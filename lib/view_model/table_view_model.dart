@@ -42,6 +42,7 @@ class TableViewModel extends ChangeNotifier {
 
   void update(Table table) {
     // TODO: ADD HTTP REQUEST TO UPDATE TABLE
+    _tables[table.id! - 1] = table;
   }
 
   void deleteById(int tableId) {
