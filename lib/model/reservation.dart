@@ -21,7 +21,7 @@ class Reservation {
 
   int? id;
   int personsNumber;
-  int clientPhoneNumber;
+  String clientPhoneNumber;
   String clientName;
   DateTime startDateTime;
   int durationIntervalMinutes;

@@ -9,7 +9,7 @@ part of 'reservation.dart';
 Reservation _$ReservationFromJson(Map<String, dynamic> json) => Reservation(
       json['id'] as int?,
       json['personsNumber'] as int,
-      json['clientPhoneNumber'] as int,
+      json['clientPhoneNumber'] as String,
       json['clientName'] as String,
       DateTime.parse(json['startDateTime'] as String),
       json['durationIntervalMinutes'] as int,
