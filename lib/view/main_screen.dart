@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restobook_mobile_client/view/employees_screen.dart';
 import 'package:restobook_mobile_client/view/profile_screen.dart';
 import 'package:restobook_mobile_client/view/reservation_screen.dart';
-import 'package:restobook_mobile_client/view/tables_screan.dart';
+import 'package:restobook_mobile_client/view/tables_screen.dart';
 import 'creation_reservation_screen.dart';
 
 class MainScreen extends StatefulWidget {

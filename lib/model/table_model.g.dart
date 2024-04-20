@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'table.dart';
+part of 'table_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Table _$TableFromJson(Map<String, dynamic> json) => Table(
+TableModel _$TableModelFromJson(Map<String, dynamic> json) => TableModel(
       json['id'] as int?,
       json['number'] as int,
       json['seatsNumber'] as int,
@@ -15,7 +15,8 @@ Table _$TableFromJson(Map<String, dynamic> json) => Table(
       (json['reservationIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
     );
 
-Map<String, dynamic> _$TableToJson(Table instance) => <String, dynamic>{
+Map<String, dynamic> _$TableModelToJson(TableModel instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'number': instance.number,
       'seatsNumber': instance.seatsNumber,

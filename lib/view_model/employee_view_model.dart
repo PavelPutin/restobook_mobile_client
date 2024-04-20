@@ -10,8 +10,9 @@ class EmployeeViewModel extends ChangeNotifier {
   Employee? get activeEmployee => null;
   set activeEmployee(Employee? employee) => activeEmployee = employee;
 
-  void load() {
+  Future<void> load() async {
     // TODO: ADD HTTP REQUEST TO GET ALL EMPLOYEES
+    await Future.delayed(const Duration(seconds: 1));
     _employees.addAll([
       Employee(
         1,
@@ -37,14 +38,16 @@ class EmployeeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void loadById(int reservationId) {
+  Future<void> loadById(int reservationId) async {
     // TODO: ADD HTTP REQUEST TO GET EMPLOYEES BY ID
+    await Future.delayed(const Duration(seconds: 1));
     activeEmployee = _employees[reservationId - 1];
     notifyListeners();
   }
 
-  void add(Employee employee) {
+  Future<void> add(Employee employee) async {
     // TODO: ADD HTTP REQUEST TO CREATE EMPLOYEE
+    await Future.delayed(const Duration(seconds: 1));
     int maxId = 0;
     for (var e in _employees) {
       if (e.id! > maxId) {
@@ -56,13 +59,15 @@ class EmployeeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void update(Employee employee) {
+  Future<void> update(Employee employee) async {
     // TODO: ADD HTTP REQUEST TO UPDATE EMPLOYEE
+    await Future.delayed(const Duration(seconds: 1));
     _employees[employee.id! - 1] = employee;
   }
 
-  void deleteById(int employeeId) {
+  Future<void> deleteById(int employeeId) async {
     // TODO: ADD HTTP REQUEST TO DELETE EMPLOYEE
+    await Future.delayed(const Duration(seconds: 1));
     _employees.removeAt(employeeId - 1);
     notifyListeners();
   }

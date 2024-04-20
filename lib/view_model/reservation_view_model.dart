@@ -5,15 +5,16 @@ import 'package:flutter/cupertino.dart';
 import '../model/reservation.dart';
 
 class ReservationViewModel extends ChangeNotifier {
-  final List<Reservation> _reservations = [];
+  List<Reservation> _reservations = [];
 
   UnmodifiableListView<Reservation> get reservations => UnmodifiableListView(_reservations);
   Reservation? get activeReservation => null;
   set activeReservation(Reservation? reservation) => activeReservation = reservation;
 
-  void load() {
+  Future<void> load() async {
     // TODO: ADD HTTP REQUEST TO GET ALL RESERVATIONS
-    _reservations.addAll([
+    await Future.delayed(const Duration(seconds: 1));
+    _reservations = [
       Reservation(
         1,
         2,
@@ -42,18 +43,20 @@ class ReservationViewModel extends ChangeNotifier {
           1,
           [1, 2]
       ),
-    ]);
+    ];
     notifyListeners();
   }
 
-  void loadById(int reservationId) {
+  Future<void> loadById(int reservationId) async {
     // TODO: ADD HTTP REQUEST TO GET RESERVATIONS BY ID
+    await Future.delayed(const Duration(seconds: 1));
     activeReservation = _reservations[reservationId - 1];
     notifyListeners();
   }
 
-  void add(Reservation reservation) {
+  Future<void> add(Reservation reservation) async {
     // TODO: ADD HTTP REQUEST TO CREATE RESERVATION
+    await Future.delayed(const Duration(seconds: 1));
     int maxId = 0;
     for (var r in _reservations) {
       if (r.id! > maxId) {
@@ -66,13 +69,15 @@ class ReservationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void update(Reservation reservation) {
+  Future<void> update(Reservation reservation) async {
     // TODO: ADD HTTP REQUEST TO UPDATE RESERVATION
+    await Future.delayed(const Duration(seconds: 1));
     _reservations[reservation.id! - 1] = reservation;
   }
 
-  void deleteById(int reservationId) {
+  Future<void> deleteById(int reservationId) async {
     // TODO: ADD HTTP REQUEST TO DELETE RESERVATION
+    await Future.delayed(const Duration(seconds: 1));
     _reservations.removeAt(reservationId - 1);
     notifyListeners();
   }

@@ -2,32 +2,42 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 
-import '../model/table.dart';
+import '../model/table_model.dart';
 
 class TableViewModel extends ChangeNotifier {
-  final List<Table> _tables = [];
+  List<TableModel> _tables = [];
+  int _tries = 0;
 
-  UnmodifiableListView<Table> get tables => UnmodifiableListView(_tables);
-  Table? get activeTable => null;
-  set activeTable(Table? table) => activeTable = table;
+  UnmodifiableListView<TableModel> get tables => UnmodifiableListView(_tables);
+  TableModel? get activeTable => null;
+  set activeTable(TableModel? table) => activeTable = table;
+  int get tries => _tries;
+  set tries(int value) => tries = value;
 
-  void load() {
+  Future<void> load() async {
     // TODO: ADD HTTP REQUEST TO GET ALL TABLES
-    _tables.addAll([
-      Table(1, 1, 2, "NORMAL", 1, []),
-      Table(2, 2, 1, "BROKEN", 1, []),
-    ]);
+    await Future.delayed(const Duration(seconds: 2));
+    _tables = [
+      TableModel(1, 1, 2, "NORMAL", 1, []),
+      TableModel(2, 2, 1, "BROKEN", 1, []),
+    ];
+    _tries++;
+    if (tries % 10 == 0) {
+      throw UnimplementedError("Error table loading");
+    }
     notifyListeners();
   }
 
-  void loadById(int tableId) {
+  Future<void> loadById(int tableId) async {
     // TODO: ADD HTTP REQUEST TO GET TABLE BY ID
+    await Future.delayed(const Duration(seconds: 1));
     activeTable = _tables[tableId - 1];
     notifyListeners();
   }
 
-  void add(Table table) {
+  Future<void> add(TableModel table) async {
     // TODO: ADD HTTP REQUEST TO CREATE TABLE
+    await Future.delayed(const Duration(seconds: 1));
     int maxId = 0;
     for (var t in _tables) {
       if (t.id! > maxId) {
@@ -40,13 +50,15 @@ class TableViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void update(Table table) {
+  Future<void> update(TableModel table) async {
     // TODO: ADD HTTP REQUEST TO UPDATE TABLE
+    await Future.delayed(const Duration(seconds: 1));
     _tables[table.id! - 1] = table;
   }
 
-  void deleteById(int tableId) {
+  Future<void> deleteById(int tableId) async {
     // TODO: ADD HTTP REQUEST TO DELETE TABLE
+    await Future.delayed(const Duration(seconds: 1));
     _tables.removeAt(tableId - 1);
     notifyListeners();
   }
