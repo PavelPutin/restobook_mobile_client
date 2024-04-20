@@ -4,16 +4,16 @@ import 'package:flutter/foundation.dart';
 import 'package:restobook_mobile_client/model/employee.dart';
 
 class EmployeeViewModel extends ChangeNotifier {
-  final List<Employee> _employees = [];
+  List<Employee> _employees = [];
 
-  UnmodifiableListView<Employee> get reservations => UnmodifiableListView(_employees);
+  UnmodifiableListView<Employee> get employees => UnmodifiableListView(_employees);
   Employee? get activeEmployee => null;
   set activeEmployee(Employee? employee) => activeEmployee = employee;
 
   Future<void> load() async {
     // TODO: ADD HTTP REQUEST TO GET ALL EMPLOYEES
     await Future.delayed(const Duration(seconds: 1));
-    _employees.addAll([
+    _employees = [
       Employee(
         1,
         "frolov_m_vR1",
@@ -34,7 +34,7 @@ class EmployeeViewModel extends ChangeNotifier {
           false,
           1
       )
-    ]);
+    ];
     notifyListeners();
   }
 
