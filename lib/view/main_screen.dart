@@ -3,6 +3,7 @@ import 'package:restobook_mobile_client/view/employees_screen.dart';
 import 'package:restobook_mobile_client/view/profile_screen.dart';
 import 'package:restobook_mobile_client/view/reservation_screen.dart';
 import 'package:restobook_mobile_client/view/tables_screan.dart';
+import 'creation_reservation_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -55,6 +56,15 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
       body: bodyWidgets[_currentScreenIndex],
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CreationReservationScreen()))
+        },
+        child: const Icon(Icons.add),
+      ),
       bottomNavigationBar: NavigationBar(
         destinations: destinations,
         selectedIndex: _currentScreenIndex,
