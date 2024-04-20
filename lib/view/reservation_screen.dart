@@ -45,7 +45,7 @@ class _ReservationsScreenState extends State<ReservationsScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Не удалось загрузить столы"),
+                        const Text("Не удалось загрузить брони"),
                         ElevatedButton(
                             onPressed: () async {
                               setState(() {

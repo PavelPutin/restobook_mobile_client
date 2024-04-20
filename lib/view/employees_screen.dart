@@ -45,7 +45,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Не удалось загрузить столы"),
+                        const Text("Не удалось загрузить сотрудников"),
                         ElevatedButton(
                             onPressed: () async {
                               setState(() {
