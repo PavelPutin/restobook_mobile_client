@@ -3,13 +3,16 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 
 import '../model/reservation.dart';
+import '../model/table_model.dart';
 
 class ReservationViewModel extends ChangeNotifier {
   List<Reservation> _reservations = [];
   Reservation? _activeReservation;
+  final List<TableModel> _activeReservationTables = [];
 
   UnmodifiableListView<Reservation> get reservations => UnmodifiableListView(_reservations);
   Reservation? get activeReservation => _activeReservation;
+  UnmodifiableListView<TableModel> get activeReservationTables => UnmodifiableListView(_activeReservationTables);
   set activeReservation(Reservation? reservation) => _activeReservation = reservation;
 
   Future<void> load() async {
@@ -28,7 +31,7 @@ class ReservationViewModel extends ChangeNotifier {
         "WAITING",
         "Юбилей",
         1,
-        [1]
+        List.from([1])
       ),
       Reservation(
           2,
@@ -42,7 +45,7 @@ class ReservationViewModel extends ChangeNotifier {
           "WAITING",
           null,
           1,
-          [1, 2]
+          List.from([1, 2])
       ),
     ];
     notifyListeners();
@@ -52,6 +55,19 @@ class ReservationViewModel extends ChangeNotifier {
     // TODO: ADD HTTP REQUEST TO GET RESERVATIONS BY ID
     await Future.delayed(const Duration(seconds: 1));
     activeReservation = _reservations[reservationId - 1];
+    notifyListeners();
+  }
+
+  Future<void> loadActiveReservationTables() async {
+    await Future.delayed(const Duration(seconds: 1));
+    var tables = [
+      TableModel(1, 1, 2, "NORMAL", 1, List.from([1])),
+      TableModel(2, 2, 1, "BROKEN", 1, List.from([1, 2])),
+    ];
+    _activeReservationTables.clear();
+    for (int id in activeReservation!.tableIds!) {
+      _activeReservationTables.add(tables[id - 1]);
+    }
     notifyListeners();
   }
 

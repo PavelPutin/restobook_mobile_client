@@ -1,8 +1,6 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
-import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
 import '../model/reservation.dart';
 import '../model/table_model.dart';
