@@ -30,7 +30,7 @@ class TableViewModel extends ChangeNotifier {
       TableModel(2, 2, 1, "BROKEN", 1, List.from([1, 2])),
     ];
     _tries++;
-    if (tries % 10 == 0) {
+    if (tries % 2 == 0) {
       throw UnimplementedError("Error table loading");
     }
     notifyListeners();

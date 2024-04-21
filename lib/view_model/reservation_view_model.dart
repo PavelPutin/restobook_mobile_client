@@ -6,10 +6,11 @@ import '../model/reservation.dart';
 
 class ReservationViewModel extends ChangeNotifier {
   List<Reservation> _reservations = [];
+  Reservation? _activeReservation;
 
   UnmodifiableListView<Reservation> get reservations => UnmodifiableListView(_reservations);
-  Reservation? get activeReservation => null;
-  set activeReservation(Reservation? reservation) => activeReservation = reservation;
+  Reservation? get activeReservation => _activeReservation;
+  set activeReservation(Reservation? reservation) => _activeReservation = reservation;
 
   Future<void> load() async {
     // TODO: ADD HTTP REQUEST TO GET ALL RESERVATIONS
