@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:restobook_mobile_client/view/employees_screen.dart';
-import 'package:restobook_mobile_client/view/profile_screen.dart';
 import 'package:restobook_mobile_client/view/reservations_screen.dart';
 import 'package:restobook_mobile_client/view/tables_screen.dart';
-import 'creation_reservation_screen.dart';
+import 'package:restobook_mobile_client/view/widgets/floating_creation_reservation_button.dart';
+import 'package:restobook_mobile_client/view/widgets/icon_button_push_profile.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -44,27 +44,11 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Restobook"),
-        actions: [
-          IconButton(
-              onPressed: () => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProfileScreen())
-                )
-              },
-              icon: const Icon(Icons.person))
-        ],
+        actions: const [IconButtonPushProfile()],
       ),
       body: bodyWidgets[_currentScreenIndex],
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CreationReservationScreen()))
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: const FloatingCreationReservationButton(),
       bottomNavigationBar: NavigationBar(
         destinations: destinations,
         selectedIndex: _currentScreenIndex,

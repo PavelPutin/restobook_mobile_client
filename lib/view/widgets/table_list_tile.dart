@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../model/table_model.dart';
+import '../table_screen.dart';
 
 
 class TableListTile extends StatelessWidget {
@@ -12,7 +13,13 @@ class TableListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: ListTile(
-        title: Text("Стол ${table.number}")
+        title: Text("Стол ${table.number}"),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TableScreen(table: table))
+          );
+        },
       ),
     );
   }
