@@ -9,9 +9,10 @@ class ReservationListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return ListTile(
-      title: Text("Бронь номер ${reservation.id}"),
+    return Material(
+      child: ListTile(
+        title: Text("Бронь номер ${reservation.id}"),
+      ),
     );
   }
 

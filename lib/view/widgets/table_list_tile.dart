@@ -10,8 +10,10 @@ class TableListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text("Стол ${table.number}")
+    return Material(
+      child: ListTile(
+        title: Text("Стол ${table.number}")
+      ),
     );
   }
 

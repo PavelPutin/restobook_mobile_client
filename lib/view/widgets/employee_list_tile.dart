@@ -8,8 +8,10 @@ class EmployeeListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text("${employee.surname} ${employee.name} ${employee.patronymic}")
+    return Material(
+      child: ListTile(
+        title: Text("${employee.surname} ${employee.name} ${employee.patronymic}")
+      ),
     );
   }
 }
