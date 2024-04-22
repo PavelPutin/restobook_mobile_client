@@ -4,6 +4,7 @@ import 'package:restobook_mobile_client/view/widgets/floating_creation_reservati
 import 'package:restobook_mobile_client/view/widgets/icon_button_push_profile.dart';
 import 'package:restobook_mobile_client/view/widgets/refreshable_future_list_view.dart';
 import 'package:restobook_mobile_client/view/widgets/table_list_tile.dart';
+import 'package:restobook_mobile_client/view/widgets/title_future_builder.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
 import '../model/reservation.dart';
@@ -35,25 +36,33 @@ class _ReservationScreenState extends State<ReservationScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const IconButtonNavigatorPop(),
-        title: FutureBuilder(
-          future: reservationLoading,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(
-                strokeAlign: CircularProgressIndicator.strokeAlignInside,
-                strokeWidth: 2,
-              );
-            }
-
-            if (snapshot.hasError) {
-              return const Text("Ошибка загрузки");
-            }
-
-            return Consumer<ReservationViewModel>(
-                builder: (context, reservationViewModel, child) {
-                  return Text("Бронь ${reservationViewModel.activeReservation?.id!}");
-                });
-          },
+        // title: FutureBuilder(
+        //   future: reservationLoading,
+        //   builder: (context, snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //       return const CircularProgressIndicator(
+        //         strokeAlign: CircularProgressIndicator.strokeAlignInside,
+        //         strokeWidth: 2,
+        //       );
+        //     }
+        //
+        //     if (snapshot.hasError) {
+        //       return const Text("Ошибка загрузки");
+        //     }
+        //
+        //     return Consumer<ReservationViewModel>(
+        //         builder: (context, reservationViewModel, child) {
+        //           return Text("Бронь ${reservationViewModel.activeReservation?.id!}");
+        //         });
+        //   },
+        // ),
+        title: TitleFutureBuilder(
+          loading: reservationLoading,
+          errorMessage: const Text("Ошибка загрузки"),
+          title: Consumer<ReservationViewModel>(
+            builder: (context, reservationViewModel, child) {
+              return Text("Бронь ${reservationViewModel.activeReservation?.id!}");
+            }),
         ),
         actions: const [IconButtonPushProfile()],
       ),

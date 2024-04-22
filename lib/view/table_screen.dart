@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/widgets/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/widgets/icon_button_push_profile.dart';
 import 'package:restobook_mobile_client/view/widgets/table_reservations.dart';
-import 'package:restobook_mobile_client/view/widgets/table_title_future_builder.dart';
+import 'package:restobook_mobile_client/view/widgets/title_future_builder.dart';
 
 import '../model/table_model.dart';
 import '../view_model/table_view_model.dart';
@@ -45,7 +45,15 @@ class _TableScreenState extends State<TableScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const IconButtonNavigatorPop(),
-        title: TableTitleFutureBuilder(tableLoading: tableLoading),
+        // title: TableTitleFutureBuilder(tableLoading: tableLoading),
+        title: TitleFutureBuilder(
+          loading: tableLoading,
+          errorMessage: const Text("Ошибка загрузки"),
+          title: Consumer<TableViewModel>(
+            builder: (context, tableViewModel, child) {
+              return Text("Стол ${tableViewModel.activeTable?.number}");
+            }),
+        ),
         actions: const [IconButtonPushProfile()],
       ),
       body: bodyWidgets[_currentScreenIndex],
