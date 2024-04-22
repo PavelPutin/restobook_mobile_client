@@ -7,7 +7,7 @@ import 'package:restobook_mobile_client/view/widgets/title_future_builder.dart';
 
 import '../model/table_model.dart';
 import '../view_model/table_view_model.dart';
-import 'widgets/icon_button_navigtor_pop.dart';
+import 'widgets/icon_button_navigator_pop.dart';
 import 'widgets/table_info.dart';
 
 class TableScreen extends StatefulWidget {

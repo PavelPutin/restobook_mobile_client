@@ -1,8 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../view_model/table_view_model.dart';
 
 class RefreshableFutureListView extends StatefulWidget {
   const RefreshableFutureListView({super.key, required this.tablesLoading, required this.onRefresh, required this.listView, required this.errorLabel});
