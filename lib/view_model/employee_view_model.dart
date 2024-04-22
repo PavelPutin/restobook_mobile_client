@@ -5,10 +5,11 @@ import 'package:restobook_mobile_client/model/employee.dart';
 
 class EmployeeViewModel extends ChangeNotifier {
   List<Employee> _employees = [];
+  Employee? _activeEmployee;
 
   UnmodifiableListView<Employee> get employees => UnmodifiableListView(_employees);
-  Employee? get activeEmployee => null;
-  set activeEmployee(Employee? employee) => activeEmployee = employee;
+  Employee? get activeEmployee => _activeEmployee;
+  set activeEmployee(Employee? employee) => _activeEmployee = employee;
 
   Future<void> load() async {
     // TODO: ADD HTTP REQUEST TO GET ALL EMPLOYEES
