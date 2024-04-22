@@ -36,8 +36,16 @@ class TableInfo extends StatelessWidget {
 
               return Column(
                 children: [
-                  Text("Количество мест: ${tableViewModel.activeTable?.seatsNumber}"),
-                  Text("Состояние стола: ${tableViewModel.activeTable?.state}"),
+                  Row(
+                    children: [
+                      Text("Количество мест: ${tableViewModel.activeTable?.seatsNumber}"),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text("Состояние стола: ${tableViewModel.activeTable?.state}"),
+                    ],
+                  ),
                 ],
               );
             });
