@@ -8,13 +8,14 @@ class FloatingCreationReservationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
+    return FloatingActionButton.extended(
       onPressed: () => {
         Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const CreationReservationScreen()))
       },
-      child: const Icon(Icons.add),
+      icon: const Icon(Icons.add),
+      label: const Text("Новая бронь"),
     );
   }
 }

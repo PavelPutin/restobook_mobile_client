@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/employee.dart';
+import 'package:restobook_mobile_client/view/widgets/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/widgets/icon_button_navigator_pop.dart';
 import 'package:restobook_mobile_client/view/widgets/icon_button_push_profile.dart';
 import 'package:restobook_mobile_client/view/widgets/title_future_builder.dart';
@@ -42,6 +43,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           ),
           actions: const [IconButtonPushProfile()],
         ),
+        floatingActionButton: const FloatingCreationReservationButton(),
         body: Consumer<EmployeeViewModel>(
             builder: (context, reservationViewModel, child) {
               return FutureBuilder(
