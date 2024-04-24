@@ -3,8 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:restobook_mobile_client/model/model.dart';
+import 'package:restobook_mobile_client/view/table/widgets/scrollable_expanded_future_builder.dart';
 import '../../../view_model/table_view_model.dart';
 import '../../shared_widget/title_future_builder.dart';
+import '../widgets/comment_text_field.dart';
+import '../widgets/seats_number_text_field.dart';
+import '../widgets/table_state_dropdown_menu.dart';
 
 class TableEditScreen extends StatefulWidget {
   const TableEditScreen({super.key, required this.table});
@@ -19,9 +23,9 @@ class _TableEditScreenState extends State<TableEditScreen> {
   late Future<void> loading;
   late Future<void> submiting;
   final _formKey = GlobalKey<FormState>();
-  late String _selectedTableState;
-  late TextEditingController _seatsNumberController;
-  late TextEditingController _commentController;
+  String _selectedTableState = "NORMAL";
+  final TextEditingController _seatsNumberController = TextEditingController();
+  final TextEditingController _commentController = TextEditingController();
 
   @override
   void initState() {
@@ -30,22 +34,22 @@ class _TableEditScreenState extends State<TableEditScreen> {
     loading = Provider.of<TableViewModel>(context, listen: false)
         .loadActiveTable(widget.table.id!);
     loading.then((value) {
-      _selectedTableState = Provider.of<TableViewModel>(context, listen: false)
-          .activeTable!
-          .state!;
+      setState(() {
+        _selectedTableState = Provider.of<TableViewModel>(context, listen: false)
+            .activeTable!
+            .state!;
+      });
 
       String seatsNumber = Provider.of<TableViewModel>(context, listen: false)
           .activeTable!
           .seatsNumber
           .toString();
-      _seatsNumberController = TextEditingController(text: seatsNumber);
+      _seatsNumberController.value = TextEditingValue(text: seatsNumber);
 
       String? comment = Provider.of<TableViewModel>(context, listen: false)
           .activeTable!
           .comment;
-      _commentController = comment != null
-          ? TextEditingController(text: comment)
-          : TextEditingController();
+      _commentController.value = TextEditingValue(text: comment ?? "");
     });
   }
 
@@ -67,142 +71,82 @@ class _TableEditScreenState extends State<TableEditScreen> {
                     builder: (context, tableViewModel, child) {
                   return Text("Стол ${tableViewModel.activeTable?.number}");
                 }))),
-        body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints viewportConstraints) => SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: viewportConstraints.maxHeight,
-                ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    children: [
-                      Expanded(
+        body: ScrollableExpandedFutureBuilder(
+            loading: loading,
+            onRefresh: () async => setState(() => loading = context
+                .read<TableViewModel>()
+                .loadActiveTable(widget.table.id!)),
+            errorLabel: const Text("Не удалось загрузить стол"),
+            child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    SeatsNumberTextField(controller: _seatsNumberController),
+                    CommentTextField(controller: _commentController),
+                    TableStateDropdownMenu(
+                      initialValue: _selectedTableState,
+                      onChanged: (selected) => setState(() {
+                        _selectedTableState = selected;
+                      }),
+                    ),
+                    ElevatedButton(
+                        onPressed: submit,
                         child: FutureBuilder(
-                            future: loading,
+                            future: submiting,
                             builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                return const Center(child: CircularProgressIndicator());
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
                               }
+                              return const Text("Применить");
+                            }))
+                  ],
+                )
+            )
+        )
+    );
+  }
 
-                              if (snapshot.hasError) {
-                                return Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text("Не удалось загрузить стол"),
-                                      ElevatedButton(
-                                          onPressed: () async => setState(() => loading =
-                                              context
-                                                  .read<TableViewModel>()
-                                                  .loadActiveTable(widget.table.id!)),
-                                          child: const Text("Попробовать ещё раз"))
-                                    ],
-                                  ),
-                                );
-                              }
+  void submit() async {
+    if (_formKey.currentState!.validate()) {
+      TableModel updated = TableModel(
+          context.read<TableViewModel>().activeTable!.id,
+          context
+              .read<TableViewModel>()
+              .activeTable!
+              .number,
+          int.parse(_seatsNumberController.text),
+          _selectedTableState,
+          _commentController.text.trim().isEmpty
+              ? null
+              : _commentController.text.trim(),
+          context
+              .read<TableViewModel>()
+              .activeTable!
+              .restaurantId,
+          context
+              .read<TableViewModel>()
+              .activeTable!
+              .reservationIds);
 
-                              return Form(
-                                  key: _formKey,
-                                  child: Column(
-                                    children: [
-                                      TextFormField(
-                                          controller: _seatsNumberController,
-                                          keyboardType: TextInputType.number,
-                                          maxLines: null,
-                                          decoration: const InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelText: "Количество мест"),
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.allow(
-                                                RegExp(r'[0-9]')),
-                                          ]),
-                                      TextFormField(
-                                          controller: _commentController,
-                                          keyboardType: TextInputType.multiline,
-                                          maxLines: null,
-                                          decoration: const InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelText: "Комментарий")),
-                                      DropdownButtonFormField(
-                                        decoration: const InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: "Состояние"),
-                                        items: const [
-                                          DropdownMenuItem<String>(
-                                              value: "NORMAL", child: Text("Нормальный")),
-                                          DropdownMenuItem<String>(
-                                              value: "BROKEN", child: Text("Сломаный"))
-                                        ],
-                                        onChanged: (String? selected) {
-                                          if (selected is String) {
-                                            setState(() {
-                                              _selectedTableState = selected;
-                                            });
-                                          }
-                                        },
-                                        value: _selectedTableState,
-                                      ),
-                                      ElevatedButton(
-                                          onPressed: () async {
-                                            if (_formKey.currentState!.validate()) {
-                                              TableModel updated = TableModel(
-                                                  context
-                                                      .read<TableViewModel>()
-                                                      .activeTable!
-                                                      .id,
-                                                  context
-                                                      .read<TableViewModel>()
-                                                      .activeTable!
-                                                      .number,
-                                                  int.parse(_seatsNumberController.text),
-                                                  _selectedTableState,
-                                                  _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
-                                                  context
-                                                      .read<TableViewModel>()
-                                                      .activeTable!
-                                                      .restaurantId,
-                                                  context
-                                                      .read<TableViewModel>()
-                                                      .activeTable!
-                                                      .reservationIds);
-                                              setState(() {
-                                                submiting = context
-                                                    .read<TableViewModel>()
-                                                    .update(updated);
-                                                submiting.then((value) {
-                                                  Navigator.pop(context);
-                                                  ScaffoldMessenger.of(context).showSnackBar(
-                                                      const SnackBar(
-                                                          content: Text("Стол успешно обновлён")));
-                                                });
-                                                submiting.onError((error, stackTrace) {
-                                                  print(error);
-                                                  print(stackTrace);
-                                                  ScaffoldMessenger.of(context).showSnackBar(
-                                                      const SnackBar(
-                                                          content: Text("Не удалось изменить стол")));
-                                                });
-                                              });
-                                            }
-                                          },
-                                          child: FutureBuilder(
-                                            future: submiting,
-                                            builder: (context, snapshot) {
-                                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                                return const CircularProgressIndicator();
-                                              }
-                                              return const Text("Применить");
-                                            }
-                                          )
-                                      )
-                                    ],
-                                  ));
-                            }),
-                      ),
-                    ],
-                  ),
-                ),
-              )),
-        ));
+      setState(() {
+        submiting = context
+            .read<TableViewModel>()
+            .update(updated);
+        submiting.then((value) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content:
+                  Text("Стол успешно обновлён")));
+        });
+        submiting.onError((error, stackTrace) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content:
+                  Text("Не удалось изменить стол")));
+        });
+      });
+    }
   }
 }
