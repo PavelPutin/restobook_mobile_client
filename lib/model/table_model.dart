@@ -8,6 +8,7 @@ class TableModel {
       this.number,
       this.seatsNumber,
       this.state,
+      this.comment,
       this.restaurantId,
       this.reservationIds
       );
@@ -16,6 +17,7 @@ class TableModel {
   int number;
   int seatsNumber;
   String? state;
+  String? comment;
   int? restaurantId;
   List<int>? reservationIds;
 
