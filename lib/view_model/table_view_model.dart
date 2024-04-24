@@ -24,8 +24,8 @@ class TableViewModel extends ChangeNotifier {
     // TODO: ADD HTTP REQUEST TO GET ALL TABLES
     await Future.delayed(const Duration(seconds: 2));
     _tables = [
-      TableModel(1, 1, 2, "NORMAL", 1, List.from([1])),
-      TableModel(2, 2, 1, "BROKEN", 1, List.from([1, 2])),
+      TableModel(1, 1, 2, "NORMAL", "Столик у бара", 1, List.from([1]), ),
+      TableModel(2, 2, 1, "BROKEN", null, 1, List.from([1, 2])),
     ];
     _tries++;
     if (tries % 2 == 0) {

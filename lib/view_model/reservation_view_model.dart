@@ -61,8 +61,8 @@ class ReservationViewModel extends ChangeNotifier {
   Future<void> loadActiveReservationTables() async {
     await Future.delayed(const Duration(seconds: 1));
     var tables = [
-      TableModel(1, 1, 2, "NORMAL", 1, List.from([1])),
-      TableModel(2, 2, 1, "BROKEN", 1, List.from([1, 2])),
+      TableModel(1, 1, 2, "NORMAL", "Столик у бара", 1, List.from([1]), ),
+      TableModel(2, 2, 1, "BROKEN", null, 1, List.from([1, 2])),
     ];
     _activeReservationTables.clear();
     for (int id in activeReservation!.tableIds!) {
