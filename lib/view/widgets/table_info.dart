@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restobook_mobile_client/view/table_edit_screen.dart';
 import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
 
@@ -46,6 +47,33 @@ class TableInfo extends StatelessWidget {
                       Text("Состояние стола: ${tableViewModel.activeTable?.state}"),
                     ],
                   ),
+                  Row(
+                    children: [
+                      Text("Комментарий: ${tableViewModel.activeTable?.comment}")
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () =>
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          TableEditScreen(
+                                              table: tableViewModel.activeTable!
+                                          )
+                                  )
+                              ),
+                          child: const Row(
+                            children: [
+                              Icon(Icons.edit),
+                              Text("Редактировать"),
+                            ],
+                          )
+                      )
+                    ],
+                  )
                 ],
               );
             });
