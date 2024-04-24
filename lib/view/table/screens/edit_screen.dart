@@ -19,7 +19,7 @@ class _TableEditScreenState extends State<TableEditScreen> {
   late Future<void> loading;
   late Future<void> submiting;
   final _formKey = GlobalKey<FormState>();
-  String? _selectedTableState = "NORMAL";
+  late String _selectedTableState;
   late TextEditingController _seatsNumberController;
   late TextEditingController _commentController;
 
@@ -30,6 +30,10 @@ class _TableEditScreenState extends State<TableEditScreen> {
     loading = Provider.of<TableViewModel>(context, listen: false)
         .loadActiveTable(widget.table.id!);
     loading.then((value) {
+      _selectedTableState = Provider.of<TableViewModel>(context, listen: false)
+          .activeTable!
+          .state!;
+
       String seatsNumber = Provider.of<TableViewModel>(context, listen: false)
           .activeTable!
           .seatsNumber
@@ -79,7 +83,7 @@ class _TableEditScreenState extends State<TableEditScreen> {
                               if (snapshot.connectionState == ConnectionState.waiting) {
                                 return const Center(child: CircularProgressIndicator());
                               }
-                                          
+
                               if (snapshot.hasError) {
                                 return Center(
                                   child: Column(
@@ -96,7 +100,7 @@ class _TableEditScreenState extends State<TableEditScreen> {
                                   ),
                                 );
                               }
-                                          
+
                               return Form(
                                   key: _formKey,
                                   child: Column(
@@ -141,10 +145,6 @@ class _TableEditScreenState extends State<TableEditScreen> {
                                       ElevatedButton(
                                           onPressed: () async {
                                             if (_formKey.currentState!.validate()) {
-                                              // processing data code
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                  const SnackBar(
-                                                      content: Text("Изменяем стол")));
                                               TableModel updated = TableModel(
                                                   context
                                                       .read<TableViewModel>()
@@ -154,18 +154,9 @@ class _TableEditScreenState extends State<TableEditScreen> {
                                                       .read<TableViewModel>()
                                                       .activeTable!
                                                       .number,
-                                                  context
-                                                      .read<TableViewModel>()
-                                                      .activeTable!
-                                                      .seatsNumber,
-                                                  context
-                                                      .read<TableViewModel>()
-                                                      .activeTable!
-                                                      .state,
-                                                  context
-                                                      .read<TableViewModel>()
-                                                      .activeTable!
-                                                      .comment,
+                                                  int.parse(_seatsNumberController.text),
+                                                  _selectedTableState,
+                                                  _commentController.text.trim().isEmpty ? null : _commentController.text.trim(),
                                                   context
                                                       .read<TableViewModel>()
                                                       .activeTable!
@@ -178,10 +169,32 @@ class _TableEditScreenState extends State<TableEditScreen> {
                                                 submiting = context
                                                     .read<TableViewModel>()
                                                     .update(updated);
+                                                submiting.then((value) {
+                                                  Navigator.pop(context);
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                      const SnackBar(
+                                                          content: Text("Стол успешно обновлён")));
+                                                });
+                                                submiting.onError((error, stackTrace) {
+                                                  print(error);
+                                                  print(stackTrace);
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                      const SnackBar(
+                                                          content: Text("Не удалось изменить стол")));
+                                                });
                                               });
                                             }
                                           },
-                                          child: const Text("Применить"))
+                                          child: FutureBuilder(
+                                            future: submiting,
+                                            builder: (context, snapshot) {
+                                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                                return const CircularProgressIndicator();
+                                              }
+                                              return const Text("Применить");
+                                            }
+                                          )
+                                      )
                                     ],
                                   ));
                             }),

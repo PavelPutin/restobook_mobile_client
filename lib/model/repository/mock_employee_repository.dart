@@ -68,6 +68,7 @@ class MockEmployeeRepository extends AbstractEmployeeRepository {
       for (int i = 0; i < _employees.length; i++) {
         if (_employees[i].id == employee.id) {
           _employees[i] = employee;
+          return;
         }
       }
       throw Exception("Сотрудник не найден");

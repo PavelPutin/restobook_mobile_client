@@ -10,8 +10,8 @@ class MockTablesRepository extends AbstractTableRepository {
   ]);
 
   @override
-  Future<void> create(TableModel table) async {
-    return ConnectionSimulator<void>().connect(() {
+  Future<TableModel> create(TableModel table) async {
+    return ConnectionSimulator<TableModel>().connect(() {
       int maxId = 0;
       for (var t in _tables) {
         if (t.id! > maxId) {
@@ -22,6 +22,7 @@ class MockTablesRepository extends AbstractTableRepository {
       table.state = "NORMAL";
       table.restaurantId = 1;
       _tables.add(table);
+      return table;
     });
   }
 
@@ -48,11 +49,13 @@ class MockTablesRepository extends AbstractTableRepository {
   }
 
   @override
-  Future<void> update(TableModel table) {
-    return ConnectionSimulator<void>().connect(() {
+  Future<TableModel> update(TableModel table) {
+    return ConnectionSimulator<TableModel>().connect(() {
+      print("Id обновляемого стола ${table.id}");
       for (int i = 0; i < _tables.length; i++) {
         if (_tables[i].id == table.id) {
           _tables[i] = table;
+          return table;
         }
       }
       throw Exception("Стол не найден");

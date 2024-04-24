@@ -13,9 +13,14 @@ import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 void main() {
   AppMetrica.runZoneGuarded(() {
     AppMetrica.activate(const AppMetricaConfig(String.fromEnvironment("AppMetricaKey")));
+
     GetIt.I.registerSingleton<AbstractTableRepository>(MockTablesRepository());
     GetIt.I.registerSingleton<AbstractReservationRepository>(MockReservationsRepository());
     GetIt.I.registerSingleton<AbstractEmployeeRepository>(MockEmployeeRepository());
+
+    FlutterError.onError =
+        (details) => print(details);
+
     runApp(
         MultiProvider(
           providers: [

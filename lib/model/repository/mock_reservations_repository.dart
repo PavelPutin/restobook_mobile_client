@@ -35,8 +35,8 @@ class MockReservationsRepository extends AbstractReservationRepository {
   ]);
 
   @override
-  Future<void> create(Reservation reservation) async {
-    return ConnectionSimulator<void>().connect(() {
+  Future<Reservation> create(Reservation reservation) async {
+    return ConnectionSimulator<Reservation>().connect(() {
       int maxId = 0;
       for (var r in _reservations) {
         if (r.id! > maxId) {
@@ -47,6 +47,7 @@ class MockReservationsRepository extends AbstractReservationRepository {
       reservation.state = "WAITING";
       reservation.restaurantId = 1;
       _reservations.add(reservation);
+      return reservation;
     });
   }
 
@@ -73,11 +74,12 @@ class MockReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
-  Future<void> update(Reservation reservation) {
-    return ConnectionSimulator<void>().connect(() {
+  Future<Reservation> update(Reservation reservation) {
+    return ConnectionSimulator<Reservation>().connect(() {
       for (int i = 0; i < _reservations.length; i++) {
         if (_reservations[i].id == reservation.id) {
           _reservations[i] = reservation;
+          return reservation;
         }
       }
       throw Exception("Бронь не найдена");
