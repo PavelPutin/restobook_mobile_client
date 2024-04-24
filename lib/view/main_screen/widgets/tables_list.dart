@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
-import 'package:restobook_mobile_client/view/widgets/table_list_tile.dart';
+import 'package:restobook_mobile_client/view/main_screen/widgets/table_list_tile.dart';
 import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
-class TablesScreen extends StatefulWidget {
-  const TablesScreen({super.key});
+class TablesList extends StatefulWidget {
+  const TablesList({super.key});
 
   @override
-  State<TablesScreen> createState() => _TablesScreenState();
+  State<TablesList> createState() => _TablesListState();
 }
 
-class _TablesScreenState extends State<TablesScreen> {
+class _TablesListState extends State<TablesList> {
   late Future<void> tablesLoading;
 
   @override

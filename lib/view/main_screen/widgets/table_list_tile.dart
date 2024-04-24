@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../model/table_model.dart';
-import '../table_screen.dart';
+import '../../../model/table_model.dart';
+import '../../table_screen.dart';
 
 
 class TableListTile extends StatelessWidget {

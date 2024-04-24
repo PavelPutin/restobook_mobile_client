@@ -1,7 +1,7 @@
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restobook_mobile_client/view/main_screen.dart';
+import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
 import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 import 'package:restobook_mobile_client/view_model/table_view_model.dart';

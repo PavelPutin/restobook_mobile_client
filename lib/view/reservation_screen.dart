@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
-import 'package:restobook_mobile_client/view/widgets/table_list_tile.dart';
+import 'package:restobook_mobile_client/view/main_screen/widgets/table_list_tile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 

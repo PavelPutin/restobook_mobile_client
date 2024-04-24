@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
-import 'package:restobook_mobile_client/view/widgets/reservation_list_tile.dart';
+import 'package:restobook_mobile_client/view/main_screen/widgets/reservation_list_tile.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
-class ReservationsScreen extends StatefulWidget {
-  const ReservationsScreen({super.key});
+class ReservationsList extends StatefulWidget {
+  const ReservationsList({super.key});
 
   @override
-  State<ReservationsScreen> createState() => _ReservationsScreenState();
+  State<ReservationsList> createState() => _ReservationsListState();
 }
 
-class _ReservationsScreenState extends State<ReservationsScreen> {
+class _ReservationsListState extends State<ReservationsList> {
   late Future<void> reservationsLoading;
 
   @override

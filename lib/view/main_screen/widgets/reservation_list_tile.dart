@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../model/reservation.dart';
-import '../reservation_screen.dart';
+import '../../../model/reservation.dart';
+import '../../reservation_screen.dart';
 
 class ReservationListTile extends StatelessWidget {
   const ReservationListTile({super.key, required this.reservation});

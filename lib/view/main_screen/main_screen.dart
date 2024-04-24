@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:restobook_mobile_client/view/employees_screen.dart';
-import 'package:restobook_mobile_client/view/reservations_screen.dart';
-import 'package:restobook_mobile_client/view/tables_screen.dart';
+import 'package:restobook_mobile_client/view/main_screen/widgets/employees_list.dart';
+import 'package:restobook_mobile_client/view/main_screen/widgets/reservations_list.dart';
+import 'package:restobook_mobile_client/view/main_screen/widgets/tables_list.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
 
@@ -21,8 +21,8 @@ class _MainScreenState extends State<MainScreen> {
     List<NavigationDestination> destinations;
     if (const String.fromEnvironment("USER_TYPE") == "EMPLOYEE") {
       bodyWidgets = [
-        const TablesScreen(),
-        const ReservationsScreen(),
+        const TablesList(),
+        const ReservationsList(),
       ];
       destinations = [
         const NavigationDestination(icon: Icon(Icons.search), label: 'Столы',),
@@ -30,9 +30,9 @@ class _MainScreenState extends State<MainScreen> {
       ];
     } else {
       bodyWidgets = [
-        const TablesScreen(),
-        const ReservationsScreen(),
-        const EmployeesScreen()
+        const TablesList(),
+        const ReservationsList(),
+        const EmployeesList()
       ];
       destinations = [
         const NavigationDestination(icon: Icon(Icons.search), label: 'Столы',),
