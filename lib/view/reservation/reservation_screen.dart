@@ -7,8 +7,8 @@ import 'package:restobook_mobile_client/view/main_screen/widgets/table_list_tile
 import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
-import '../model/reservation.dart';
-import 'shared_widget/icon_button_navigator_pop.dart';
+import '../../model/reservation.dart';
+import '../shared_widget/icon_button_navigator_pop.dart';
 
 class ReservationScreen extends StatefulWidget {
   const ReservationScreen({super.key, required this.reservation});

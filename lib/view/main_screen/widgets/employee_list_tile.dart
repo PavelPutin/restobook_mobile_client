@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restobook_mobile_client/model/employee.dart';
 
-import '../../employee_screen.dart';
+import '../../employee/employee_screen.dart';
 
 class EmployeeListTile extends StatelessWidget {
   const EmployeeListTile({super.key, required this.employee});

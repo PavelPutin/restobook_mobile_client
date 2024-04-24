@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../profile_screen.dart';
+import '../profile/profile_screen.dart';
 
 class IconButtonPushProfile extends StatelessWidget {
   const IconButtonPushProfile({super.key});

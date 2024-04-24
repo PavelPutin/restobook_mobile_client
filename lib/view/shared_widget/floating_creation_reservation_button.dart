@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../creation_reservation_screen.dart';
+import '../reservation/creation_reservation_screen.dart';
 
 class FloatingCreationReservationButton extends StatelessWidget {
   const FloatingCreationReservationButton({super.key});

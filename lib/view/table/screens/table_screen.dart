@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
-import 'package:restobook_mobile_client/view/widgets/table_reservations.dart';
+import 'package:restobook_mobile_client/view/table/widgets/reservations.dart';
 import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 
-import '../model/table_model.dart';
-import '../view_model/table_view_model.dart';
-import 'shared_widget/icon_button_navigator_pop.dart';
-import 'widgets/table_info.dart';
+import '../../../model/table_model.dart';
+import '../../../view_model/table_view_model.dart';
+import '../../shared_widget/icon_button_navigator_pop.dart';
+import '../widgets/info.dart';
 
 class TableScreen extends StatefulWidget {
   const TableScreen({super.key, required this.table});
