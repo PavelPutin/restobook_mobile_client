@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restobook_mobile_client/model/employee.dart';
+import 'package:restobook_mobile_client/model/entities/employee.dart';
 
 import '../../employee/employee_screen.dart';
 

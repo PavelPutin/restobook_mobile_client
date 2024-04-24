@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/reservation.dart';
+import 'package:restobook_mobile_client/model/model.dart';
 import '../../reservation/reservation_screen.dart';
 
 class ReservationListTile extends StatelessWidget {

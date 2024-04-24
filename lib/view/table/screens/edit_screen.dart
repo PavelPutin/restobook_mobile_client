@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/table_model.dart';
+import 'package:restobook_mobile_client/model/model.dart';
 import '../../../view_model/table_view_model.dart';
 import '../../shared_widget/title_future_builder.dart';
 
@@ -28,7 +28,7 @@ class _TableEditScreenState extends State<TableEditScreen> {
     super.initState();
     tableUpdating = Future.delayed(const Duration(seconds: 0));
     tableLoading = Provider.of<TableViewModel>(context, listen: false)
-        .loadById(widget.table.id!);
+        .loadActiveTable(widget.table.id!);
     tableLoading.then((value) {
       String seatsNumber = Provider.of<TableViewModel>(context, listen: false)
           .activeTable!
@@ -85,7 +85,7 @@ class _TableEditScreenState extends State<TableEditScreen> {
                             onPressed: () async => setState(() =>
                             tableLoading = context
                                 .read<TableViewModel>()
-                                .loadById(widget.table.id!)),
+                                .loadActiveTable(widget.table.id!)),
                             child: const Text("Попробовать ещё раз"))
                       ],
                     ),

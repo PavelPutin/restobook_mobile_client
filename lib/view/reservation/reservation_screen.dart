@@ -7,7 +7,7 @@ import 'package:restobook_mobile_client/view/main_screen/widgets/table_list_tile
 import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
-import '../../model/reservation.dart';
+import 'package:restobook_mobile_client/model/model.dart';
 import '../shared_widget/icon_button_navigator_pop.dart';
 
 class ReservationScreen extends StatefulWidget {
@@ -27,7 +27,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
   void initState() {
     super.initState();
     reservationLoading =
-        Provider.of<ReservationViewModel>(context, listen: false).loadById(widget.reservation.id!);
+        Provider.of<ReservationViewModel>(context, listen: false).loadActiveTable(widget.reservation.id!);
     reservationLoading.then((value) => tablesLoading = context.read<ReservationViewModel>().loadActiveReservationTables());
   }
 
@@ -65,7 +65,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                             onPressed: () async {
                               setState(() {
                                 reservationLoading =
-                                  Provider.of<ReservationViewModel>(context, listen: false).loadById(widget.reservation.id!);
+                                  Provider.of<ReservationViewModel>(context, listen: false).loadActiveTable(widget.reservation.id!);
                                 reservationLoading.then((value) => tablesLoading = context.read<ReservationViewModel>().loadActiveReservationTables());
                               });
                             },

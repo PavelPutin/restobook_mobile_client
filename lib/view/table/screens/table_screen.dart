@@ -5,7 +5,7 @@ import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_prof
 import 'package:restobook_mobile_client/view/table/widgets/reservations.dart';
 import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 
-import '../../../model/table_model.dart';
+import 'package:restobook_mobile_client/model/model.dart';
 import '../../../view_model/table_view_model.dart';
 import '../../shared_widget/icon_button_navigator_pop.dart';
 import '../widgets/info.dart';
@@ -26,7 +26,7 @@ class _TableScreenState extends State<TableScreen> {
   @override
   void initState() {
     super.initState();
-    tableLoading = Provider.of<TableViewModel>(context, listen: false).loadById(widget.table.id!);
+    tableLoading = Provider.of<TableViewModel>(context, listen: false).loadActiveTable(widget.table.id!);
   }
 
   @override
@@ -37,7 +37,7 @@ class _TableScreenState extends State<TableScreen> {
         onRetry: () async =>
           setState(() =>
             tableLoading =
-                context.read<TableViewModel>().loadById(widget.table.id!)
+                context.read<TableViewModel>().loadActiveTable(widget.table.id!)
           )
       ),
       const TableReservations()

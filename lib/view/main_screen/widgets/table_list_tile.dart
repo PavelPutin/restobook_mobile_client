@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/table_model.dart';
+import 'package:restobook_mobile_client/model/model.dart';
 import '../../table/screens/table_screen.dart';
 
 

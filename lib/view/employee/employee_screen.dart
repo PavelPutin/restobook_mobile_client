@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restobook_mobile_client/model/employee.dart';
+import 'package:restobook_mobile_client/model/entities/employee.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator_pop.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
@@ -23,7 +23,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   void initState() {
     super.initState();
     employeeLoading =
-        Provider.of<EmployeeViewModel>(context, listen: false).loadById(
+        Provider.of<EmployeeViewModel>(context, listen: false).loadActiveEmployee(
             widget.employee.id!);
   }
 
@@ -64,7 +64,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                             onPressed: () async {
                               setState(() {
                                 employeeLoading =
-                                    Provider.of<EmployeeViewModel>(context, listen: false).loadById(
+                                    Provider.of<EmployeeViewModel>(context, listen: false).loadActiveEmployee(
                                         widget.employee.id!);
                               });
                             },
