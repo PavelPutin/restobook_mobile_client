@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:restobook_mobile_client/view/employees_screen.dart';
 import 'package:restobook_mobile_client/view/reservations_screen.dart';
 import 'package:restobook_mobile_client/view/tables_screen.dart';
-import 'package:restobook_mobile_client/view/widgets/floating_creation_reservation_button.dart';
-import 'package:restobook_mobile_client/view/widgets/icon_button_push_profile.dart';
+import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
+import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

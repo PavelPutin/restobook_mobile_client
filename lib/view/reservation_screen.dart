@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restobook_mobile_client/view/widgets/floating_creation_reservation_button.dart';
-import 'package:restobook_mobile_client/view/widgets/icon_button_push_profile.dart';
-import 'package:restobook_mobile_client/view/widgets/refreshable_future_list_view.dart';
+import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
+import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
+import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
 import 'package:restobook_mobile_client/view/widgets/table_list_tile.dart';
-import 'package:restobook_mobile_client/view/widgets/title_future_builder.dart';
+import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
 import '../model/reservation.dart';
-import 'widgets/icon_button_navigator_pop.dart';
+import 'shared_widget/icon_button_navigator_pop.dart';
 
 class ReservationScreen extends StatefulWidget {
   const ReservationScreen({super.key, required this.reservation});

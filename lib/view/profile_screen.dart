@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restobook_mobile_client/view/widgets/icon_button_navigator_pop.dart';
+import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator_pop.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

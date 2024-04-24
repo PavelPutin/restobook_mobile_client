@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../model/table_model.dart';
 import '../view_model/table_view_model.dart';
-import 'widgets/title_future_builder.dart';
+import 'shared_widget/title_future_builder.dart';
 
 class TableEditScreen extends StatefulWidget {
   const TableEditScreen({super.key, required this.table});

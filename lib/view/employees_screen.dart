@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/widgets/employee_list_tile.dart';
-import 'package:restobook_mobile_client/view/widgets/refreshable_future_list_view.dart';
+import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
 import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
 class EmployeesScreen extends StatefulWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/employee.dart';
-import 'package:restobook_mobile_client/view/widgets/floating_creation_reservation_button.dart';
-import 'package:restobook_mobile_client/view/widgets/icon_button_navigator_pop.dart';
-import 'package:restobook_mobile_client/view/widgets/icon_button_push_profile.dart';
-import 'package:restobook_mobile_client/view/widgets/title_future_builder.dart';
+import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
+import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator_pop.dart';
+import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
+import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
 class EmployeeScreen extends StatefulWidget {
