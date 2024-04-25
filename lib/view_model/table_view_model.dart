@@ -34,8 +34,10 @@ class TableViewModel extends ChangeNotifier {
   Future<void> loadActiveTableReservations() async {
     // TODO: ADD HTTP REQUEST TO GET RESERVATIONS BY ID
     _activeTableReservations.clear();
-    for (int id in activeTable!.reservationIds!) {
-      _activeTableReservations.add(await reservationRepository.getById(id));
+    if (activeTable!.reservationIds != null) {
+      for (int id in activeTable!.reservationIds!) {
+        _activeTableReservations.add(await reservationRepository.getById(id));
+      }
     }
     notifyListeners();
   }
