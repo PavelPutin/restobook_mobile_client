@@ -8,7 +8,7 @@ import 'package:restobook_mobile_client/view/table/widgets/table_number_text_fie
 
 import '../../../model/entities/table_model.dart';
 import '../../../view_model/table_view_model.dart';
-import '../widgets/comment_text_field.dart';
+import '../../shared_widget/comment_text_field.dart';
 import '../widgets/seats_number_text_field.dart';
 
 class TableCreationScreen extends StatefulWidget {

@@ -6,7 +6,7 @@ import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/view/table/widgets/scrollable_expanded_future_builder.dart';
 import '../../../view_model/table_view_model.dart';
 import '../../shared_widget/title_future_builder.dart';
-import '../widgets/comment_text_field.dart';
+import '../../shared_widget/comment_text_field.dart';
 import '../widgets/seats_number_text_field.dart';
 import '../widgets/table_state_dropdown_menu.dart';
 

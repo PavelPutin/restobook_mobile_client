@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restobook_mobile_client/view/reservation/edit_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
@@ -115,6 +116,28 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       Row(
                         children: [
                           Text("Комментарий: ${reservationViewModel.activeReservation?.comment}"),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          ElevatedButton(
+                              onPressed: () =>
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ReservationEditScreen(
+                                                  reservation: reservationViewModel.activeReservation!
+                                              )
+                                      )
+                                  ),
+                              child: const Row(
+                                children: [
+                                  Icon(Icons.edit),
+                                  Text("Редактировать"),
+                                ],
+                              )
+                          )
                         ],
                       ),
                       Expanded(

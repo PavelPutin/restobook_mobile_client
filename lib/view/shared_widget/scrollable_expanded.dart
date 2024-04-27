@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ScrollableExpanded extends StatelessWidget {
   const ScrollableExpanded({super.key, required this.child});
