@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:restobook_mobile_client/view/shared_widget/number_text_field.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scrollable_expanded.dart';
 import 'package:restobook_mobile_client/view/table/screens/table_screen.dart';
+import 'package:restobook_mobile_client/view/table/widgets/table_number_text_field.dart';
 
 import '../../../model/entities/table_model.dart';
 import '../../../view_model/table_view_model.dart';
@@ -41,15 +43,7 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
           key: _tableCreationFormKey,
           child: Column(
             children: [
-              TextFormField(
-                  controller: _numberController,
-                  keyboardType: TextInputType.number,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Номер столика"),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[1-9]')),
-                  ]),
+              TableNumberTextField(controller: _numberController),
               SeatsNumberTextField(controller: _seatsNumberController),
               CommentTextField(controller: _commentController),
               ElevatedButton(
