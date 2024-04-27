@@ -27,7 +27,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
   void initState() {
     super.initState();
     reservationLoading =
-        Provider.of<ReservationViewModel>(context, listen: false).loadActiveTable(widget.reservation.id!);
+        Provider.of<ReservationViewModel>(context, listen: false).loadActiveReservation(widget.reservation.id!);
     reservationLoading.then((value) => tablesLoading = context.read<ReservationViewModel>().loadActiveReservationTables());
   }
 
@@ -65,7 +65,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                             onPressed: () async {
                               setState(() {
                                 reservationLoading =
-                                  Provider.of<ReservationViewModel>(context, listen: false).loadActiveTable(widget.reservation.id!);
+                                  Provider.of<ReservationViewModel>(context, listen: false).loadActiveReservation(widget.reservation.id!);
                                 reservationLoading.then((value) => tablesLoading = context.read<ReservationViewModel>().loadActiveReservationTables());
                               });
                             },

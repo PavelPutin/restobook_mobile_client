@@ -24,7 +24,7 @@ class ReservationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadActiveTable(int reservationId) async {
+  Future<void> loadActiveReservation(int reservationId) async {
     // TODO: ADD HTTP REQUEST TO GET RESERVATIONS BY ID
     activeReservation = await reservationRepository.getById(reservationId);
     notifyListeners();
