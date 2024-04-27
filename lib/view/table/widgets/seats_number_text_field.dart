@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
+import '../../shared_widget/number_text_field.dart';
 
 class SeatsNumberTextField extends StatelessWidget {
   const SeatsNumberTextField({super.key, required this.controller});
@@ -8,14 +9,9 @@ class SeatsNumberTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-        controller: controller,
-        keyboardType: TextInputType.number,
-        maxLines: null,
-        decoration: const InputDecoration(
-            border: OutlineInputBorder(), labelText: "Количество мест"),
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-        ]);
+    return NumberTextField(
+      controller: controller,
+      labelText: "Количество мест"
+    );
   }
 }
