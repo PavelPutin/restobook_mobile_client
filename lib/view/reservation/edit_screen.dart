@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
+import 'package:restobook_mobile_client/view/reservation/widgets/client_phone_number_textfield.dart';
+import 'package:restobook_mobile_client/view/reservation/widgets/duration_interval_minutes_textfield.dart';
+import 'package:restobook_mobile_client/view/reservation/widgets/persons_number_textfield.dart';
+import 'package:restobook_mobile_client/view/reservation/widgets/start_date_field.dart';
+import 'package:restobook_mobile_client/view/reservation/widgets/start_time_field.dart';
 import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.dart';
 import 'package:restobook_mobile_client/view/shared_widget/number_text_field.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
@@ -78,23 +83,25 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
             TextEditingValue(text: _startTime.format(context));
 
         _startDate = startDateTime;
-        _startDateController.value =
-            TextEditingValue(text: DateFormat.yMMMMd("ru_RU").format(_startDate));
+        _startDateController.value = TextEditingValue(
+            text: DateFormat.yMMMMd("ru_RU").format(_startDate));
 
-        var duration =
-            Provider.of<ReservationViewModel>(context, listen: false)
-                .activeReservation!
-                .durationIntervalMinutes.toString();
-        _durationIntervalMinutesController.value = TextEditingValue(text: duration);
+        var duration = Provider.of<ReservationViewModel>(context, listen: false)
+            .activeReservation!
+            .durationIntervalMinutes
+            .toString();
+        _durationIntervalMinutesController.value =
+            TextEditingValue(text: duration);
 
         _selectedState =
             Provider.of<ReservationViewModel>(context, listen: false)
                 .activeReservation!
                 .state!;
 
-        String? comment = Provider.of<ReservationViewModel>(context, listen: false)
-            .activeReservation!
-            .comment;
+        String? comment =
+            Provider.of<ReservationViewModel>(context, listen: false)
+                .activeReservation!
+                .comment;
         _commentController.value = TextEditingValue(text: comment ?? "");
       });
     });
@@ -121,93 +128,40 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
           key: _reservationEditingFormKey,
           child: Column(
             children: [
-              NumberTextField(
-                  controller: _personsNumberController,
-                  labelText: "Количество гостей"),
-              TextFormField(
-                keyboardType: TextInputType.phone,
-                controller: _clientPhoneNumberController,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: "Номер клиента"),
+              PersonsNumberTextField(controller: _personsNumberController),
+              ClientPhoneNumberTextField(
+                  controller: _clientPhoneNumberController),
+              ClientPhoneNumberTextField(controller: _clientNameController),
+              StartTimeField(
+                controller: _startTimeController,
+                initialTime: _startTime,
+                blockEditing: () => _startTimeController.value =
+                    TextEditingValue(text: _startTime.format(context)),
+                onChange: (TimeOfDay? value) => setState(() {
+                  if (value != null) {
+                    _startTime = value;
+                    _startTimeController.value =
+                        TextEditingValue(text: _startTime.format(context));
+                  }
+                }),
               ),
-              TextFormField(
-                controller: _clientNameController,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: "Имя клиента"),
-              ),
-              TextFormField(
-                  controller: _startTimeController,
-                  enableInteractiveSelection: false,
-                  keyboardType: TextInputType.none,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Время"),
-                  onChanged: (value) {
-                    _startTimeController.value = TextEditingValue(
-                        text: _startTime.format(context));
-                  },
-                  onTap: () {
-                    Future<TimeOfDay?> selectedTime = showTimePicker(
-                        context: context,
-                        initialTime: _startTime,
-                        builder: (BuildContext context, Widget? child) {
-                          return MediaQuery(
-                            data: MediaQuery.of(context)
-                                .copyWith(alwaysUse24HourFormat: true),
-                            child: child!,
-                          );
-                        });
-                    selectedTime.then((value) {
-                      setState(() {
-                        if (value != null) {
-                          _startTime = value;
-                          _startTimeController.value = TextEditingValue(
-                              text: _startTime.format(context));
-                        }
-                      });
-                    });
-                  }),
-              TextFormField(
+              StartDateField(
                   controller: _startDateController,
-                  enableInteractiveSelection: false,
-                  keyboardType: TextInputType.none,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Дата"),
-                  onChanged: (value) {
-                    _startDateController.value = TextEditingValue(
-                        text: DateFormat.yMMMMd("ru_RU").format(_startDate));
-                  },
-                  onTap: () {
-                    Future<DateTime?> selectedDate = showDatePicker(
-                        context: context,
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(const Duration(days: 31)),
-                        builder: (BuildContext context, Widget? child) {
-                          return MediaQuery(
-                            data: MediaQuery.of(context)
-                                .copyWith(alwaysUse24HourFormat: true),
-                            child: child!,
-                          );
-                        });
-                    selectedDate.then((value) {
-                      setState(() {
+                  blockEditing: () => _startTimeController.value =
+                      TextEditingValue(text: _startTime.format(context)),
+                  onChange: (DateTime? value) => setState(() {
                         if (value != null) {
                           _startDate = value;
                           _startDateController.value = TextEditingValue(
-                              text: DateFormat.yMMMMd("ru_RU").format(_startDate));
+                              text: DateFormat.yMMMMd("ru_RU")
+                                  .format(_startDate));
                         }
-                      });
-                    });
-                  }),
-              NumberTextField(
-                  controller: _durationIntervalMinutesController,
-                  labelText: "Длительность (в минутах)"),
+                      })),
+              DurationIntervalMinutesTextField(
+                  controller: _durationIntervalMinutesController),
               ReservationStateDropdownMenu(
                 initialValue: _selectedState,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedState = value;
-                  });
-                },
+                onChanged: (value) => setState(() => _selectedState = value),
               ),
               CommentTextField(controller: _commentController),
               ElevatedButton(
@@ -231,13 +185,15 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
   void submit() async {
     if (_reservationEditingFormKey.currentState!.validate()) {
       // update reservation
-      Reservation source = context.read<ReservationViewModel>().activeReservation!;
+      Reservation source =
+          context.read<ReservationViewModel>().activeReservation!;
       var updated = Reservation(
           source.id,
           int.parse(_personsNumberController.text),
           _clientPhoneNumberController.text,
           _clientNameController.text,
-          DateTime(_startDate.year, _startDate.month, _startDate.day, _startTime.hour, _startTime.minute),
+          DateTime(_startDate.year, _startDate.month, _startDate.day,
+              _startTime.hour, _startTime.minute),
           int.parse(_durationIntervalMinutesController.text),
           source.employeeFullName,
           source.creatingDateTime,
