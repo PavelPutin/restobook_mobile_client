@@ -7,21 +7,48 @@ import 'package:restobook_mobile_client/model/model.dart';
 
 class TableViewModel extends ChangeNotifier {
   AbstractTableRepository tableRepository = GetIt.I<AbstractTableRepository>();
-  AbstractReservationRepository reservationRepository = GetIt.I<AbstractReservationRepository>();
+  AbstractReservationRepository reservationRepository = GetIt.I<
+      AbstractReservationRepository>();
 
   List<TableModel> _tables = [];
   final List<Reservation> _activeTableReservations = [];
   TableModel? _activeTable;
 
   UnmodifiableListView<TableModel> get tables => UnmodifiableListView(_tables);
+
   TableModel? get activeTable => _activeTable;
+
   set activeTable(TableModel? table) => _activeTable = table;
 
-  UnmodifiableListView<Reservation> get activeTableReservations => UnmodifiableListView(_activeTableReservations);
+  UnmodifiableListView<Reservation> get activeTableReservations =>
+      UnmodifiableListView(_activeTableReservations);
 
   Future<void> load() async {
     // TODO: ADD HTTP REQUEST TO GET ALL TABLES
     _tables = await tableRepository.getAll();
+    notifyListeners();
+  }
+
+  Future<void> loadWithDateTime(DateTime dateTime) async {
+    _tables = await tableRepository.getAll();
+    var reservations = await reservationRepository.getByDateTime(dateTime);
+    for (var t in _tables) {
+      t.reservedState = "FREE";
+      for (var r in reservations) {
+        if (r.tableIds == null) {
+          continue;
+        }
+        for (var tId in r.tableIds!) {
+          if (t.id! == tId) {
+            if (r.state! == "OPEN") {
+              t.reservedState = "RESERVED";
+            } else if (r.state! == "WAITING") {
+              t.reservedState = "NEAR_RESERVED";
+            }
+          }
+        }
+      }
+    }
     notifyListeners();
   }
 

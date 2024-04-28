@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
@@ -5,21 +6,11 @@ import 'package:restobook_mobile_client/view/main_screen/widgets/table_list_tile
 import 'package:restobook_mobile_client/view/table/screens/creation_screen.dart';
 import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
-class TablesList extends StatefulWidget {
-  const TablesList({super.key});
+class TablesList extends StatelessWidget {
+  const TablesList({super.key, required this.tablesLoading, required this.onRefresh});
 
-  @override
-  State<TablesList> createState() => _TablesListState();
-}
-
-class _TablesListState extends State<TablesList> {
-  late Future<void> tablesLoading;
-
-  @override
-  void initState() {
-    super.initState();
-    tablesLoading = Provider.of<TableViewModel>(context, listen: false).load();
-  }
+  final Future<void> tablesLoading;
+  final AsyncCallback onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +23,15 @@ class _TablesListState extends State<TablesList> {
 
       return RefreshableFutureListView(
         tablesLoading: tablesLoading,
-        onRefresh: () async {
-          var promise = context.read<TableViewModel>().load();
-          setState(() {
-            tablesLoading = promise;
-          });
-          await promise;
-        },
+        // onRefresh: () async {
+        //   var promise = context.read<TableViewModel>().load();
+        //   promise.onError((error, stackTrace) {print(error); print(stackTrace);});
+        //   setState(() {
+        //     tablesLoading = promise;
+        //   });
+        //   await promise;
+        // },
+        onRefresh: onRefresh,
         errorLabel: "Не удалось загрузить столы",
         listView: ListView.builder(
             itemCount: itemCount,

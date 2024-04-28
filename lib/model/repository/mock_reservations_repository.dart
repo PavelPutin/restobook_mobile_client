@@ -9,7 +9,7 @@ class MockReservationsRepository extends AbstractReservationRepository {
         2,
         "+79007629931",
         "Василий",
-        DateTime.utc(2024, 4, 19, 19, 00, 00),
+        DateTime.utc(2024, 4, 28, 13, 00, 00),
         60,
         "Фролов Макар Викторович",
         DateTime.utc(2024, 4, 19, 17, 54, 32),
@@ -67,10 +67,11 @@ class MockReservationsRepository extends AbstractReservationRepository {
       List<Reservation> result = [];
       for (var r in _reservations) {
         int diff = r.startDateTime.difference(dateTime).inMinutes;
-        if (0 <= diff && diff <= 60) {
+        if (-r.durationIntervalMinutes <= diff && diff <= 60) {
           result.add(r);
         }
       }
+      return result;
     });
   }
 

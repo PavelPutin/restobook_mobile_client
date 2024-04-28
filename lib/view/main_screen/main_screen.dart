@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/employees_list.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/reservations_list.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/tables_list.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
+
+import '../../view_model/table_view_model.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,15 +20,18 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentScreenIndex = 0;
+  late Future<void> _tablesLoading;
   bool _dateTimeSelected = false;
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
-  late Timer? _timer;
+  late Timer? _updateTitleTimer;
+  late Timer? _updateListTimer;
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+    loadByTime();
+    _updateTitleTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
       setState(() {
         if (!_dateTimeSelected) {
           _date = DateTime.now();
@@ -33,12 +39,23 @@ class _MainScreenState extends State<MainScreen> {
         }
       });
     });
+
+    _updateListTimer = Timer.periodic(const Duration(seconds: 30), (timer) {
+      setState(() {
+        if (_currentScreenIndex == 0) {
+          loadByTime();
+        }
+      });
+    });
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
-    _timer = null;
+    _updateTitleTimer?.cancel();
+    _updateTitleTimer = null;
+
+    _updateListTimer?.cancel();
+    _updateListTimer = null;
     super.dispose();
   }
 
@@ -48,7 +65,15 @@ class _MainScreenState extends State<MainScreen> {
     List<NavigationDestination> destinations;
     if (const String.fromEnvironment("USER_TYPE") == "EMPLOYEE") {
       bodyWidgets = [
-        const TablesList(),
+        TablesList(
+            tablesLoading: _tablesLoading,
+            onRefresh: () async {
+              var promise = context.read<TableViewModel>().load();
+              setState(() {
+                _tablesLoading = promise;
+              });
+              await promise;
+            }),
         const ReservationsList(),
       ];
       destinations = [
@@ -63,7 +88,15 @@ class _MainScreenState extends State<MainScreen> {
       ];
     } else {
       bodyWidgets = [
-        const TablesList(),
+        TablesList(
+            tablesLoading: _tablesLoading,
+            onRefresh: () async {
+              var promise = context.read<TableViewModel>().load();
+              setState(() {
+                _tablesLoading = promise;
+              });
+              await promise;
+            }),
         const ReservationsList(),
         const EmployeesList()
       ];
@@ -104,7 +137,10 @@ class _MainScreenState extends State<MainScreen> {
         title: Column(
           children: [
             const Row(children: [Text("Restobook")]),
-            Row(children: [Text("${DateFormat.MMMEd("ru_RU").format(_date)} ${_time.format(context)}")])
+            Row(children: [
+              Text(
+                  "${DateFormat.MMMEd("ru_RU").format(_date)} ${_time.format(context)}")
+            ])
           ],
         ),
         actions: actions,
@@ -123,11 +159,13 @@ class _MainScreenState extends State<MainScreen> {
     Future<DateTime?> selectedDateTime = showDatePicker(
         context: context,
         firstDate: DateTime.now(),
-        lastDate: DateTime.now().add(const Duration(days: 31)));
+        lastDate: DateTime.now().add(const Duration(days: 31)),
+        currentDate: _date);
     selectedDateTime.then((value) => setState(() {
           if (value != null) {
             _date = value;
             _dateTimeSelected = true;
+            loadByTime();
           }
         }));
   }
@@ -143,6 +181,7 @@ class _MainScreenState extends State<MainScreen> {
       _date = DateTime.now();
       _time = TimeOfDay.now();
       _dateTimeSelected = false;
+      loadByTime();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Установлено текущее время"),
         duration: Duration(seconds: 1),
@@ -152,12 +191,20 @@ class _MainScreenState extends State<MainScreen> {
 
   void setTime(BuildContext context) {
     Future<TimeOfDay?> selectedTime =
-        showTimePicker(context: context, initialTime: TimeOfDay.now());
+        showTimePicker(context: context, initialTime: _time);
     selectedTime.then((value) => setState(() {
           if (value != null) {
             _time = value;
             _dateTimeSelected = true;
+            loadByTime();
           }
         }));
+  }
+
+  void loadByTime() {
+    setState(() {
+      _tablesLoading = Provider.of<TableViewModel>(context, listen: false)
+          .loadWithDateTime(DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute));
+    });
   }
 }

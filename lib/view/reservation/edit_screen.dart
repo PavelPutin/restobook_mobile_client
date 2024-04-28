@@ -8,7 +8,6 @@ import 'package:restobook_mobile_client/view/reservation/widgets/persons_number_
 import 'package:restobook_mobile_client/view/reservation/widgets/start_date_field.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/start_time_field.dart';
 import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.dart';
-import 'package:restobook_mobile_client/view/shared_widget/number_text_field.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
 import '../shared_widget/title_future_builder.dart';
