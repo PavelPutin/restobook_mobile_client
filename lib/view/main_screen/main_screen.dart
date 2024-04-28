@@ -132,17 +132,22 @@ class _MainScreenState extends State<MainScreen> {
     }
     actions.add(const IconButtonPushProfile());
 
+    Widget title = Text("Restobook");
+    if (_currentScreenIndex == 0) {
+      title = Column(
+        children: [
+          const Row(children: [Text("Restobook")]),
+          Row(children: [
+            Text(
+                "${DateFormat.MMMEd("ru_RU").format(_date)} ${_time.format(context)}")
+          ])
+        ],
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          children: [
-            const Row(children: [Text("Restobook")]),
-            Row(children: [
-              Text(
-                  "${DateFormat.MMMEd("ru_RU").format(_date)} ${_time.format(context)}")
-            ])
-          ],
-        ),
+        title: title,
         actions: actions,
       ),
       body: bodyWidgets[_currentScreenIndex],
