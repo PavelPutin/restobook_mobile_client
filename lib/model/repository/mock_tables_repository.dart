@@ -51,7 +51,6 @@ class MockTablesRepository extends AbstractTableRepository {
   @override
   Future<TableModel> update(TableModel table) {
     return ConnectionSimulator<TableModel>().connect(() {
-      print("Id обновляемого стола ${table.id}");
       for (int i = 0; i < _tables.length; i++) {
         if (_tables[i].id == table.id) {
           _tables[i] = table;
