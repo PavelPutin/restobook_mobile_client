@@ -62,6 +62,19 @@ class MockReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
+  Future<List<Reservation>> getByDateTime(DateTime dateTime) {
+    return ConnectionSimulator<List<Reservation>>().connect(() {
+      List<Reservation> result = [];
+      for (var r in _reservations) {
+        int diff = r.startDateTime.difference(dateTime).inMinutes;
+        if (0 <= diff && diff <= 60) {
+          result.add(r);
+        }
+      }
+    });
+  }
+
+  @override
   Future<Reservation> getById(int id) {
     return ConnectionSimulator<Reservation>().connect(() {
       for (var reservation in _reservations) {

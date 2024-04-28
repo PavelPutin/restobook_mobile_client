@@ -13,7 +13,7 @@ class TableListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: ListTile(
-        title: Text("Стол ${table.number}"),
+        title: Text("Стол ${table.number} + ${table.reservedState}"),
         onTap: () {
           Navigator.push(
             context,
