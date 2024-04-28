@@ -7,6 +7,9 @@ import 'package:restobook_mobile_client/view/reservation/widgets/duration_interv
 import 'package:restobook_mobile_client/view/reservation/widgets/persons_number_textfield.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/start_date_field.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/start_time_field.dart';
+import 'package:restobook_mobile_client/view/reservation/widgets/table_selection_chips_field.dart';
+import 'package:restobook_mobile_client/view/reservation/widgets/table_selection_dialog.dart';
+import 'package:restobook_mobile_client/view/shared_widget/chips_input.dart';
 import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
@@ -40,9 +43,9 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
   final _durationIntervalMinutesController = TextEditingController();
   String _selectedState = "WAITING";
 
-  final _commentController = TextEditingController();
+  List<TableModel> tables = [];
 
-  // DateTime _startTime = DateTime.now();
+  final _commentController = TextEditingController();
 
   @override
   void initState() {
@@ -96,6 +99,10 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
             Provider.of<ReservationViewModel>(context, listen: false)
                 .activeReservation!
                 .state!;
+
+        tables = List.from(
+            Provider.of<ReservationViewModel>(context, listen: false)
+                .activeReservationTables);
 
         String? comment =
             Provider.of<ReservationViewModel>(context, listen: false)
@@ -162,6 +169,22 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
                 initialValue: _selectedState,
                 onChanged: (value) => setState(() => _selectedState = value),
               ),
+              TableSelectionChipsField(
+                tables: tables,
+                targetDateTime: DateTime(
+                    _startDate.year,
+                    _startDate.month,
+                    _startDate.day,
+                    _startTime.hour,
+                    _startTime.minute),
+                onDeleted: (value) => setState(() {
+                  tables.remove(value);
+                }),
+                onSelected: (values) => setState(() {
+                  tables.addAll(values);
+                }),
+
+              ),
               CommentTextField(controller: _commentController),
               ElevatedButton(
                   onPressed: submit,
@@ -186,6 +209,10 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
       // update reservation
       Reservation source =
           context.read<ReservationViewModel>().activeReservation!;
+      List<int> tableIds = [];
+      for (var t in tables) {
+        tableIds.add(t.id!);
+      }
       var updated = Reservation(
           source.id,
           int.parse(_personsNumberController.text),
@@ -201,7 +228,7 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
               ? null
               : _commentController.text.trim(),
           source.restaurantId,
-          source.tableIds);
+          tableIds);
 
       setState(() {
         submiting = context.read<ReservationViewModel>().update(updated);
@@ -211,6 +238,8 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
               const SnackBar(content: Text("Бронь успешно обновлёна")));
         });
         submiting.onError((error, stackTrace) {
+          print(error);
+          print(stackTrace);
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Не удалось изменить бронь")));
         });

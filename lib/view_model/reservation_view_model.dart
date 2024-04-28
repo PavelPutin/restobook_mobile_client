@@ -48,6 +48,14 @@ class ReservationViewModel extends ChangeNotifier {
   Future<void> update(Reservation reservation) async {
     // TODO: ADD HTTP REQUEST TO UPDATE RESERVATION
     activeReservation = await reservationRepository.update(reservation);
+    await loadActiveReservationTables();
+    for (var t in activeReservationTables) {
+      t.reservationIds ??= [];
+      if (!t.reservationIds!.contains(activeReservation!.id!)) {
+        t.reservationIds?.add(activeReservation!.id!);
+        tableRepository.update(t);
+      }
+    }
     notifyListeners();
   }
 
