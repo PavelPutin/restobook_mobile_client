@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/employees_list.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/reservations_list.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/tables_list.dart';
@@ -16,7 +17,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentScreenIndex = 0;
-  bool _timeSelected = false;
+  bool _dateTimeSelected = false;
+  DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
   late Timer? _timer;
 
@@ -25,7 +27,8 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       setState(() {
-        if (!_timeSelected) {
+        if (!_dateTimeSelected) {
+          _date = DateTime.now();
           _time = TimeOfDay.now();
         }
       });
@@ -81,12 +84,15 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     var actions = <Widget>[];
-    if (_currentScreenIndex == 0 && _timeSelected) {
-      actions.add(IconButton(
-          onPressed: () => setCurrentTime(context),
-          icon: const Icon(Icons.cancel_outlined)));
-    }
     if (_currentScreenIndex == 0) {
+      if (_dateTimeSelected) {
+        actions.add(IconButton(
+            onPressed: () => setCurrentTime(context),
+            icon: const Icon(Icons.cancel_outlined)));
+      }
+      actions.add(IconButton(
+          onPressed: () => setDate(context),
+          icon: const Icon(Icons.calendar_month)));
       actions.add(IconButton(
           onPressed: () => setTime(context),
           icon: const Icon(Icons.access_time)));
@@ -98,7 +104,7 @@ class _MainScreenState extends State<MainScreen> {
         title: Column(
           children: [
             const Row(children: [Text("Restobook")]),
-            Row(children: [Text(_time.format(context))])
+            Row(children: [Text("${DateFormat.MMMEd("ru_RU").format(_date)} ${_time.format(context)}")])
           ],
         ),
         actions: actions,
@@ -113,16 +119,30 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  void setDate(BuildContext context) {
+    Future<DateTime?> selectedDateTime = showDatePicker(
+        context: context,
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(const Duration(days: 31)));
+    selectedDateTime.then((value) => setState(() {
+          if (value != null) {
+            _date = value;
+            _dateTimeSelected = true;
+          }
+        }));
+  }
+
   void setDestination(int index) {
-        setState(() {
-          _currentScreenIndex = index;
-        });
-      }
+    setState(() {
+      _currentScreenIndex = index;
+    });
+  }
 
   void setCurrentTime(BuildContext context) {
     setState(() {
+      _date = DateTime.now();
       _time = TimeOfDay.now();
-      _timeSelected = false;
+      _dateTimeSelected = false;
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Установлено текущее время"),
         duration: Duration(seconds: 1),
@@ -131,13 +151,13 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void setTime(BuildContext context) {
-    Future<TimeOfDay?> selectedTime = showTimePicker(
-        context: context, initialTime: TimeOfDay.now());
+    Future<TimeOfDay?> selectedTime =
+        showTimePicker(context: context, initialTime: TimeOfDay.now());
     selectedTime.then((value) => setState(() {
-      if (value != null) {
-        _time = value;
-        _timeSelected = true;
-      }
-    }));
+          if (value != null) {
+            _time = value;
+            _dateTimeSelected = true;
+          }
+        }));
   }
 }
