@@ -42,7 +42,7 @@ class ReservationViewModel extends ChangeNotifier {
   Future<void> add(Reservation reservation, List<TableModel> tables) async {
     // TODO: ADD HTTP REQUEST TO CREATE RESERVATION
     var creating = reservationRepository.create(reservation);
-    creating.then((value) {
+    await creating.then((value) {
       activeReservation = value;
       for (var t in tables) {
         t.reservationIds ??= [];

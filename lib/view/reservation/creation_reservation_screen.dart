@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
+import 'package:restobook_mobile_client/view/reservation/reservation_screen.dart';
+import 'package:restobook_mobile_client/view/reservation/widgets/client_name_textfield.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/client_phone_number_textfield.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/duration_interval_minutes_textfield.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/persons_number_textfield.dart';
@@ -21,7 +23,8 @@ class CreationReservationScreen extends StatefulWidget {
   const CreationReservationScreen({super.key});
 
   @override
-  State<CreationReservationScreen> createState() => _CreationReservationScreenState();
+  State<CreationReservationScreen> createState() =>
+      _CreationReservationScreenState();
 }
 
 class _CreationReservationScreenState extends State<CreationReservationScreen> {
@@ -29,7 +32,7 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
   final _reservationCreatingFormKey = GlobalKey<FormState>();
 
   final TextEditingController _personsNumberController =
-  TextEditingController();
+      TextEditingController();
   final _clientPhoneNumberController = TextEditingController();
   final _clientNameController = TextEditingController();
   final _startTimeController = TextEditingController();
@@ -53,9 +56,7 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text("Новая бронь")
-      ),
+      appBar: AppBar(title: const Text("Новая бронь")),
       body: ScrollableExpanded(
         child: Form(
           key: _reservationCreatingFormKey,
@@ -64,7 +65,7 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
               PersonsNumberTextField(controller: _personsNumberController),
               ClientPhoneNumberTextField(
                   controller: _clientPhoneNumberController),
-              ClientPhoneNumberTextField(controller: _clientNameController),
+              ClientNameTextField(controller: _clientNameController),
               StartTimeField(
                 controller: _startTimeController,
                 initialTime: _startTime,
@@ -83,30 +84,25 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
                   blockEditing: () => _startTimeController.value =
                       TextEditingValue(text: _startTime.format(context)),
                   onChange: (DateTime? value) => setState(() {
-                    if (value != null) {
-                      _startDate = value;
-                      _startDateController.value = TextEditingValue(
-                          text: DateFormat.yMMMMd("ru_RU")
-                              .format(_startDate));
-                    }
-                  })),
+                        if (value != null) {
+                          _startDate = value;
+                          _startDateController.value = TextEditingValue(
+                              text: DateFormat.yMMMMd("ru_RU")
+                                  .format(_startDate));
+                        }
+                      })),
               DurationIntervalMinutesTextField(
                   controller: _durationIntervalMinutesController),
               TableSelectionChipsField(
                 tables: tables,
-                targetDateTime: DateTime(
-                    _startDate.year,
-                    _startDate.month,
-                    _startDate.day,
-                    _startTime.hour,
-                    _startTime.minute),
+                targetDateTime: DateTime(_startDate.year, _startDate.month,
+                    _startDate.day, _startTime.hour, _startTime.minute),
                 onDeleted: (value) => setState(() {
                   tables.remove(value);
                 }),
                 onSelected: (values) => setState(() {
                   tables.addAll(values);
                 }),
-
               ),
               CommentTextField(controller: _commentController),
               ElevatedButton(
@@ -154,7 +150,13 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
       setState(() {
         submiting = context.read<ReservationViewModel>().add(created, tables);
         submiting.then((value) {
-          Navigator.pop(context);
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ReservationScreen(
+                      reservation: context
+                          .read<ReservationViewModel>()
+                          .activeReservation!)));
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Бронь успешно создана")));
         });

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ClientPhoneNumberTextField extends StatelessWidget {
-  const ClientPhoneNumberTextField({super.key, required this.controller});
+class ClientNameTextField extends StatelessWidget {
+  const ClientNameTextField({super.key, required this.controller});
 
   final TextEditingController controller;
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
+import 'package:restobook_mobile_client/view/reservation/widgets/client_name_textfield.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/client_phone_number_textfield.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/duration_interval_minutes_textfield.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/persons_number_textfield.dart';
@@ -137,7 +138,7 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
               PersonsNumberTextField(controller: _personsNumberController),
               ClientPhoneNumberTextField(
                   controller: _clientPhoneNumberController),
-              ClientPhoneNumberTextField(controller: _clientNameController),
+              ClientNameTextField(controller: _clientNameController),
               StartTimeField(
                 controller: _startTimeController,
                 initialTime: _startTime,
