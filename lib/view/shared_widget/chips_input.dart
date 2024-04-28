@@ -109,6 +109,10 @@ class ChipsInputState<T> extends State<ChipsInput<T>> {
     return TextField(
       minLines: 1,
       maxLines: 3,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "Столики"
+      ),
       textInputAction: TextInputAction.done,
       keyboardType: TextInputType.none,
       style: widget.style,
