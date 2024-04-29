@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restobook_mobile_client/view/profile/edit_password_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator_pop.dart';
 import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 
@@ -40,6 +41,18 @@ class ProfileScreen extends StatelessWidget {
               Row(
                 children: [
                   Text("Комментарий: ${applicationViewModel.authorizedUser!.employee.comment}")
+                ],
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                          MaterialPageRoute(builder: (context) => EditPasswordScreen())
+                        );
+                      },
+                      child: Text("Изменить пароль"))
                 ],
               )
             ],
