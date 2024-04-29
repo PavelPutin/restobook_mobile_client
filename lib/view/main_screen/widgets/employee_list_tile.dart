@@ -11,16 +11,18 @@ class EmployeeListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: ListTile(
-        title: Text("${employee.surname} ${employee.name} ${employee.patronymic}"),
-        onTap: () => {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => EmployeeScreen(employee: employee,)
-              )
-          )
-        },
+      child: Card(
+        child: ListTile(
+          title: Text("${employee.surname} ${employee.name} ${employee.patronymic ?? ""}"),
+          onTap: () => {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EmployeeScreen(employee: employee,)
+                )
+            )
+          },
+        ),
       ),
     );
   }
