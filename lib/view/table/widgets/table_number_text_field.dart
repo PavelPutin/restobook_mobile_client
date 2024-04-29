@@ -10,6 +10,16 @@ class TableNumberTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NumberTextField(
-        controller: controller, labelText: "Номер столика");
+        controller: controller,
+        labelText: "Номер столика",
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Поле обязательное";
+          }
+          if (int.parse(value) < 1) {
+            return "Значение должно быть не меньше 1";
+          }
+          return null;
+        });
   }
 }

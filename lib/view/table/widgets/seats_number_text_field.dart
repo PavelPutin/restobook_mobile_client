@@ -10,8 +10,16 @@ class SeatsNumberTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NumberTextField(
-      controller: controller,
-      labelText: "Количество мест"
-    );
+        controller: controller,
+        labelText: "Количество мест",
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Поле обязательное";
+          }
+          if (int.parse(value) < 1) {
+            return "Значение должно быть не меньше 1";
+          }
+          return null;
+        });
   }
 }
