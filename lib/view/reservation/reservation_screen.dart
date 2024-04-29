@@ -48,14 +48,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
         ),
         actions: [
           DeleteIconButton(
-            dialogTitle: const Text("Удалить стол"),
+            dialogTitle: const Text("Удалить бронь"),
             onSubmit: () {
               return context
                   .read<ReservationViewModel>()
                   .delete(context.read<ReservationViewModel>().activeReservation!);
             },
-            successLabel: "Стол удалён",
-            errorLabel: "Не удалось удалить стол",
+            successLabel: "Бронь удалёна",
+            errorLabel: "Не удалось удалить бронь",
           ),
           const IconButtonPushProfile()
         ],
