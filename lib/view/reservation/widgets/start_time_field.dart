@@ -22,6 +22,15 @@ class StartTimeField extends StatelessWidget {
         decoration: const InputDecoration(
             border: OutlineInputBorder(), labelText: "Время"),
         onChanged: (value) => blockEditing(),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Поле обязательное";
+          }
+          if (value.length > 30) {
+            return "Номер не должен быть длиннее 30 символов";
+          }
+          return null;
+        },
         onTap: () {
           Future<TimeOfDay?> selectedTime = showTimePicker(
               context: context,

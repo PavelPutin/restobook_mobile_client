@@ -9,8 +9,18 @@ class ClientPhoneNumberTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTextField(
-        controller: controller,
-        labelText: "Номер клиента",
-        keyboardType: TextInputType.phone);
+      controller: controller,
+      labelText: "Номер клиента",
+      keyboardType: TextInputType.phone,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Поле обязательное";
+        }
+        if (value.length > 30) {
+          return "Номер не должен быть длиннее 30 символов";
+        }
+        return null;
+      },
+    );
   }
 }

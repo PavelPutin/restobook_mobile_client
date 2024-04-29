@@ -10,7 +10,17 @@ class DurationIntervalMinutesTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NumberTextField(
-        controller: controller,
-        labelText: "Длительность (в минутах)");
+      controller: controller,
+      labelText: "Длительность (в минутах)",
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Поле обязательное";
+        }
+        if (int.parse(value) < 5) {
+          return "Длительность не должна быть меньше 5 минут";
+        }
+        return null;
+      },
+    );
   }
 }

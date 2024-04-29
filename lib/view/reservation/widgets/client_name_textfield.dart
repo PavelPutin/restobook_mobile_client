@@ -11,6 +11,15 @@ class ClientNameTextField extends StatelessWidget {
     return DefaultTextField(
       controller: controller,
       labelText: "Имя клиента",
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Поле обязательное";
+        }
+        if (value.length > 30) {
+          return "Имя не должно быть длиннее 512 символов";
+        }
+        return null;
+      },
     );
   }
 }

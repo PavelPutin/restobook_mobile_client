@@ -10,7 +10,17 @@ class PersonsNumberTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NumberTextField(
-        controller: controller,
-        labelText: "Количество гостей");
+      controller: controller,
+      labelText: "Количество гостей",
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Поле обязательное";
+        }
+        if (int.parse(value) <= 0) {
+          return "Значение должно быть больше нуля";
+        }
+        return null;
+      },
+    );
   }
 }

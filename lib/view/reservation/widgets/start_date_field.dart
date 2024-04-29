@@ -20,6 +20,12 @@ class StartDateField extends StatelessWidget {
         decoration: const InputDecoration(
             border: OutlineInputBorder(), labelText: "Дата"),
         onChanged: (value) => blockEditing(),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Поле обязательное";
+          }
+          return null;
+        },
         onTap: () {
           Future<DateTime?> selectedDate = showDatePicker(
               context: context,

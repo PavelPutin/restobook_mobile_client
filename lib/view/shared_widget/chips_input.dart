@@ -106,7 +106,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>> {
   Widget build(BuildContext context) {
     controller.updateValues(<T>[...widget.values]);
 
-    return TextField(
+    return TextFormField(
       minLines: 1,
       maxLines: 3,
       decoration: const InputDecoration(
@@ -121,8 +121,12 @@ class ChipsInputState<T> extends State<ChipsInput<T>> {
       onTap: widget.onTap,
       onChanged: (String value) =>
           widget.onTextChanged?.call(controller.textWithoutReplacements),
-      onSubmitted: (String value) =>
-          widget.onSubmitted?.call(controller.textWithoutReplacements),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Поле обязательное";
+        }
+        return null;
+      },
     );
   }
 }
