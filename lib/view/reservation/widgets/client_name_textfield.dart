@@ -15,7 +15,7 @@ class ClientNameTextField extends StatelessWidget {
         if (value == null || value.isEmpty) {
           return "Поле обязательное";
         }
-        if (value.length > 30) {
+        if (value.length > 512) {
           return "Имя не должно быть длиннее 512 символов";
         }
         return null;
