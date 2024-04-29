@@ -38,7 +38,7 @@ class EmployeeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteById(Employee employee) async {
+  Future<void> delete(Employee employee) async {
     // TODO: ADD HTTP REQUEST TO DELETE EMPLOYEE
     await employeeRepository.delete(employee);
     notifyListeners();

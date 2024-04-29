@@ -8,6 +8,8 @@ import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_prof
 import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
+import '../shared_widget/delete_icon_button.dart';
+
 class EmployeeScreen extends StatefulWidget {
   const EmployeeScreen({super.key, required this.employee});
 
@@ -42,7 +44,19 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                       "${reservationViewModel.activeEmployee?.shortFullName}");
                 }),
           ),
-          actions: const [IconButtonPushProfile()],
+          actions: [
+            DeleteIconButton(
+              dialogTitle: const Text("Удалить сотрудника"),
+              onSubmit: () {
+                return context
+                    .read<EmployeeViewModel>()
+                    .delete(context.read<EmployeeViewModel>().activeEmployee!);
+              },
+              successLabel: "Сотрудник удалён",
+              errorLabel: "Не удалось удалить сотрудника",
+            ),
+            const IconButtonPushProfile()
+          ],
         ),
         floatingActionButton: const FloatingCreationReservationButton(),
         body: Consumer<EmployeeViewModel>(
