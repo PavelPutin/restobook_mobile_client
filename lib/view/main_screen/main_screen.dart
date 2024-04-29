@@ -8,6 +8,7 @@ import 'package:restobook_mobile_client/view/main_screen/widgets/reservations_li
 import 'package:restobook_mobile_client/view/main_screen/widgets/tables_list.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
+import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 
 import '../../view_model/table_view_model.dart';
 
@@ -209,7 +210,8 @@ class _MainScreenState extends State<MainScreen> {
   void loadByTime() {
     setState(() {
       _tablesLoading = Provider.of<TableViewModel>(context, listen: false)
-          .loadWithDateTime(DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute));
+          .loadWithDateTime(DateTime(
+              _date.year, _date.month, _date.day, _time.hour, _time.minute));
     });
   }
 }
