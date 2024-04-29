@@ -29,10 +29,17 @@ class TableListTile extends StatelessWidget {
       String() => throw UnimplementedError(),
     };
 
+    if (table.state == "BROKEN") {
+      status = "Сломан";
+    }
+
     return Material(
       child: Card(
         color: color,
         child: ListTile(
+          leading: CircleAvatar(
+            child: Text("${table.seatsNumber}"),
+          ),
           title: Text("Стол ${table.number}"),
           subtitle: Text(status),
           onTap: () {
