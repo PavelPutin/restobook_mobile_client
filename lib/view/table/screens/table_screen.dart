@@ -6,6 +6,7 @@ import 'package:restobook_mobile_client/view/table/widgets/reservations.dart';
 import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 
 import 'package:restobook_mobile_client/model/model.dart';
+import '../../../view_model/application_view_model.dart';
 import '../../../view_model/table_view_model.dart';
 import '../../shared_widget/delete_alert_dialog.dart';
 import '../../shared_widget/delete_icon_button.dart';
@@ -55,16 +56,17 @@ class _TableScreenState extends State<TableScreen> {
           }),
         ),
         actions: [
-          DeleteIconButton(
-            dialogTitle: const Text("Удалить стол"),
-            onSubmit: () {
-              return context
-                  .read<TableViewModel>()
-                  .delete(context.read<TableViewModel>().activeTable!);
-            },
-            successLabel: "Стол удалён",
-            errorLabel: "Не удалось удалить стол",
-          ),
+          if (context.read<ApplicationViewModel>().isAdmin)
+            DeleteIconButton(
+              dialogTitle: const Text("Удалить стол"),
+              onSubmit: () {
+                return context
+                    .read<TableViewModel>()
+                    .delete(context.read<TableViewModel>().activeTable!);
+              },
+              successLabel: "Стол удалён",
+              errorLabel: "Не удалось удалить стол",
+            ),
           const IconButtonPushProfile()
         ],
       ),

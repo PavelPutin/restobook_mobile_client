@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/table_list_tile.dart';
 import 'package:restobook_mobile_client/view/table/screens/creation_screen.dart';
+import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
 class TablesList extends StatelessWidget {
@@ -15,7 +16,7 @@ class TablesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<TableViewModel>(builder: (context, tableViewModel, child) {
-      bool isAdmin = const String.fromEnvironment("USER_TYPE") == "ADMIN";
+      bool isAdmin = context.read<ApplicationViewModel>().isAdmin;
       var itemCount = tableViewModel.tables.length;
       if (isAdmin) {
         itemCount += 1;

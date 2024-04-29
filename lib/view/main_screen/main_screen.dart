@@ -64,30 +64,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     List<Widget> bodyWidgets;
     List<NavigationDestination> destinations;
-    if (const String.fromEnvironment("USER_TYPE") == "EMPLOYEE") {
-      bodyWidgets = [
-        TablesList(
-            tablesLoading: _tablesLoading,
-            onRefresh: () async {
-              var promise = context.read<TableViewModel>().load();
-              setState(() {
-                _tablesLoading = promise;
-              });
-              await promise;
-            }),
-        const ReservationsList(),
-      ];
-      destinations = [
-        const NavigationDestination(
-          icon: Icon(Icons.search),
-          label: 'Столы',
-        ),
-        const NavigationDestination(
-          icon: Icon(Icons.ad_units),
-          label: 'Брони',
-        )
-      ];
-    } else {
+    if (context.read<ApplicationViewModel>().isAdmin) {
       bodyWidgets = [
         TablesList(
             tablesLoading: _tablesLoading,
@@ -113,6 +90,29 @@ class _MainScreenState extends State<MainScreen> {
         const NavigationDestination(
           icon: Icon(Icons.person),
           label: 'Сотрудники',
+        )
+      ];
+    } else {
+      bodyWidgets = [
+        TablesList(
+            tablesLoading: _tablesLoading,
+            onRefresh: () async {
+              var promise = context.read<TableViewModel>().load();
+              setState(() {
+                _tablesLoading = promise;
+              });
+              await promise;
+            }),
+        const ReservationsList(),
+      ];
+      destinations = [
+        const NavigationDestination(
+          icon: Icon(Icons.search),
+          label: 'Столы',
+        ),
+        const NavigationDestination(
+          icon: Icon(Icons.ad_units),
+          label: 'Брони',
         )
       ];
     }

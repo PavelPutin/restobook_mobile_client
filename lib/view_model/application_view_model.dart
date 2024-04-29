@@ -13,6 +13,7 @@ class ApplicationViewModel extends ChangeNotifier {
 
   bool get firstEnter => _firstEnter;
   bool get authorized => _authorizedUser != null;
+  bool get isAdmin => _authorizedUser != null && _authorizedUser!.role == "ROLE_ADMIN";
 
   void initIsFirstEnter() {
     SharedPreferences.getInstance().then((preferences) {
