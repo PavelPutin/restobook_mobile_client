@@ -27,8 +27,8 @@ class MockEmployeeRepository extends AbstractEmployeeRepository {
   ]);
 
   @override
-  Future<void> create(Employee employee) {
-    return ConnectionSimulator<void>().connect(() {
+  Future<Employee> create(Employee employee) {
+    return ConnectionSimulator<Employee>().connect(() {
       int maxId = 0;
       for (var e in _employees) {
         if (e.id! > maxId) {
@@ -37,6 +37,7 @@ class MockEmployeeRepository extends AbstractEmployeeRepository {
       }
       employee.id = maxId + 1;
       _employees.add(employee);
+      return employee;
     });
   }
 
@@ -63,12 +64,12 @@ class MockEmployeeRepository extends AbstractEmployeeRepository {
   }
 
   @override
-  Future<void> update(Employee employee) {
-    return ConnectionSimulator<void>().connect(() {
+  Future<Employee> update(Employee employee) {
+    return ConnectionSimulator<Employee>().connect(() {
       for (int i = 0; i < _employees.length; i++) {
         if (_employees[i].id == employee.id) {
           _employees[i] = employee;
-          return;
+          return employee;
         }
       }
       throw Exception("Сотрудник не найден");
