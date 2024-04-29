@@ -52,6 +52,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (value == null || value.isEmpty) {
                               return "Поле обязательное";
                             }
+                            if (value.length > 512) {
+                              return "Логин не должен быть длиннее 512 символов";
+                            }
                             return null;
                           },
                         ),

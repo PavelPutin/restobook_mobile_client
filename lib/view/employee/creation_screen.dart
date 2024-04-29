@@ -43,33 +43,75 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                     margin: const EdgeInsets.only(bottom: 10),
                     child: DefaultTextField(
                         controller: _loginController,
-                        labelText: "Логин сотрудника"),
+                        labelText: "Логин сотрудника",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Поле обязательное";
+                          }
+                          if (value.length > 512) {
+                            return "Логин не должен быть длиннее 512 символов";
+                          }
+                          return null;
+                        }),
                   ),
                   Container(
                       margin: const EdgeInsets.only(bottom: 10),
-                      child: PasswordTextField(controller: _passwordController)
-                  ),
+                      child: PasswordTextField(
+                          controller: _passwordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Поле обязательное";
+                            }
+                            return null;
+                          })),
                   Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     child: DefaultTextField(
                         controller: _surnameController,
-                        labelText: "Фамилия сотрудника"),
+                        labelText: "Фамилия сотрудника",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Поле обязательное";
+                          }
+                          if (value.length > 512) {
+                            return "Фамилия не должна быть длиннее 512 символов";
+                          }
+                          return null;
+                        }),
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     child: DefaultTextField(
-                        controller: _nameController, labelText: "Имя сотрудника"),
+                        controller: _nameController,
+                        labelText: "Имя сотрудника",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Поле обязательное";
+                          }
+                          if (value.length > 512) {
+                            return "Имя не должно быть длиннее 512 символов";
+                          }
+                          return null;
+                        }),
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     child: DefaultTextField(
                         controller: _patronymicController,
-                        labelText: "Отчество сотрудника"),
+                        labelText: "Отчество сотрудника",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Поле обязательное";
+                          }
+                          if (value.length > 512) {
+                            return "Отчество не должно быть длиннее 512 символов";
+                          }
+                          return null;
+                        }),
                   ),
                   Container(
                       margin: const EdgeInsets.only(bottom: 10),
-                      child: CommentTextField(controller: _commentController)
-                  ),
+                      child: CommentTextField(controller: _commentController)),
                   ElevatedButton(
                       onPressed: submit,
                       child: FutureBuilder(
