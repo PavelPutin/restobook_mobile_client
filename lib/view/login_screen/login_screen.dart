@@ -7,6 +7,7 @@ import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
 import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 
 import '../shared_widget/default_text_field.dart';
+import '../shared_widget/password_textfield.dart';
 import '../shared_widget/scaffold_body_padding.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -45,25 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       DefaultTextField(
                           controller: _loginController,
                           labelText: "Логин"),
-                      TextFormField(
-                        controller: _passwordController,
-                        obscureText: !_passwordVisible,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              icon: Icon(_passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                              onPressed: () {
-                                setState(() {
-                                  _passwordVisible = !_passwordVisible;
-                                });
-                              },
-                            ),
-                            border: const OutlineInputBorder(),
-                            labelText: "Пароль"),
-                      ),
+                      PasswordTextField(controller: _passwordController)
                     ],
                   ),
                 ),

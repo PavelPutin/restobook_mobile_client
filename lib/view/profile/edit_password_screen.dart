@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../view_model/application_view_model.dart';
+import '../shared_widget/password_textfield.dart';
 
 class EditPasswordScreen extends StatefulWidget {
   const EditPasswordScreen({super.key});
@@ -16,7 +17,6 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   final _oldPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
   var _oldPasswordVisible = false;
-  var _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,25 +47,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     border: const OutlineInputBorder(),
                     labelText: "Старый пароль"),
               ),
-              TextFormField(
-                controller: _passwordController,
-                obscureText: !_passwordVisible,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: Icon(_passwordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off),
-                      onPressed: () {
-                        setState(() {
-                          _passwordVisible = !_passwordVisible;
-                        });
-                      },
-                    ),
-                    border: const OutlineInputBorder(),
-                    labelText: "Новый пароль"),
-              ),
+              PasswordTextField(controller: _passwordController),
               ElevatedButton(
                   onPressed: submit,
                   child: FutureBuilder(

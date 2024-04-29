@@ -6,6 +6,7 @@ import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.da
 import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
 import '../shared_widget/default_text_field.dart';
+import '../shared_widget/password_textfield.dart';
 import '../shared_widget/scaffold_body_padding.dart';
 import '../shared_widget/scrollable_expanded.dart';
 
@@ -26,8 +27,6 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
   final _patronymicController = TextEditingController();
   final _commentController = TextEditingController();
 
-  var _passwordVisible = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,25 +42,7 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                   DefaultTextField(
                       controller: _loginController,
                       labelText: "Логин сотрудника"),
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: !_passwordVisible,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: Icon(_passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          onPressed: () {
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
-                        ),
-                        border: const OutlineInputBorder(),
-                        labelText: "Пароль сотрудника"),
-                  ),
+                  PasswordTextField(controller: _passwordController),
                   DefaultTextField(
                       controller: _surnameController,
                       labelText: "Фамилия сотрудника"),

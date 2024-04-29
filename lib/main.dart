@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
           ],
           supportedLocales: const [Locale('ru')],
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x00ffeceb)),
+            colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x008b5350)),
             useMaterial3: true,
           ),
           home: home,
