@@ -1,38 +1,11 @@
+import 'package:get_it/get_it.dart';
 import 'package:restobook_mobile_client/model/model.dart';
+import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
 
 import '../utils/utils.dart';
 
 class MockReservationsRepository extends AbstractReservationRepository {
-  final List<Reservation> _reservations = List.from([
-    Reservation(
-        1,
-        2,
-        "+79007629931",
-        "Василий",
-        DateTime.utc(2024, 4, 28, 13, 00, 00),
-        60,
-        "Фролов Макар Викторович",
-        DateTime.utc(2024, 4, 19, 17, 54, 32),
-        "WAITING",
-        "Юбилей",
-        1,
-        List.from([1])
-    ),
-    Reservation(
-        2,
-        3,
-        "+79217629932",
-        "Анатолий",
-        DateTime.utc(2024, 4, 20, 17, 00, 00),
-        60,
-        "Фролов Макар Викторович",
-        DateTime.utc(2024, 4, 19, 18, 17, 32),
-        "WAITING",
-        null,
-        1,
-        List.from([1, 2])
-    ),
-  ]);
+  final List<Reservation> _reservations = GetIt.I<MockBackend>().reservations;
 
   @override
   Future<Reservation> create(Reservation reservation) async {

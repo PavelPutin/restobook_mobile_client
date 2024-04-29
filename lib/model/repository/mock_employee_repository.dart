@@ -1,40 +1,11 @@
+import 'package:get_it/get_it.dart';
 import 'package:restobook_mobile_client/model/model.dart';
+import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
 
 import '../utils/utils.dart';
 
 class MockEmployeeRepository extends AbstractEmployeeRepository {
-  final List<Employee> _employees = List.from([
-    Employee(
-        1,
-        "frolov_m_vR1",
-        "Фролов",
-        "Макар",
-        null,
-        "Лучший сотрудник!",
-        true,
-        1
-    ),
-    Employee(
-        2,
-        "pupkin_v_pR1",
-        "Пупкин",
-        "Василий",
-        "Петрович",
-        "стажёр",
-        false,
-        1
-    ),
-    Employee(
-        3,
-        "putin_p_a",
-        "Путин",
-        "Павел",
-        "Александрович",
-        "администратор",
-        false,
-        1
-    )
-  ]);
+  final List<Employee> _employees = GetIt.I<MockBackend>().employee;
 
   @override
   Future<Employee> create(Employee employee) {

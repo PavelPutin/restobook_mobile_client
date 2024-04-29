@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
+import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
 import 'package:restobook_mobile_client/model/repository/mock_employee_repository.dart';
 import 'package:restobook_mobile_client/model/repository/mock_reservations_repository.dart';
 import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart';
@@ -21,6 +22,7 @@ void main() {
     AppMetrica.activate(
         const AppMetricaConfig(String.fromEnvironment("AppMetricaKey")));
 
+    GetIt.I.registerSingleton<MockBackend>(MockBackend());
     GetIt.I.registerSingleton<AbstractTableRepository>(MockTablesRepository());
     GetIt.I.registerSingleton<AbstractReservationRepository>(
         MockReservationsRepository());

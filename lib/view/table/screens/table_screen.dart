@@ -7,6 +7,7 @@ import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.
 
 import 'package:restobook_mobile_client/model/model.dart';
 import '../../../view_model/table_view_model.dart';
+import '../../shared_widget/delete_alert_dialog.dart';
 import '../../shared_widget/icon_button_navigator_pop.dart';
 import '../widgets/info.dart';
 
@@ -54,7 +55,20 @@ class _TableScreenState extends State<TableScreen> {
               return Text("Стол ${tableViewModel.activeTable?.number}");
             }),
         ),
-        actions: const [IconButtonPushProfile()],
+        actions: [
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const DeleteAlertDialog(title: Text("Удалить стол"));
+                    }
+                );
+              },
+              icon: const Icon(Icons.delete_forever)
+          ),
+          const IconButtonPushProfile()
+        ],
       ),
       body: bodyWidgets[_currentScreenIndex],
       floatingActionButton: const FloatingCreationReservationButton(),

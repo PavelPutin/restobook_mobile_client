@@ -1,13 +1,15 @@
+import 'package:get_it/get_it.dart';
 import 'package:restobook_mobile_client/model/entities/table_model.dart';
 import 'package:restobook_mobile_client/model/repository/abstract_table_repository.dart';
+import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
 import 'package:restobook_mobile_client/model/utils/utils.dart';
+
+import '../entities/reservation.dart';
 
 class MockTablesRepository extends AbstractTableRepository {
 
-  final List<TableModel> _tables = List.from([
-    TableModel(1, 1, 2, "NORMAL", "Столик у бара", 1, List.from([1])),
-    TableModel(2, 2, 1, "BROKEN", null, 1, List.from([1, 2])),
-  ]);
+  final List<TableModel> _tables = GetIt.I<MockBackend>().tables;
+  final List<Reservation> _reservations = GetIt.I<MockBackend>().reservations;
 
   @override
   Future<TableModel> create(TableModel table) async {
@@ -28,6 +30,16 @@ class MockTablesRepository extends AbstractTableRepository {
 
   @override
   Future<void> delete(TableModel table) {
+    for (int reservationId in table.reservationIds!) {
+      for (var reservation in _reservations) {
+        if (reservation.id! == reservationId) {
+          if (reservation.tableIds?.length == 1) {
+            throw Exception("Нельзя удалить стол, так как он единственный для брони");
+          }
+          reservation.tableIds?.remove(table.id!);
+        }
+      }
+    }
     return ConnectionSimulator<void>().connect(() => _tables.remove(table));
   }
 
