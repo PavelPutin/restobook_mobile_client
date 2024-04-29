@@ -14,7 +14,7 @@ TableModel _$TableModelFromJson(Map<String, dynamic> json) => TableModel(
       json['comment'] as String?,
       json['restaurantId'] as int?,
       (json['reservationIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
-    );
+    )..reservedState = json['reservedState'] as String;
 
 Map<String, dynamic> _$TableModelToJson(TableModel instance) =>
     <String, dynamic>{
@@ -25,4 +25,5 @@ Map<String, dynamic> _$TableModelToJson(TableModel instance) =>
       'comment': instance.comment,
       'restaurantId': instance.restaurantId,
       'reservationIds': instance.reservationIds,
+      'reservedState': instance.reservedState,
     };
