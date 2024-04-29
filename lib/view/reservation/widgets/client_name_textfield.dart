@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restobook_mobile_client/view/shared_widget/default_text_field.dart';
 
 class ClientNameTextField extends StatelessWidget {
   const ClientNameTextField({super.key, required this.controller});
@@ -7,10 +8,9 @@ class ClientNameTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return DefaultTextField(
       controller: controller,
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(), labelText: "Имя клиента"),
+      labelText: "Имя клиента",
     );
   }
 }
