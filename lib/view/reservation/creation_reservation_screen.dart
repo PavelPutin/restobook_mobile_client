@@ -64,49 +64,73 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
             key: _reservationCreatingFormKey,
             child: Column(
               children: [
-                PersonsNumberTextField(controller: _personsNumberController),
-                ClientPhoneNumberTextField(
-                    controller: _clientPhoneNumberController),
-                ClientNameTextField(controller: _clientNameController),
-                StartTimeField(
-                  controller: _startTimeController,
-                  initialTime: _startTime,
-                  blockEditing: () => _startTimeController.value =
-                      TextEditingValue(text: _startTime.format(context)),
-                  onChange: (TimeOfDay? value) => setState(() {
-                    if (value != null) {
-                      _startTime = value;
-                      _startTimeController.value =
-                          TextEditingValue(text: _startTime.format(context));
-                    }
-                  }),
+                Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: PersonsNumberTextField(controller: _personsNumberController)
                 ),
-                StartDateField(
-                    controller: _startDateController,
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: ClientPhoneNumberTextField(
+                      controller: _clientPhoneNumberController),
+                ),
+                Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: ClientNameTextField(controller: _clientNameController)
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: StartTimeField(
+                    controller: _startTimeController,
+                    initialTime: _startTime,
                     blockEditing: () => _startTimeController.value =
                         TextEditingValue(text: _startTime.format(context)),
-                    onChange: (DateTime? value) => setState(() {
-                          if (value != null) {
-                            _startDate = value;
-                            _startDateController.value = TextEditingValue(
-                                text: DateFormat.yMMMMd("ru_RU")
-                                    .format(_startDate));
-                          }
-                        })),
-                DurationIntervalMinutesTextField(
-                    controller: _durationIntervalMinutesController),
-                TableSelectionChipsField(
-                  tables: tables,
-                  targetDateTime: DateTime(_startDate.year, _startDate.month,
-                      _startDate.day, _startTime.hour, _startTime.minute),
-                  onDeleted: (value) => setState(() {
-                    tables.remove(value);
-                  }),
-                  onSelected: (values) => setState(() {
-                    tables.addAll(values);
-                  }),
+                    onChange: (TimeOfDay? value) => setState(() {
+                      if (value != null) {
+                        _startTime = value;
+                        _startTimeController.value =
+                            TextEditingValue(text: _startTime.format(context));
+                      }
+                    }),
+                  ),
                 ),
-                CommentTextField(controller: _commentController),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: StartDateField(
+                      controller: _startDateController,
+                      blockEditing: () => _startTimeController.value =
+                          TextEditingValue(text: _startTime.format(context)),
+                      onChange: (DateTime? value) => setState(() {
+                            if (value != null) {
+                              _startDate = value;
+                              _startDateController.value = TextEditingValue(
+                                  text: DateFormat.yMMMMd("ru_RU")
+                                      .format(_startDate));
+                            }
+                          })),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: DurationIntervalMinutesTextField(
+                      controller: _durationIntervalMinutesController),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: TableSelectionChipsField(
+                    tables: tables,
+                    targetDateTime: DateTime(_startDate.year, _startDate.month,
+                        _startDate.day, _startTime.hour, _startTime.minute),
+                    onDeleted: (value) => setState(() {
+                      tables.remove(value);
+                    }),
+                    onSelected: (values) => setState(() {
+                      tables.addAll(values);
+                    }),
+                  ),
+                ),
+                Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: CommentTextField(controller: _commentController)
+                ),
                 ElevatedButton(
                     onPressed: submit,
                     child: FutureBuilder(

@@ -39,19 +39,37 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
               key: _employeeCreationFormKey,
               child: Column(
                 children: [
-                  DefaultTextField(
-                      controller: _loginController,
-                      labelText: "Логин сотрудника"),
-                  PasswordTextField(controller: _passwordController),
-                  DefaultTextField(
-                      controller: _surnameController,
-                      labelText: "Фамилия сотрудника"),
-                  DefaultTextField(
-                      controller: _nameController, labelText: "Имя сотрудника"),
-                  DefaultTextField(
-                      controller: _patronymicController,
-                      labelText: "Отчество сотрудника"),
-                  CommentTextField(controller: _commentController),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: DefaultTextField(
+                        controller: _loginController,
+                        labelText: "Логин сотрудника"),
+                  ),
+                  Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: PasswordTextField(controller: _passwordController)
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: DefaultTextField(
+                        controller: _surnameController,
+                        labelText: "Фамилия сотрудника"),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: DefaultTextField(
+                        controller: _nameController, labelText: "Имя сотрудника"),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: DefaultTextField(
+                        controller: _patronymicController,
+                        labelText: "Отчество сотрудника"),
+                  ),
+                  Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: CommentTextField(controller: _commentController)
+                  ),
                   ElevatedButton(
                       onPressed: submit,
                       child: FutureBuilder(

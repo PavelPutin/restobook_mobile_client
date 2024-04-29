@@ -27,9 +27,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ScaffoldBodyPadding(
-        child: Center(
-          child: Card(
+        body: ScaffoldBodyPadding(
+      child: Center(
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -43,18 +45,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   key: _loginFormKey,
                   child: Column(
                     children: [
-                      DefaultTextField(
-                          controller: _loginController,
-                          labelText: "Логин"),
-                      PasswordTextField(controller: _passwordController)
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                        child: DefaultTextField(
+                            controller: _loginController, labelText: "Логин"),
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: PasswordTextField(
+                              controller: _passwordController))
                     ],
                   ),
                 ),
                 const Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("У меня нет аккаунта")
-                  ],
+                  children: [Text("У меня нет аккаунта")],
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -62,17 +67,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextButton(
                         onPressed: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const AdministratorRegistrationInfoScreen())
-                          );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AdministratorRegistrationInfoScreen()));
                         },
                         child: const Text("Я администратор")),
                     TextButton(
                         onPressed: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const EmployeeRegistrationInfoScreen())
-                          );
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const EmployeeRegistrationInfoScreen()));
                         },
                         child: const Text("Я сотрудник"))
                   ],
@@ -80,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ElevatedButton(
+                    FilledButton(
                         onPressed: submit,
                         child: FutureBuilder(
                             future: submiting,
@@ -97,25 +104,25 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-      )
-    );
+      ),
+    ));
   }
 
   void submit() async {
     if (_loginFormKey.currentState!.validate()) {
       setState(() {
-        submiting = context.read<ApplicationViewModel>().login(_loginController.text, _passwordController.text);
+        submiting = context
+            .read<ApplicationViewModel>()
+            .login(_loginController.text, _passwordController.text);
         submiting.then((value) {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const MainScreen()));
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Добро пожаловать")));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const MainScreen()));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("Добро пожаловать")));
         });
         submiting.onError((error, stackTrace) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Не удалось войти. Неверный логин или пароль")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Не удалось войти. Неверный логин или пароль")));
         });
       });
     }

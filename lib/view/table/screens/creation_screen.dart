@@ -43,9 +43,18 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
             key: _tableCreationFormKey,
             child: Column(
               children: [
-                TableNumberTextField(controller: _numberController),
-                SeatsNumberTextField(controller: _seatsNumberController),
-                CommentTextField(controller: _commentController),
+                Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: TableNumberTextField(controller: _numberController)
+                ),
+                Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: SeatsNumberTextField(controller: _seatsNumberController)
+                ),
+                Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: CommentTextField(controller: _commentController)
+                ),
                 ElevatedButton(
                     onPressed: submit,
                     child: FutureBuilder(

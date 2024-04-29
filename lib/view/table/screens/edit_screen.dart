@@ -82,13 +82,22 @@ class _TableEditScreenState extends State<TableEditScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      SeatsNumberTextField(controller: _seatsNumberController),
-                      CommentTextField(controller: _commentController),
-                      TableStateDropdownMenu(
-                        initialValue: _selectedTableState,
-                        onChanged: (selected) => setState(() {
-                          _selectedTableState = selected;
-                        }),
+                      Container(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: SeatsNumberTextField(controller: _seatsNumberController)
+                      ),
+                      Container(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: CommentTextField(controller: _commentController)
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: TableStateDropdownMenu(
+                          initialValue: _selectedTableState,
+                          onChanged: (selected) => setState(() {
+                            _selectedTableState = selected;
+                          }),
+                        ),
                       ),
                       ElevatedButton(
                           onPressed: submit,
