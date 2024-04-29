@@ -5,6 +5,7 @@ import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
 import '../utils/utils.dart';
 
 class MockReservationsRepository extends AbstractReservationRepository {
+  final List<TableModel> _tables = GetIt.I<MockBackend>().tables;
   final List<Reservation> _reservations = GetIt.I<MockBackend>().reservations;
 
   @override
@@ -26,6 +27,13 @@ class MockReservationsRepository extends AbstractReservationRepository {
 
   @override
   Future<void> delete(Reservation reservation) {
+    for (int tableId in reservation.tableIds!) {
+      for (var table in _tables) {
+        if (table.id! == tableId) {
+          table.reservationIds!.remove(reservation.id!);
+        }
+      }
+    }
     return ConnectionSimulator<void>().connect(() => _reservations.remove(reservation));
   }
 

@@ -9,6 +9,7 @@ import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
 import 'package:restobook_mobile_client/model/model.dart';
+import '../shared_widget/delete_icon_button.dart';
 import '../shared_widget/icon_button_navigator_pop.dart';
 
 class ReservationScreen extends StatefulWidget {
@@ -45,7 +46,19 @@ class _ReservationScreenState extends State<ReservationScreen> {
               return Text("Бронь ${reservationViewModel.activeReservation?.id!}");
             }),
         ),
-        actions: const [IconButtonPushProfile()],
+        actions: [
+          DeleteIconButton(
+            dialogTitle: const Text("Удалить стол"),
+            onSubmit: () {
+              return context
+                  .read<ReservationViewModel>()
+                  .delete(context.read<ReservationViewModel>().activeReservation!);
+            },
+            successLabel: "Стол удалён",
+            errorLabel: "Не удалось удалить стол",
+          ),
+          const IconButtonPushProfile()
+        ],
       ),
       body: Consumer<ReservationViewModel>(
           builder: (context, reservationViewModel, child) {
