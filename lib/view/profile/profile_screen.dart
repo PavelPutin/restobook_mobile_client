@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restobook_mobile_client/view/login_screen/login_screen.dart';
+import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
 import 'package:restobook_mobile_client/view/profile/edit_password_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator_pop.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
@@ -15,9 +17,18 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const IconButtonNavigatorPop(),
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.read<ApplicationViewModel>().logout();
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
+              icon: const Icon(Icons.exit_to_app))
+        ],
         title: Consumer<ApplicationViewModel>(
           builder: (context, applicationViewModel, child) {
-            return Text(applicationViewModel.authorizedUser!.employee.shortFullName);
+            return Text(applicationViewModel.authorizedUser?.employee.shortFullName ?? "");
           },
         ),
       ),
@@ -28,22 +39,22 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    InfoLabel(label: "Имя:", info: applicationViewModel.authorizedUser!.employee.name)
+                    InfoLabel(label: "Имя:", info: applicationViewModel.authorizedUser?.employee.name ?? "")
                   ],
                 ),
                 Row(
                   children: [
-                    InfoLabel(label: "Фамилия:", info: applicationViewModel.authorizedUser!.employee.surname)
+                    InfoLabel(label: "Фамилия:", info: applicationViewModel.authorizedUser?.employee.surname ?? "")
                   ],
                 ),
                 Row(
                   children: [
-                    InfoLabel(label: "Отчество:", info: applicationViewModel.authorizedUser!.employee.patronymic ?? "-")
+                    InfoLabel(label: "Отчество:", info: applicationViewModel.authorizedUser?.employee.patronymic ?? "-")
                   ],
                 ),
                 Row(
                   children: [
-                    InfoLabel(label: "Комментарий:", info: applicationViewModel.authorizedUser!.employee.comment ?? "-")
+                    InfoLabel(label: "Комментарий:", info: applicationViewModel.authorizedUser?.employee.comment ?? "-")
                   ],
                 ),
                 Row(
