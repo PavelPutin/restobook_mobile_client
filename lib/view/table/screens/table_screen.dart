@@ -27,20 +27,18 @@ class _TableScreenState extends State<TableScreen> {
   @override
   void initState() {
     super.initState();
-    tableLoading = Provider.of<TableViewModel>(context, listen: false).loadActiveTable(widget.table.id!);
+    tableLoading = Provider.of<TableViewModel>(context, listen: false)
+        .loadActiveTable(widget.table.id!);
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> bodyWidgets = [
       TableInfo(
-        tableLoading: tableLoading,
-        onRetry: () async =>
-          setState(() =>
-            tableLoading =
-                context.read<TableViewModel>().loadActiveTable(widget.table.id!)
-          )
-      ),
+          tableLoading: tableLoading,
+          onRetry: () async => setState(() => tableLoading = context
+              .read<TableViewModel>()
+              .loadActiveTable(widget.table.id!))),
       const TableReservations()
     ];
     return Scaffold(
@@ -51,9 +49,9 @@ class _TableScreenState extends State<TableScreen> {
           loading: tableLoading,
           errorMessage: const Text("Ошибка загрузки"),
           title: Consumer<TableViewModel>(
-            builder: (context, tableViewModel, child) {
-              return Text("Стол ${tableViewModel.activeTable?.number}");
-            }),
+              builder: (context, tableViewModel, child) {
+            return Text("Стол ${tableViewModel.activeTable?.number}");
+          }),
         ),
         actions: [
           IconButton(
@@ -61,44 +59,48 @@ class _TableScreenState extends State<TableScreen> {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return const DeleteAlertDialog(title: Text("Удалить стол"));
-                    }
-                );
+                      return DeleteAlertDialog(
+                        title: const Text("Удалить стол"),
+                        onSubmit: () {
+                           return context
+                              .read<TableViewModel>()
+                              .delete(context.read<TableViewModel>().activeTable!);
+                        },
+                        successLabel: "Стол удалён",
+                        errorLabel: "Не удалось удалить стол",
+                      );
+                    });
               },
-              icon: const Icon(Icons.delete_forever)
-          ),
+              icon: const Icon(Icons.delete_forever)),
           const IconButtonPushProfile()
         ],
       ),
       body: bodyWidgets[_currentScreenIndex],
       floatingActionButton: const FloatingCreationReservationButton(),
       bottomNavigationBar: FutureBuilder(
-        future: tableLoading,
-        builder: (context, snapshot) {
-          bool reservationScreenEnable =
-            snapshot.connectionState != ConnectionState.waiting &&
-            !snapshot.hasError;
-          return NavigationBar(
-            destinations: [
-              const NavigationDestination(
-                icon: Icon(Icons.info_outline),
-                label: "О столе"
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.ad_units),
-                label: "Брони",
-                enabled: reservationScreenEnable,
-              ),
-            ],
-            selectedIndex: _currentScreenIndex,
-            onDestinationSelected: (int index) {
-              setState(() {
-                _currentScreenIndex = index;
-              });
-            },
-          );
-        }
-      ),
+          future: tableLoading,
+          builder: (context, snapshot) {
+            bool reservationScreenEnable =
+                snapshot.connectionState != ConnectionState.waiting &&
+                    !snapshot.hasError;
+            return NavigationBar(
+              destinations: [
+                const NavigationDestination(
+                    icon: Icon(Icons.info_outline), label: "О столе"),
+                NavigationDestination(
+                  icon: const Icon(Icons.ad_units),
+                  label: "Брони",
+                  enabled: reservationScreenEnable,
+                ),
+              ],
+              selectedIndex: _currentScreenIndex,
+              onDestinationSelected: (int index) {
+                setState(() {
+                  _currentScreenIndex = index;
+                });
+              },
+            );
+          }),
     );
   }
 }

@@ -1,11 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
 class DeleteAlertDialog extends StatefulWidget {
-  const DeleteAlertDialog({super.key, required this.title});
+  const DeleteAlertDialog({super.key, required this.title, required this.onSubmit, required this.successLabel, required this.errorLabel});
 
   final Widget title;
+  final AsyncCallback onSubmit;
+  final String successLabel;
+  final String errorLabel;
 
   @override
   State<DeleteAlertDialog> createState() => _DeleteAlertDialogState();
@@ -25,20 +27,21 @@ class _DeleteAlertDialogState extends State<DeleteAlertDialog> {
             onPressed: () => Navigator.pop(context), child: Text("Отмена")),
         TextButton(
             onPressed: () async {
-              var promise = context
-                  .read<TableViewModel>()
-                  .delete(context.read<TableViewModel>().activeTable!);
+              // var promise = context
+              //     .read<TableViewModel>()
+              //     .delete(context.read<TableViewModel>().activeTable!);
+              var promise = widget.onSubmit();
               setState(() {
                 deleting = promise;
               });
               await promise.then((value) {
                 Navigator.pop(context);
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Стол удалён")));
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(widget.successLabel)));
+                // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Стол удалён")));
               }).onError((error, stackTrace) {
-                print(error);
-                print(stackTrace);
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Не удалось удалить стол")));
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(widget.errorLabel)));
+                // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Не удалось удалить стол")));
               });
             },
             child: FutureBuilder(
