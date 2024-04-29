@@ -2,7 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class DeleteAlertDialog extends StatefulWidget {
-  const DeleteAlertDialog({super.key, required this.title, required this.onSubmit, required this.successLabel, required this.errorLabel});
+  const DeleteAlertDialog(
+      {super.key,
+      required this.title,
+      required this.onSubmit,
+      required this.successLabel,
+      required this.errorLabel});
 
   final Widget title;
   final AsyncCallback onSubmit;
@@ -37,10 +42,12 @@ class _DeleteAlertDialogState extends State<DeleteAlertDialog> {
               await promise.then((value) {
                 Navigator.pop(context);
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(widget.successLabel)));
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(widget.successLabel)));
                 // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Стол удалён")));
               }).onError((error, stackTrace) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(widget.errorLabel)));
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(widget.errorLabel)));
                 // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Не удалось удалить стол")));
               });
             },
@@ -51,7 +58,11 @@ class _DeleteAlertDialogState extends State<DeleteAlertDialog> {
                   return const CircularProgressIndicator();
                 }
 
-                return const Text("Удалить");
+                return Text("Удалить",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Theme.of(context).colorScheme.error));
               },
             )),
       ],
