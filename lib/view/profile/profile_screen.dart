@@ -24,6 +24,7 @@ class ProfileScreen extends StatelessWidget {
                 Navigator.of(context).popUntil((route) => route.isFirst);
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen()));
               },
+              color: Theme.of(context).colorScheme.error,
               icon: const Icon(Icons.exit_to_app))
         ],
         title: Consumer<ApplicationViewModel>(
