@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restobook_mobile_client/view/employee/edit_screen.dart';
+import 'package:restobook_mobile_client/view/login_screen/administrator_registration_info_screen.dart';
+import 'package:restobook_mobile_client/view/login_screen/employee_registration_info_screen.dart';
 import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
 import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 
@@ -62,10 +65,31 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
+              const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("У меня нет аккаунта")
+                ],
+              ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextButton(onPressed: () {}, child: const Text("У меня нет аккаунта"))
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const AdministratorRegistrationInfoScreen())
+                        );
+                      },
+                      child: const Text("Я администратор")),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const EmployeeRegistrationInfoScreen())
+                        );
+                      },
+                      child: const Text("Я сотрудник"))
                 ],
               ),
               Row(
