@@ -5,6 +5,8 @@ import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
 import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 
+import '../shared_widget/info_label.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -26,23 +28,22 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                        "Имя: ${applicationViewModel.authorizedUser!.employee.name}")
+                    InfoLabel(label: "Имя:", info: applicationViewModel.authorizedUser!.employee.name)
                   ],
                 ),
                 Row(
                   children: [
-                    Text("Фамилия: ${applicationViewModel.authorizedUser!.employee.surname}")
+                    InfoLabel(label: "Фамилия:", info: applicationViewModel.authorizedUser!.employee.surname)
                   ],
                 ),
                 Row(
                   children: [
-                    Text("Отчество: ${applicationViewModel.authorizedUser!.employee.patronymic}")
+                    InfoLabel(label: "Отчество:", info: applicationViewModel.authorizedUser!.employee.patronymic ?? "-")
                   ],
                 ),
                 Row(
                   children: [
-                    Text("Комментарий: ${applicationViewModel.authorizedUser!.employee.comment}")
+                    InfoLabel(label: "Комментарий:", info: applicationViewModel.authorizedUser!.employee.comment ?? "-")
                   ],
                 ),
                 Row(
@@ -54,7 +55,12 @@ class ProfileScreen extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => EditPasswordScreen())
                           );
                         },
-                        child: Text("Изменить пароль"))
+                        child: const Row(
+                          children: [
+                            Icon(Icons.password),
+                            Text("Изменить пароль"),
+                          ],
+                        ))
                   ],
                 )
               ],

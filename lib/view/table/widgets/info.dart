@@ -4,6 +4,7 @@ import 'package:restobook_mobile_client/view/table/screens/edit_screen.dart';
 import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
 import '../../../view_model/application_view_model.dart';
+import '../../shared_widget/info_label.dart';
 
 class TableInfo extends StatelessWidget {
   const TableInfo(
@@ -40,19 +41,29 @@ class TableInfo extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                        "Количество мест: ${tableViewModel.activeTable?.seatsNumber}"),
+                    InfoLabel(
+                        label: "Количество мест:",
+                        info:
+                            tableViewModel.activeTable!.seatsNumber.toString()),
                   ],
                 ),
                 Row(
                   children: [
-                    Text(
-                        "Состояние стола: ${tableViewModel.activeTable?.state}"),
+                    InfoLabel(
+                        label: "Количество мест:",
+                        info: switch (tableViewModel.activeTable?.state) {
+                          "NORMAL" => "Нормальное",
+                          "BROKEN" => "Сломан",
+                          // TODO: Handle this case.
+                          String() => throw UnimplementedError(),
+                          // TODO: Handle this case.
+                          null => throw UnimplementedError(),
+                        }),
                   ],
                 ),
                 Row(
                   children: [
-                    Text("Комментарий: ${tableViewModel.activeTable?.comment}")
+                    InfoLabel(label: "Комментарий:", info: tableViewModel.activeTable?.comment ?? '-')
                   ],
                 ),
                 if (context.read<ApplicationViewModel>().isAdmin)

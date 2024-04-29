@@ -5,6 +5,7 @@ import 'package:restobook_mobile_client/view/employee/edit_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator_pop.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
+import 'package:restobook_mobile_client/view/shared_widget/info_label.dart';
 import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
@@ -96,25 +97,22 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                     children: [
                       Row(
                         children: [
-                          Text("Имя: ${employeeViewModel.activeEmployee?.name}")
+                          InfoLabel(label: "Имя:", info: employeeViewModel.activeEmployee!.name)
                         ],
                       ),
                       Row(
                         children: [
-                          Text(
-                              "Фамилия: ${employeeViewModel.activeEmployee?.surname}")
+                          InfoLabel(label: "Фамилия:", info: employeeViewModel.activeEmployee!.surname)
                         ],
                       ),
                       Row(
                         children: [
-                          Text(
-                              "Отчество: ${employeeViewModel.activeEmployee?.patronymic}")
+                          InfoLabel(label: "Отчество:", info: employeeViewModel.activeEmployee!.patronymic ?? "-")
                         ],
                       ),
                       Row(
                         children: [
-                          Text(
-                              "Комментарий: ${employeeViewModel.activeEmployee?.comment}")
+                          InfoLabel(label: "Комментарий:", info: employeeViewModel.activeEmployee?.comment ?? "-")
                         ],
                       ),
                       Row(

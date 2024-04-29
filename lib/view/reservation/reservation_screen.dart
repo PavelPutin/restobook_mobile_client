@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/reservation/edit_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
+import 'package:restobook_mobile_client/view/shared_widget/info_label.dart';
 import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/table_list_tile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
@@ -104,50 +106,58 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   children: [
                     Row(
                       children: [
-                        Text(
-                            "Количество человек: ${reservationViewModel.activeReservation?.personsNumber}"),
+                        InfoLabel(label: "Количество человек:", info: reservationViewModel.activeReservation!.personsNumber.toString())
                       ],
                     ),
                     Row(
                       children: [
-                        Text(
-                            "Имя клиента: ${reservationViewModel.activeReservation?.clientName}"),
+                        InfoLabel(label: "Имя клиента:", info: reservationViewModel.activeReservation!.clientName),
                       ],
                     ),
                     Row(
                       children: [
-                        Text(
-                            "Телефон клиента: ${reservationViewModel.activeReservation?.clientPhoneNumber}"),
+                        InfoLabel(label: "Телефон клиента:", info: reservationViewModel.activeReservation!.clientPhoneNumber),
                       ],
                     ),
                     Row(
                       children: [
-                        Text(
-                            "Дата и время начала: ${reservationViewModel.activeReservation?.startDateTime}"),
+                        InfoLabel(
+                            label: "Дата и время начала:",
+                            info: "${DateFormat.MMMEd("ru_RU").format(reservationViewModel.activeReservation!.startDateTime)} ${DateFormat.Hm("ru_RU").format(reservationViewModel.activeReservation!.startDateTime)}"),
+                        // Text(
+                        //     "Дата и время начала: ${reservationViewModel.activeReservation?.startDateTime}"),
                       ],
                     ),
                     Row(
                       children: [
-                        Text(
-                            "Продолжительность: ${reservationViewModel.activeReservation?.durationIntervalMinutes} мин."),
+                        InfoLabel(label: "Продолжительность:", info: "${reservationViewModel.activeReservation?.durationIntervalMinutes} мин."),
                       ],
                     ),
                     Row(
                       children: [
-                        Text(
-                            "Сотрудник, открывший бронь: ${reservationViewModel.activeReservation?.employeeFullName}"),
+                        InfoLabel(
+                            label: "Сотрудник, открывший бронь:",
+                            info: reservationViewModel.activeReservation!.employeeFullName)
                       ],
                     ),
                     Row(
                       children: [
-                        Text(
-                            "Состояние: ${reservationViewModel.activeReservation?.state}"),
+                        InfoLabel(
+                            label: "Состояние:",
+                            info: switch (reservationViewModel.activeReservation?.state) {
+                              "WAITING" => "Ожидает",
+                              "OPEN" => "Открыта",
+                              "CLOSED" => "Закрыта",
+                              String() => throw UnimplementedError(),
+                              null => throw UnimplementedError(),
+                            }),
                       ],
                     ),
                     Row(
                       children: [
-                        Text(
-                            "Комментарий: ${reservationViewModel.activeReservation?.comment}"),
+                        InfoLabel(
+                            label: "Комментарий:",
+                            info: reservationViewModel.activeReservation!.comment ?? "-"),
                       ],
                     ),
                     Row(
