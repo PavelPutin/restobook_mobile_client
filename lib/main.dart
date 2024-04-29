@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/model/repository/mock_employee_repository.dart';
 import 'package:restobook_mobile_client/model/repository/mock_reservations_repository.dart';
+import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart';
+import 'package:restobook_mobile_client/model/service/mock_auth_service.dart';
 import 'package:restobook_mobile_client/view/login_screen/login_screen.dart';
 import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
 import 'package:restobook_mobile_client/view/onboarding/onboarding_screen.dart';
@@ -24,6 +26,8 @@ void main() {
         MockReservationsRepository());
     GetIt.I.registerSingleton<AbstractEmployeeRepository>(
         MockEmployeeRepository());
+    GetIt.I.registerSingleton<AbstractAuthService>(
+        MockAuthService());
 
     FlutterError.onError = (details) => print(details);
 
@@ -55,8 +59,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Consumer<ApplicationViewModel>(
       builder: (context, applicationViewModel, child) {
-        Widget home =
-            applicationViewModel.firstEnter ? const OnboardingScreen() : const MainScreen();
+        // Widget home =
+        //     applicationViewModel.firstEnter ? const OnboardingScreen() : const MainScreen();
+        Widget home = false
+            ? const OnboardingScreen()
+            : applicationViewModel.authorized
+            ? const MainScreen()
+            : const LoginScreen();
         applicationViewModel.enter();
         return MaterialApp(
           title: 'Flutter Demo',

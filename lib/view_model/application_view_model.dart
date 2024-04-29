@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:restobook_mobile_client/model/entities/auth_entity.dart';
+import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApplicationViewModel extends ChangeNotifier {
+  AbstractAuthService authService = GetIt.I<AbstractAuthService>();
   AuthEntity? _authorizedUser;
   bool _firstEnter = true;
 
   AuthEntity? get authorizedUser => _authorizedUser;
 
   bool get firstEnter => _firstEnter;
+  bool get authorized => _authorizedUser != null;
 
   void initIsFirstEnter() {
     SharedPreferences.getInstance().then((preferences) {
@@ -29,5 +33,16 @@ class ApplicationViewModel extends ChangeNotifier {
       _firstEnter = true;
       notifyListeners();
     });
+  }
+
+  Future<void> login(String username, String password) async {
+    await authService.login(username, password)
+        .then((value) => _authorizedUser = value);
+    notifyListeners();
+  }
+
+  void logout() {
+    _authorizedUser = null;
+    notifyListeners();
   }
 }
