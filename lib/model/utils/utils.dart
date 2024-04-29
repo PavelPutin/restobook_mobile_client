@@ -6,7 +6,7 @@ class ConnectionSimulator<T> {
 
   Future<T> connect(Function() func) {
     return Future<T>.delayed(
-        const Duration(seconds: 2),
+        const Duration(milliseconds: delay),
         () {
           if (Random().nextInt(100) < errorRate) {
             throw Exception("Ошибка соединения");
