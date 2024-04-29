@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
 import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
 import '../../model/entities/employee.dart';
@@ -74,32 +75,34 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
                         "Редактирование ${employeeViewModel.activeEmployee
                             ?.shortFullName}");
                   }))),
-        body: ScrollableExpanded(
-          child: Form(
-            key: _editEmployeeFormKey,
-            child: Column(
-              children: [
-                DefaultTextField(
-                    controller: _surnameController,
-                    labelText: "Фамилия сотрудника"),
-                DefaultTextField(
-                    controller: _nameController, labelText: "Имя сотрудника"),
-                DefaultTextField(
-                    controller: _patronymicController,
-                    labelText: "Отчество сотрудника"),
-                CommentTextField(controller: _commentController),
-                ElevatedButton(
-                    onPressed: submit,
-                    child: FutureBuilder(
-                        future: submiting,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          }
-                          return const Text("Изменить");
-                        }))
-              ],
+        body: ScaffoldBodyPadding(
+          child: ScrollableExpanded(
+            child: Form(
+              key: _editEmployeeFormKey,
+              child: Column(
+                children: [
+                  DefaultTextField(
+                      controller: _surnameController,
+                      labelText: "Фамилия сотрудника"),
+                  DefaultTextField(
+                      controller: _nameController, labelText: "Имя сотрудника"),
+                  DefaultTextField(
+                      controller: _patronymicController,
+                      labelText: "Отчество сотрудника"),
+                  CommentTextField(controller: _commentController),
+                  ElevatedButton(
+                      onPressed: submit,
+                      child: FutureBuilder(
+                          future: submiting,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            }
+                            return const Text("Изменить");
+                          }))
+                ],
+              ),
             ),
           ),
         )

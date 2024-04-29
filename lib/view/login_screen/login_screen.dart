@@ -7,6 +7,7 @@ import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
 import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 
 import '../shared_widget/default_text_field.dart';
+import '../shared_widget/scaffold_body_padding.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,90 +26,92 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text("Вход"),
-                ],
-              ),
-              Form(
-                key: _loginFormKey,
-                child: Column(
+      body: ScaffoldBodyPadding(
+        child: Center(
+          child: Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    DefaultTextField(
-                        controller: _loginController,
-                        labelText: "Логин"),
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: !_passwordVisible,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            icon: Icon(_passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                _passwordVisible = !_passwordVisible;
-                              });
-                            },
-                          ),
-                          border: const OutlineInputBorder(),
-                          labelText: "Пароль"),
-                    ),
+                    Text("Вход"),
                   ],
                 ),
-              ),
-              const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text("У меня нет аккаунта")
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const AdministratorRegistrationInfoScreen())
-                        );
-                      },
-                      child: const Text("Я администратор")),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
+                Form(
+                  key: _loginFormKey,
+                  child: Column(
+                    children: [
+                      DefaultTextField(
+                          controller: _loginController,
+                          labelText: "Логин"),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: !_passwordVisible,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: Icon(_passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                            ),
+                            border: const OutlineInputBorder(),
+                            labelText: "Пароль"),
+                      ),
+                    ],
+                  ),
+                ),
+                const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("У меня нет аккаунта")
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const EmployeeRegistrationInfoScreen())
-                        );
-                      },
-                      child: const Text("Я сотрудник"))
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ElevatedButton(
-                      onPressed: submit,
-                      child: FutureBuilder(
-                          future: submiting,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
-                            }
-                            return const Text("Войти");
-                          })),
-                ],
-              )
-            ],
+                            MaterialPageRoute(builder: (context) => const AdministratorRegistrationInfoScreen())
+                          );
+                        },
+                        child: const Text("Я администратор")),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const EmployeeRegistrationInfoScreen())
+                          );
+                        },
+                        child: const Text("Я сотрудник"))
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(
+                        onPressed: submit,
+                        child: FutureBuilder(
+                            future: submiting,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              }
+                              return const Text("Войти");
+                            })),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       )

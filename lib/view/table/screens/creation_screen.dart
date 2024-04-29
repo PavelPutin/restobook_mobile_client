@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scrollable_expanded.dart';
 import 'package:restobook_mobile_client/view/table/screens/table_screen.dart';
 import 'package:restobook_mobile_client/view/table/widgets/table_number_text_field.dart';
@@ -36,26 +37,28 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
       appBar: AppBar(
           title: const Text("Новый стол")
       ),
-      body: ScrollableExpanded(
-        child: Form(
-          key: _tableCreationFormKey,
-          child: Column(
-            children: [
-              TableNumberTextField(controller: _numberController),
-              SeatsNumberTextField(controller: _seatsNumberController),
-              CommentTextField(controller: _commentController),
-              ElevatedButton(
-                  onPressed: submit,
-                  child: FutureBuilder(
-                      future: submiting,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        }
-                        return const Text("Создать");
-                      }))
-            ],
+      body: ScaffoldBodyPadding(
+        child: ScrollableExpanded(
+          child: Form(
+            key: _tableCreationFormKey,
+            child: Column(
+              children: [
+                TableNumberTextField(controller: _numberController),
+                SeatsNumberTextField(controller: _seatsNumberController),
+                CommentTextField(controller: _commentController),
+                ElevatedButton(
+                    onPressed: submit,
+                    child: FutureBuilder(
+                        future: submiting,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          return const Text("Создать");
+                        }))
+              ],
+            ),
           ),
         ),
       )

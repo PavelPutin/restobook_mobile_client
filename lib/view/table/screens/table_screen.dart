@@ -11,6 +11,7 @@ import '../../../view_model/table_view_model.dart';
 import '../../shared_widget/delete_alert_dialog.dart';
 import '../../shared_widget/delete_icon_button.dart';
 import '../../shared_widget/icon_button_navigator_pop.dart';
+import '../../shared_widget/scaffold_body_padding.dart';
 import '../widgets/info.dart';
 
 class TableScreen extends StatefulWidget {
@@ -70,7 +71,9 @@ class _TableScreenState extends State<TableScreen> {
           const IconButtonPushProfile()
         ],
       ),
-      body: bodyWidgets[_currentScreenIndex],
+      body: ScaffoldBodyPadding(
+        child: bodyWidgets[_currentScreenIndex],
+      ),
       floatingActionButton: const FloatingCreationReservationButton(),
       bottomNavigationBar: FutureBuilder(
           future: tableLoading,

@@ -6,6 +6,7 @@ import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.da
 import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
 import '../shared_widget/default_text_field.dart';
+import '../shared_widget/scaffold_body_padding.dart';
 import '../shared_widget/scrollable_expanded.dart';
 
 class EmployeeCreationScreen extends StatefulWidget {
@@ -33,54 +34,56 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
         appBar: AppBar(
           title: const Text("Новый сотрудник"),
         ),
-        body: ScrollableExpanded(
-          child: Form(
-            key: _employeeCreationFormKey,
-            child: Column(
-              children: [
-                DefaultTextField(
-                    controller: _loginController,
-                    labelText: "Логин сотрудника"),
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: !_passwordVisible,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: Icon(_passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                        onPressed: () {
-                          setState(() {
-                            _passwordVisible = !_passwordVisible;
-                          });
-                        },
-                      ),
-                      border: const OutlineInputBorder(),
-                      labelText: "Пароль сотрудника"),
-                ),
-                DefaultTextField(
-                    controller: _surnameController,
-                    labelText: "Фамилия сотрудника"),
-                DefaultTextField(
-                    controller: _nameController, labelText: "Имя сотрудника"),
-                DefaultTextField(
-                    controller: _patronymicController,
-                    labelText: "Отчество сотрудника"),
-                CommentTextField(controller: _commentController),
-                ElevatedButton(
-                    onPressed: submit,
-                    child: FutureBuilder(
-                        future: submiting,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          }
-                          return const Text("Создать");
-                        }))
-              ],
+        body: ScaffoldBodyPadding(
+          child: ScrollableExpanded(
+            child: Form(
+              key: _employeeCreationFormKey,
+              child: Column(
+                children: [
+                  DefaultTextField(
+                      controller: _loginController,
+                      labelText: "Логин сотрудника"),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: !_passwordVisible,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(_passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _passwordVisible = !_passwordVisible;
+                            });
+                          },
+                        ),
+                        border: const OutlineInputBorder(),
+                        labelText: "Пароль сотрудника"),
+                  ),
+                  DefaultTextField(
+                      controller: _surnameController,
+                      labelText: "Фамилия сотрудника"),
+                  DefaultTextField(
+                      controller: _nameController, labelText: "Имя сотрудника"),
+                  DefaultTextField(
+                      controller: _patronymicController,
+                      labelText: "Отчество сотрудника"),
+                  CommentTextField(controller: _commentController),
+                  ElevatedButton(
+                      onPressed: submit,
+                      child: FutureBuilder(
+                          future: submiting,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            }
+                            return const Text("Создать");
+                          }))
+                ],
+              ),
             ),
           ),
         ));

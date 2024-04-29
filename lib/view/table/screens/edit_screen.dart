@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/view/table/widgets/scrollable_expanded_future_builder.dart';
 import '../../../view_model/table_view_model.dart';
+import '../../shared_widget/scaffold_body_padding.dart';
 import '../../shared_widget/title_future_builder.dart';
 import '../../shared_widget/comment_text_field.dart';
 import '../widgets/seats_number_text_field.dart';
@@ -70,38 +71,40 @@ class _TableEditScreenState extends State<TableEditScreen> {
                     builder: (context, tableViewModel, child) {
                   return Text("Стол ${tableViewModel.activeTable?.number}");
                 }))),
-        body: ScrollableExpandedFutureBuilder(
-            loading: loading,
-            onRefresh: () async => setState(() => loading = context
-                .read<TableViewModel>()
-                .loadActiveTable(widget.table.id!)),
-            errorLabel: const Text("Не удалось загрузить стол"),
-            child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    SeatsNumberTextField(controller: _seatsNumberController),
-                    CommentTextField(controller: _commentController),
-                    TableStateDropdownMenu(
-                      initialValue: _selectedTableState,
-                      onChanged: (selected) => setState(() {
-                        _selectedTableState = selected;
-                      }),
-                    ),
-                    ElevatedButton(
-                        onPressed: submit,
-                        child: FutureBuilder(
-                            future: submiting,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const CircularProgressIndicator();
-                              }
-                              return const Text("Применить");
-                            }))
-                  ],
-                )
-            )
+        body: ScaffoldBodyPadding(
+          child: ScrollableExpandedFutureBuilder(
+              loading: loading,
+              onRefresh: () async => setState(() => loading = context
+                  .read<TableViewModel>()
+                  .loadActiveTable(widget.table.id!)),
+              errorLabel: const Text("Не удалось загрузить стол"),
+              child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      SeatsNumberTextField(controller: _seatsNumberController),
+                      CommentTextField(controller: _commentController),
+                      TableStateDropdownMenu(
+                        initialValue: _selectedTableState,
+                        onChanged: (selected) => setState(() {
+                          _selectedTableState = selected;
+                        }),
+                      ),
+                      ElevatedButton(
+                          onPressed: submit,
+                          child: FutureBuilder(
+                              future: submiting,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const CircularProgressIndicator();
+                                }
+                                return const Text("Применить");
+                              }))
+                    ],
+                  )
+              )
+          ),
         )
     );
   }

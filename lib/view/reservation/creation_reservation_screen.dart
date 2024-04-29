@@ -14,6 +14,7 @@ import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.da
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
+import '../shared_widget/scaffold_body_padding.dart';
 import '../shared_widget/scrollable_expanded.dart';
 import '../shared_widget/title_future_builder.dart';
 import '../table/widgets/scrollable_expanded_future_builder.dart';
@@ -57,66 +58,68 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Новая бронь")),
-      body: ScrollableExpanded(
-        child: Form(
-          key: _reservationCreatingFormKey,
-          child: Column(
-            children: [
-              PersonsNumberTextField(controller: _personsNumberController),
-              ClientPhoneNumberTextField(
-                  controller: _clientPhoneNumberController),
-              ClientNameTextField(controller: _clientNameController),
-              StartTimeField(
-                controller: _startTimeController,
-                initialTime: _startTime,
-                blockEditing: () => _startTimeController.value =
-                    TextEditingValue(text: _startTime.format(context)),
-                onChange: (TimeOfDay? value) => setState(() {
-                  if (value != null) {
-                    _startTime = value;
-                    _startTimeController.value =
-                        TextEditingValue(text: _startTime.format(context));
-                  }
-                }),
-              ),
-              StartDateField(
-                  controller: _startDateController,
+      body: ScaffoldBodyPadding(
+        child: ScrollableExpanded(
+          child: Form(
+            key: _reservationCreatingFormKey,
+            child: Column(
+              children: [
+                PersonsNumberTextField(controller: _personsNumberController),
+                ClientPhoneNumberTextField(
+                    controller: _clientPhoneNumberController),
+                ClientNameTextField(controller: _clientNameController),
+                StartTimeField(
+                  controller: _startTimeController,
+                  initialTime: _startTime,
                   blockEditing: () => _startTimeController.value =
                       TextEditingValue(text: _startTime.format(context)),
-                  onChange: (DateTime? value) => setState(() {
-                        if (value != null) {
-                          _startDate = value;
-                          _startDateController.value = TextEditingValue(
-                              text: DateFormat.yMMMMd("ru_RU")
-                                  .format(_startDate));
-                        }
-                      })),
-              DurationIntervalMinutesTextField(
-                  controller: _durationIntervalMinutesController),
-              TableSelectionChipsField(
-                tables: tables,
-                targetDateTime: DateTime(_startDate.year, _startDate.month,
-                    _startDate.day, _startTime.hour, _startTime.minute),
-                onDeleted: (value) => setState(() {
-                  tables.remove(value);
-                }),
-                onSelected: (values) => setState(() {
-                  tables.addAll(values);
-                }),
-              ),
-              CommentTextField(controller: _commentController),
-              ElevatedButton(
-                  onPressed: submit,
-                  child: FutureBuilder(
-                      future: submiting,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        }
-                        return const Text("Применить");
-                      }))
-            ],
+                  onChange: (TimeOfDay? value) => setState(() {
+                    if (value != null) {
+                      _startTime = value;
+                      _startTimeController.value =
+                          TextEditingValue(text: _startTime.format(context));
+                    }
+                  }),
+                ),
+                StartDateField(
+                    controller: _startDateController,
+                    blockEditing: () => _startTimeController.value =
+                        TextEditingValue(text: _startTime.format(context)),
+                    onChange: (DateTime? value) => setState(() {
+                          if (value != null) {
+                            _startDate = value;
+                            _startDateController.value = TextEditingValue(
+                                text: DateFormat.yMMMMd("ru_RU")
+                                    .format(_startDate));
+                          }
+                        })),
+                DurationIntervalMinutesTextField(
+                    controller: _durationIntervalMinutesController),
+                TableSelectionChipsField(
+                  tables: tables,
+                  targetDateTime: DateTime(_startDate.year, _startDate.month,
+                      _startDate.day, _startTime.hour, _startTime.minute),
+                  onDeleted: (value) => setState(() {
+                    tables.remove(value);
+                  }),
+                  onSelected: (values) => setState(() {
+                    tables.addAll(values);
+                  }),
+                ),
+                CommentTextField(controller: _commentController),
+                ElevatedButton(
+                    onPressed: submit,
+                    child: FutureBuilder(
+                        future: submiting,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          return const Text("Применить");
+                        }))
+              ],
+            ),
           ),
         ),
       ),

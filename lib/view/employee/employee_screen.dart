@@ -10,6 +10,7 @@ import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
 import '../../view_model/application_view_model.dart';
 import '../shared_widget/delete_icon_button.dart';
+import '../shared_widget/scaffold_body_padding.dart';
 
 class EmployeeScreen extends StatefulWidget {
   const EmployeeScreen({super.key, required this.employee});
@@ -59,83 +60,85 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           ],
         ),
         floatingActionButton: const FloatingCreationReservationButton(),
-        body: Consumer<EmployeeViewModel>(
-            builder: (context, employeeViewModel, child) {
-          return FutureBuilder(
-              future: employeeLoading,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+        body: ScaffoldBodyPadding(
+          child: Consumer<EmployeeViewModel>(
+              builder: (context, employeeViewModel, child) {
+            return FutureBuilder(
+                future: employeeLoading,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Не удалось загрузить сотрудника"),
-                        ElevatedButton(
-                            onPressed: () async {
-                              setState(() {
-                                employeeLoading =
-                                    Provider.of<EmployeeViewModel>(context,
-                                            listen: false)
-                                        .loadActiveEmployee(
-                                            widget.employee.id!);
-                              });
-                            },
-                            child: const Text("Попробовать ещё раз"))
-                      ],
-                    ),
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Не удалось загрузить сотрудника"),
+                          ElevatedButton(
+                              onPressed: () async {
+                                setState(() {
+                                  employeeLoading =
+                                      Provider.of<EmployeeViewModel>(context,
+                                              listen: false)
+                                          .loadActiveEmployee(
+                                              widget.employee.id!);
+                                });
+                              },
+                              child: const Text("Попробовать ещё раз"))
+                        ],
+                      ),
+                    );
+                  }
+
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text("Имя: ${employeeViewModel.activeEmployee?.name}")
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                              "Фамилия: ${employeeViewModel.activeEmployee?.surname}")
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                              "Отчество: ${employeeViewModel.activeEmployee?.patronymic}")
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                              "Комментарий: ${employeeViewModel.activeEmployee?.comment}")
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          ElevatedButton(
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EmployeeEditScreen(
+                                            employee:
+                                                employeeViewModel.activeEmployee!,
+                                          ))),
+                              child: const Row(
+                                children: [
+                                  Icon(Icons.edit),
+                                  Text("Редактировать"),
+                                ],
+                              ))
+                        ],
+                      )
+                    ],
                   );
-                }
-
-                return Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text("Имя: ${employeeViewModel.activeEmployee?.name}")
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                            "Фамилия: ${employeeViewModel.activeEmployee?.surname}")
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                            "Отчество: ${employeeViewModel.activeEmployee?.patronymic}")
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                            "Комментарий: ${employeeViewModel.activeEmployee?.comment}")
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                            onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EmployeeEditScreen(
-                                          employee:
-                                              employeeViewModel.activeEmployee!,
-                                        ))),
-                            child: const Row(
-                              children: [
-                                Icon(Icons.edit),
-                                Text("Редактировать"),
-                              ],
-                            ))
-                      ],
-                    )
-                  ],
-                );
-              });
-        }));
+                });
+          }),
+        ));
   }
 }

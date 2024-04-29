@@ -12,6 +12,7 @@ import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import '../shared_widget/delete_icon_button.dart';
 import '../shared_widget/icon_button_navigator_pop.dart';
+import '../shared_widget/scaffold_body_padding.dart';
 
 class ReservationScreen extends StatefulWidget {
   const ReservationScreen({super.key, required this.reservation});
@@ -63,133 +64,135 @@ class _ReservationScreenState extends State<ReservationScreen> {
           const IconButtonPushProfile()
         ],
       ),
-      body: Consumer<ReservationViewModel>(
-          builder: (context, reservationViewModel, child) {
-        return FutureBuilder(
-            future: reservationLoading,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
+      body: ScaffoldBodyPadding(
+        child: Consumer<ReservationViewModel>(
+            builder: (context, reservationViewModel, child) {
+          return FutureBuilder(
+              future: reservationLoading,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-              if (snapshot.hasError) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Не удалось загрузить бронь"),
-                      ElevatedButton(
-                          onPressed: () async {
-                            setState(() {
-                              reservationLoading =
-                                  Provider.of<ReservationViewModel>(context,
-                                          listen: false)
-                                      .loadActiveReservation(
-                                          widget.reservation.id!);
-                              reservationLoading.then((value) => tablesLoading =
-                                  context
-                                      .read<ReservationViewModel>()
-                                      .loadActiveReservationTables());
-                            });
-                          },
-                          child: const Text("Попробовать ещё раз"))
-                    ],
-                  ),
-                );
-              }
-
-              return Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                          "Количество человек: ${reservationViewModel.activeReservation?.personsNumber}"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                          "Имя клиента: ${reservationViewModel.activeReservation?.clientName}"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                          "Телефон клиента: ${reservationViewModel.activeReservation?.clientPhoneNumber}"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                          "Дата и время начала: ${reservationViewModel.activeReservation?.startDateTime}"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                          "Продолжительность: ${reservationViewModel.activeReservation?.durationIntervalMinutes} мин."),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                          "Сотрудник, открывший бронь: ${reservationViewModel.activeReservation?.employeeFullName}"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                          "Состояние: ${reservationViewModel.activeReservation?.state}"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                          "Комментарий: ${reservationViewModel.activeReservation?.comment}"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                          onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ReservationEditScreen(
-                                      reservation: reservationViewModel
-                                          .activeReservation!))),
-                          child: const Row(
-                            children: [
-                              Icon(Icons.edit),
-                              Text("Редактировать"),
-                            ],
-                          ))
-                    ],
-                  ),
-                  Expanded(
-                    child: RefreshableFutureListView(
-                      tablesLoading: tablesLoading,
-                      errorLabel: 'Не удалось загрузить столы',
-                      onRefresh: () async {
-                        var promise = context
-                            .read<ReservationViewModel>()
-                            .loadActiveReservationTables();
-                        setState(() {
-                          tablesLoading = promise;
-                        });
-                        await promise;
-                      },
-                      listView: ListView.builder(
-                          itemCount: reservationViewModel
-                              .activeReservationTables.length,
-                          itemBuilder: (context, index) => TableListTile(
-                              table: reservationViewModel
-                                  .activeReservationTables[index])),
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Не удалось загрузить бронь"),
+                        ElevatedButton(
+                            onPressed: () async {
+                              setState(() {
+                                reservationLoading =
+                                    Provider.of<ReservationViewModel>(context,
+                                            listen: false)
+                                        .loadActiveReservation(
+                                            widget.reservation.id!);
+                                reservationLoading.then((value) => tablesLoading =
+                                    context
+                                        .read<ReservationViewModel>()
+                                        .loadActiveReservationTables());
+                              });
+                            },
+                            child: const Text("Попробовать ещё раз"))
+                      ],
                     ),
-                  )
-                ],
-              );
-            });
-      }),
+                  );
+                }
+
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                            "Количество человек: ${reservationViewModel.activeReservation?.personsNumber}"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                            "Имя клиента: ${reservationViewModel.activeReservation?.clientName}"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                            "Телефон клиента: ${reservationViewModel.activeReservation?.clientPhoneNumber}"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                            "Дата и время начала: ${reservationViewModel.activeReservation?.startDateTime}"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                            "Продолжительность: ${reservationViewModel.activeReservation?.durationIntervalMinutes} мин."),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                            "Сотрудник, открывший бронь: ${reservationViewModel.activeReservation?.employeeFullName}"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                            "Состояние: ${reservationViewModel.activeReservation?.state}"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                            "Комментарий: ${reservationViewModel.activeReservation?.comment}"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ReservationEditScreen(
+                                        reservation: reservationViewModel
+                                            .activeReservation!))),
+                            child: const Row(
+                              children: [
+                                Icon(Icons.edit),
+                                Text("Редактировать"),
+                              ],
+                            ))
+                      ],
+                    ),
+                    Expanded(
+                      child: RefreshableFutureListView(
+                        tablesLoading: tablesLoading,
+                        errorLabel: 'Не удалось загрузить столы',
+                        onRefresh: () async {
+                          var promise = context
+                              .read<ReservationViewModel>()
+                              .loadActiveReservationTables();
+                          setState(() {
+                            tablesLoading = promise;
+                          });
+                          await promise;
+                        },
+                        listView: ListView.builder(
+                            itemCount: reservationViewModel
+                                .activeReservationTables.length,
+                            itemBuilder: (context, index) => TableListTile(
+                                table: reservationViewModel
+                                    .activeReservationTables[index])),
+                      ),
+                    )
+                  ],
+                );
+              });
+        }),
+      ),
       floatingActionButton: const FloatingCreationReservationButton(),
     );
   }

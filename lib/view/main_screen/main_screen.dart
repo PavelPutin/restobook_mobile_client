@@ -8,6 +8,7 @@ import 'package:restobook_mobile_client/view/main_screen/widgets/reservations_li
 import 'package:restobook_mobile_client/view/main_screen/widgets/tables_list.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
+import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
 import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 
 import '../../view_model/table_view_model.dart';
@@ -151,7 +152,7 @@ class _MainScreenState extends State<MainScreen> {
         title: title,
         actions: actions,
       ),
-      body: bodyWidgets[_currentScreenIndex],
+      body: ScaffoldBodyPadding(child: bodyWidgets[_currentScreenIndex]),
       floatingActionButton: const FloatingCreationReservationButton(),
       bottomNavigationBar: NavigationBar(
         destinations: destinations,
