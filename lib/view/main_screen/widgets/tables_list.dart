@@ -46,7 +46,7 @@ class TablesList extends StatelessWidget {
                     child: const Text("Добавить стол"));
               }
 
-              return TableListTile(table: tableViewModel.tables[index]);
+              return ColorIndicatedTableListTile(table: tableViewModel.tables[index]);
             }),
       );
     });

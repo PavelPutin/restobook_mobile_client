@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/reservation/edit_screen.dart';
+import 'package:restobook_mobile_client/view/reservation/widgets/table_list_tile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/info_label.dart';
