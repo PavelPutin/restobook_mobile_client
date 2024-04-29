@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/entities/employee.dart';
+import 'package:restobook_mobile_client/view/employee/edit_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator_pop.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
@@ -45,7 +46,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         ),
         floatingActionButton: const FloatingCreationReservationButton(),
         body: Consumer<EmployeeViewModel>(
-            builder: (context, reservationViewModel, child) {
+            builder: (context, employeeViewModel, child) {
               return FutureBuilder(
                   future: employeeLoading,
                   builder: (context, snapshot)
@@ -79,27 +80,49 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                     Row(
                       children: [
                         Text(
-                            "Имя: ${reservationViewModel.activeEmployee?.name}")
+                            "Имя: ${employeeViewModel.activeEmployee?.name}")
                       ],
                     ),
                     Row(
                       children: [
-                        Text("Фамилия: ${reservationViewModel.activeEmployee
+                        Text("Фамилия: ${employeeViewModel.activeEmployee
                             ?.surname}")
                       ],
                     ),
                     Row(
                       children: [
-                        Text("Отчество: ${reservationViewModel.activeEmployee
+                        Text("Отчество: ${employeeViewModel.activeEmployee
                             ?.patronymic}")
                       ],
                     ),
                     Row(
                       children: [
-                        Text("Комментарий: ${reservationViewModel.activeEmployee
+                        Text("Комментарий: ${employeeViewModel.activeEmployee
                             ?.comment}")
                       ],
                     ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                            onPressed: () =>
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EmployeeEditScreen(
+                                                employee: employeeViewModel.activeEmployee!,
+                                            )
+                                    )
+                                ),
+                            child: const Row(
+                              children: [
+                                Icon(Icons.edit),
+                                Text("Редактировать"),
+                              ],
+                            )
+                        )
+                      ],
+                    )
                   ],
                 );
               });
