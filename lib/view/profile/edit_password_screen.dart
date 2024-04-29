@@ -21,58 +21,60 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Изменить пароль"),
+      appBar: AppBar(
+        title: const Text("Изменить пароль"),
+      ),
+      body: Form(
+        key: _passwordEditingFormKey,
+        child: Column(
+          children: [
+            Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: PasswordTextField(
+                    controller: _oldPasswordController,
+                    labelText: "Старый пароль",
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Поле обязательное";
+                      }
+                      return null;
+                    })),
+            Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: PasswordTextField(
+                  controller: _passwordController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Поле обязательное";
+                    }
+                    return null;
+                  }
+                )),
+            ElevatedButton(
+                onPressed: submit,
+                child: FutureBuilder(
+                    future: submiting,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+                      return const Text("Войти");
+                    })),
+          ],
         ),
-        body: Form(
-          key: _passwordEditingFormKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _oldPasswordController,
-                obscureText: !_oldPasswordVisible,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: Icon(_oldPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off),
-                      onPressed: () {
-                        setState(() {
-                          _oldPasswordVisible = !_oldPasswordVisible;
-                        });
-                      },
-                    ),
-                    border: const OutlineInputBorder(),
-                    labelText: "Старый пароль"),
-              ),
-              PasswordTextField(controller: _passwordController),
-              ElevatedButton(
-                  onPressed: submit,
-                  child: FutureBuilder(
-                      future: submiting,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        }
-                        return const Text("Войти");
-                      })),
-            ],
-          ),
-        ),
+      ),
     );
   }
 
   void submit() async {
     if (_passwordEditingFormKey.currentState!.validate()) {
       setState(() {
-        submiting = context.read<ApplicationViewModel>().changePassword(_oldPasswordController.text, _passwordController.text);
+        submiting = context.read<ApplicationViewModel>().changePassword(
+            _oldPasswordController.text, _passwordController.text);
         submiting.then((value) {
           Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Пароль изменён")));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("Пароль изменён")));
         });
         submiting.onError((error, stackTrace) {
           ScaffoldMessenger.of(context).showSnackBar(
