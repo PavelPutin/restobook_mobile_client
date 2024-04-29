@@ -46,12 +46,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         child: DefaultTextField(
-                            controller: _loginController, labelText: "Логин"),
+                          controller: _loginController,
+                          labelText: "Логин",
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Поле обязательное";
+                            }
+                            return null;
+                          },
+                        ),
                       ),
                       Container(
                           margin: const EdgeInsets.only(bottom: 10),
                           child: PasswordTextField(
-                              controller: _passwordController))
+                              controller: _passwordController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Поле обязательное";
+                                }
+                                return null;
+                              }))
                     ],
                   ),
                 ),
