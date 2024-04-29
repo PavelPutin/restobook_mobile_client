@@ -5,11 +5,13 @@ class DefaultTextField extends StatelessWidget {
       {super.key,
       required this.controller,
       required this.labelText,
-      this.keyboardType = TextInputType.text});
+      this.keyboardType = TextInputType.text,
+      this.validator});
 
   final TextEditingController controller;
   final String labelText;
   final TextInputType keyboardType;
+  final String? Function(String? value)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,7 @@ class DefaultTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
           border: const OutlineInputBorder(), labelText: labelText),
+      validator: validator,
     );
   }
 }
