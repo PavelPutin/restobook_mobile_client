@@ -9,7 +9,7 @@ class MockEmployeeRepository extends AbstractEmployeeRepository {
         "frolov_m_vR1",
         "Фролов",
         "Макар",
-        "Викторович",
+        null,
         "Лучший сотрудник!",
         true,
         1
@@ -21,6 +21,16 @@ class MockEmployeeRepository extends AbstractEmployeeRepository {
         "Василий",
         "Петрович",
         "стажёр",
+        false,
+        1
+    ),
+    Employee(
+        3,
+        "putin_p_a",
+        "Путин",
+        "Павел",
+        "Александрович",
+        "администратор",
         false,
         1
     )
