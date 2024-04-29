@@ -7,7 +7,7 @@ class AdministratorRegistrationInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Как зарегистрироваться"),
+        title: const Text("Как зарегистрироваться"),
       ),
       body: const Center(
         child: Card(

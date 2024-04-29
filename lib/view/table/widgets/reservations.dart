@@ -17,7 +17,7 @@ class _TableReservationsState extends State<TableReservations> {
   @override
   void initState() {
     super.initState();
-    reservationsLoading = Provider.of<TableViewModel>(context, listen: false).loadActiveTableReservations().onError((error, stackTrace) => print(error));
+    reservationsLoading = Provider.of<TableViewModel>(context, listen: false).loadActiveTableReservations();
   }
 
   @override

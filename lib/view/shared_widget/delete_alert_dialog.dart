@@ -29,7 +29,7 @@ class _DeleteAlertDialogState extends State<DeleteAlertDialog> {
       content: const Text("Внимание! Это действие нельзя отменить"),
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context), child: Text("Отмена")),
+            onPressed: () => Navigator.pop(context), child: const Text("Отмена")),
         TextButton(
             onPressed: () async {
               // var promise = context

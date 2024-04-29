@@ -8,7 +8,6 @@ import '../shared_widget/comment_text_field.dart';
 import '../shared_widget/default_text_field.dart';
 import '../shared_widget/scrollable_expanded.dart';
 import '../shared_widget/title_future_builder.dart';
-import 'employee_screen.dart';
 
 class EmployeeEditScreen extends StatefulWidget {
   const EmployeeEditScreen({super.key, required this.employee});

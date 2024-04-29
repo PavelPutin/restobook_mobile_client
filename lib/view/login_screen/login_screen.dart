@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restobook_mobile_client/view/employee/edit_screen.dart';
 import 'package:restobook_mobile_client/view/login_screen/administrator_registration_info_screen.dart';
 import 'package:restobook_mobile_client/view/login_screen/employee_registration_info_screen.dart';
 import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
@@ -22,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> submiting = Future.delayed(const Duration(seconds: 0));
   final _loginController = TextEditingController();
   final _passwordController = TextEditingController();
-  var _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +44,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.symmetric(vertical: 10),
+                        margin: const EdgeInsets.symmetric(vertical: 10),
                         child: DefaultTextField(
                             controller: _loginController, labelText: "Логин"),
                       ),
                       Container(
-                          margin: EdgeInsets.only(bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 10),
                           child: PasswordTextField(
                               controller: _passwordController))
                     ],

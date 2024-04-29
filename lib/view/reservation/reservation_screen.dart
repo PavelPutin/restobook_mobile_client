@@ -7,7 +7,6 @@ import 'package:restobook_mobile_client/view/shared_widget/floating_creation_res
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/info_label.dart';
 import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
-import 'package:restobook_mobile_client/view/main_screen/widgets/table_list_tile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.dart';
 import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';

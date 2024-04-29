@@ -134,7 +134,7 @@ class _MainScreenState extends State<MainScreen> {
     }
     actions.add(const IconButtonPushProfile());
 
-    Widget title = Text("Restobook");
+    Widget title = const Text("Restobook");
     if (_currentScreenIndex == 0) {
       title = Column(
         children: [

@@ -42,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     },
                     itemCount: datas.length,
                     itemBuilder: (context, index) => Padding(
-                        padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                        padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
                         child: OnboardContent(
                           text: datas[index].text,
                         ))),
@@ -55,7 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ...List.generate(
                         datas.length,
                             (index) => Padding(
-                            padding: EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(16),
                             child: DotIndicator(
                               isActive: index == _pageIndex,
                             ))),
@@ -77,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       style: ElevatedButton.styleFrom(
                         shape: const CircleBorder(),
                       ),
-                      child: Icon(Icons.arrow_forward),
+                      child: const Icon(Icons.arrow_forward),
                     ),
                   ),
                 ),

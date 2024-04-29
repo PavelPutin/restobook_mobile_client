@@ -4,8 +4,6 @@ import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart';
 import 'package:restobook_mobile_client/model/utils/utils.dart';
 
-import '../repository/mock_employee_repository.dart';
-
 class MockAuthService extends AbstractAuthService {
   AbstractEmployeeRepository employeeRepository = GetIt.I<
       AbstractEmployeeRepository>();

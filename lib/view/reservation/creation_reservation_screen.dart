@@ -12,13 +12,9 @@ import 'package:restobook_mobile_client/view/reservation/widgets/start_time_fiel
 import 'package:restobook_mobile_client/view/reservation/widgets/table_selection_chips_field.dart';
 import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
-import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
 import '../shared_widget/scaffold_body_padding.dart';
 import '../shared_widget/scrollable_expanded.dart';
-import '../shared_widget/title_future_builder.dart';
-import '../table/widgets/scrollable_expanded_future_builder.dart';
-import 'widgets/reservation_state_dropdown_menu.dart';
 
 class CreationReservationScreen extends StatefulWidget {
   const CreationReservationScreen({super.key});
@@ -42,7 +38,6 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
   DateTime _startDate = DateTime.now();
 
   final _durationIntervalMinutesController = TextEditingController();
-  String _selectedState = "WAITING";
 
   List<TableModel> tables = [];
 
@@ -188,8 +183,6 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
               const SnackBar(content: Text("Бронь успешно создана")));
         });
         submiting.onError((error, stackTrace) {
-          print(error);
-          print(stackTrace);
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Не удалось создать бронь")));
         });

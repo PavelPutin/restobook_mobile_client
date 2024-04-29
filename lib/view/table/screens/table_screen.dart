@@ -8,7 +8,6 @@ import 'package:restobook_mobile_client/view/shared_widget/title_future_builder.
 import 'package:restobook_mobile_client/model/model.dart';
 import '../../../view_model/application_view_model.dart';
 import '../../../view_model/table_view_model.dart';
-import '../../shared_widget/delete_alert_dialog.dart';
 import '../../shared_widget/delete_icon_button.dart';
 import '../../shared_widget/icon_button_navigator_pop.dart';
 import '../../shared_widget/scaffold_body_padding.dart';

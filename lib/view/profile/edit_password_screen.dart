@@ -22,7 +22,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Изменить пароль"),
+          title: const Text("Изменить пароль"),
         ),
         body: Form(
           key: _passwordEditingFormKey,

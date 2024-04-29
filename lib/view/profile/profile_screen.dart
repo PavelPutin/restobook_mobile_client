@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/login_screen/login_screen.dart';
-import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
 import 'package:restobook_mobile_client/view/profile/edit_password_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator_pop.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
@@ -22,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () {
                 context.read<ApplicationViewModel>().logout();
                 Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginScreen()));
               },
               color: Theme.of(context).colorScheme.error,
               icon: const Icon(Icons.exit_to_app))
@@ -64,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                               context,
-                            MaterialPageRoute(builder: (context) => EditPasswordScreen())
+                            MaterialPageRoute(builder: (context) => const EditPasswordScreen())
                           );
                         },
                         child: const Row(

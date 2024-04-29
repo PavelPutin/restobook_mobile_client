@@ -9,8 +9,6 @@ import 'package:restobook_mobile_client/view/reservation/widgets/persons_number_
 import 'package:restobook_mobile_client/view/reservation/widgets/start_date_field.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/start_time_field.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/table_selection_chips_field.dart';
-import 'package:restobook_mobile_client/view/reservation/widgets/table_selection_dialog.dart';
-import 'package:restobook_mobile_client/view/shared_widget/chips_input.dart';
 import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
@@ -269,8 +267,6 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
               const SnackBar(content: Text("Бронь успешно обновлёна")));
         });
         submiting.onError((error, stackTrace) {
-          print(error);
-          print(stackTrace);
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Не удалось изменить бронь")));
         });
