@@ -59,7 +59,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return const CircularProgressIndicator();
                         }
-                        return const Text("Войти");
+                        return const Text("Изменить");
                       })),
             ],
           ),
