@@ -1,0 +1,25 @@
+{
+    "open_login_page": "Открыл страницу входа",
+    "open_admin_registration_info": "Открыл страницу с информацией о регистрации для администратора",
+    "open_employee_registration_info": "Открыл страницу с информацией о регистрации для сотрудника",
+    
+    "open_table_info": "Открыл страницу с информацией о столе",
+    "edit_table": "Изменил стол",
+    "delete_table": "Удалил стол",
+    "create_table": "Создал стол",
+
+    "open_reservation_info": "Открыл страницу с информацией о брони",
+    "edit_reservation": "Изменил бронь",
+    "delete_reservation": "Удалил бронь",
+    "create_reservation": "Создал бронь",
+
+    "open_employee_info": "Открыл страницу с информацией о человеке",
+    "edit_employee": "Изменил бронь",
+    "delete_employee": "Удалил бронь",
+    "create_employee": "Создал бронь",
+    
+    "show_change_password_dialog": "Увидел приглашение к смене пароля",
+    "open_edit_password_screen": "Открыл экран изменения пароля",
+    
+    "logout": "Вышел из аккаунта"
+}

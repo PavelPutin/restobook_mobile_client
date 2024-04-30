@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/login_screen/administrator_registration_info_screen.dart';
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppMetrica.reportEvent(const String.fromEnvironment("open_login_page"));
     return Scaffold(
         body: ScaffoldBodyPadding(
       child: Center(

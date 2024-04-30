@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -173,6 +174,7 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
       setState(() {
         submiting = context.read<ReservationViewModel>().add(created, tables);
         submiting.then((value) {
+          AppMetrica.reportEvent(const String.fromEnvironment("create_reservation"));
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(

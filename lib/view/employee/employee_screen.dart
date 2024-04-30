@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/entities/employee.dart';
@@ -34,6 +35,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppMetrica.reportEvent(const String.fromEnvironment("open_employee_info"));
     return Scaffold(
         appBar: AppBar(
           leading: const IconButtonNavigatorPop(),
@@ -51,6 +53,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
               DeleteIconButton(
                 dialogTitle: const Text("Удалить сотрудника"),
                 onSubmit: () {
+                  AppMetrica.reportEvent(const String.fromEnvironment("delete_employee"));
                   return context.read<EmployeeViewModel>().delete(
                       context.read<EmployeeViewModel>().activeEmployee!);
                 },

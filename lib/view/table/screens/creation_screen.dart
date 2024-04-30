@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
@@ -92,6 +93,7 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
             .read<TableViewModel>()
             .add(updated);
         submiting.then((value) {
+          AppMetrica.reportEvent(const String.fromEnvironment("create_table"));
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => TableScreen(table: context

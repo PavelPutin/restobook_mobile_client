@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
@@ -29,6 +30,7 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppMetrica.reportEvent(const String.fromEnvironment("create_employee"));
     return Scaffold(
         appBar: AppBar(
           title: const Text("Новый сотрудник"),

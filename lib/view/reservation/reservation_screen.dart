@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +42,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppMetrica.reportEvent(const String.fromEnvironment("open_reservation_info"));
     return Scaffold(
       appBar: AppBar(
         leading: const IconButtonNavigatorPop(),
@@ -57,6 +59,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
             DeleteIconButton(
               dialogTitle: const Text("Удалить бронь"),
               onSubmit: () {
+                AppMetrica.reportEvent(const String.fromEnvironment("delete_reservation"));
                 return context.read<ReservationViewModel>().delete(
                     context.read<ReservationViewModel>().activeReservation!);
               },

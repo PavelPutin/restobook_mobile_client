@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 
 class AdministratorRegistrationInfoScreen extends StatelessWidget {
@@ -5,6 +6,7 @@ class AdministratorRegistrationInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppMetrica.reportEvent(const String.fromEnvironment("open_admin_registration_info"));
     return Scaffold(
         appBar: AppBar(
           title: const Text("Как зарегистрироваться"),

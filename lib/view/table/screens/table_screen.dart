@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
@@ -35,6 +36,7 @@ class _TableScreenState extends State<TableScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppMetrica.reportEvent(const String.fromEnvironment("open_table_info"));
     List<Widget> bodyWidgets = [
       TableInfo(
           tableLoading: tableLoading,
@@ -60,6 +62,7 @@ class _TableScreenState extends State<TableScreen> {
             DeleteIconButton(
               dialogTitle: const Text("Удалить стол"),
               onSubmit: () {
+                AppMetrica.reportEvent(const String.fromEnvironment("delete_table"));
                 return context
                     .read<TableViewModel>()
                     .delete(context.read<TableViewModel>().activeTable!);

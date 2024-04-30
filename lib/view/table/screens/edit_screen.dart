@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -62,6 +63,7 @@ class _TableEditScreenState extends State<TableEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppMetrica.reportEvent(const String.fromEnvironment("edit_table"));
     return Scaffold(
         appBar: AppBar(
             title: TitleFutureBuilder(

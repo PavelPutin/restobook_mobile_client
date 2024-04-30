@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -115,6 +116,7 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppMetrica.reportEvent(const String.fromEnvironment("edit_reservation"));
     return Scaffold(
       appBar: AppBar(
           title: TitleFutureBuilder(

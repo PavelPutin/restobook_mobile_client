@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +59,7 @@ class _MainScreenState extends State<MainScreen> {
               ?.employee
               .changedPassword;
       if (changedPassword != null && !changedPassword) {
+        AppMetrica.reportEvent(const String.fromEnvironment("show_change_password_dialog"));
         await showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(

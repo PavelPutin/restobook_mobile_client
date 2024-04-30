@@ -1,3 +1,4 @@
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
@@ -20,6 +21,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppMetrica.reportEvent(const String.fromEnvironment("open_edit_password_screen"));
     return Scaffold(
       appBar: AppBar(
         title: const Text("Изменить пароль"),
