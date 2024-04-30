@@ -21,6 +21,7 @@ class MockReservationsRepository extends AbstractReservationRepository {
       reservation.state = "WAITING";
       reservation.restaurantId = 1;
       _reservations.add(reservation);
+      _reservations.sort(comparator);
       return reservation;
     });
   }
@@ -39,11 +40,13 @@ class MockReservationsRepository extends AbstractReservationRepository {
 
   @override
   Future<List<Reservation>> getAll() {
+    _reservations.sort(comparator);
     return ConnectionSimulator<List<Reservation>>().connect(() => _reservations);
   }
 
   @override
   Future<List<Reservation>> getByDateTime(DateTime dateTime) {
+    _reservations.sort(comparator);
     return ConnectionSimulator<List<Reservation>>().connect(() {
       List<Reservation> result = [];
       for (var r in _reservations) {
@@ -74,10 +77,20 @@ class MockReservationsRepository extends AbstractReservationRepository {
       for (int i = 0; i < _reservations.length; i++) {
         if (_reservations[i].id == reservation.id) {
           _reservations[i] = reservation;
+          _reservations.sort(comparator);
           return reservation;
         }
       }
       throw Exception("Бронь не найдена");
     });
+  }
+
+  int comparator(Reservation a, Reservation b) {
+      if (a.state == "CLOSED" && b.state != "CLOSED") return 1;
+      if (a.state == "WAITING" && b.state == "CLOSED") return -1;
+      if (a.state == "WAITING" && b.state == "OPEN") return 1;
+      if (a.state == "OPEN" && b.state != "OPEN") return -1;
+      if (a.startDateTime.isBefore(b.startDateTime)) return 1;
+      return a.id! < b.id! ? 1 : -1;
   }
 }

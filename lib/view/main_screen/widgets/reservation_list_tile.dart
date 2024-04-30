@@ -11,14 +11,30 @@ class ReservationListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double elevation = reservation.state == "CLOSED" ? 0.1 : 1;
+    Color avatarColor = reservation.state == "CLOSED"
+        ? Theme.of(context).colorScheme.secondaryContainer
+        : Theme.of(context).colorScheme.primaryContainer;
+    String state = switch (reservation.state) {
+      "WAITING" => "Ожидает",
+      "OPEN" => "Открыта",
+      "CLOSED" => "Закрыта",
+      String() => throw UnimplementedError(),
+      null => throw UnimplementedError(),
+    };
+
     return Material(
       child: Card(
+        elevation: elevation,
         child: ListTile(
-          leading: CircleAvatar(child: Text("${reservation.personsNumber}")),
+          leading: CircleAvatar(
+              backgroundColor: avatarColor,
+              child: Text("${reservation.personsNumber}")),
           title: Text(
               "${reservation.clientName}, ${reservation.clientPhoneNumber}"),
           subtitle: Text(
               "${DateFormat.MMMEd("ru_RU").format(reservation.startDateTime)} ${DateFormat.Hm().format(reservation.startDateTime)}"),
+          trailing: Text(state),
           onTap: () {
             Navigator.push(
                 context,

@@ -27,7 +27,7 @@ class Reservation {
   int durationIntervalMinutes;
   String employeeFullName;
   DateTime creatingDateTime;
-  String? state;
+  String? state; // OPEN, WAITING, CLOSED
   String? comment;
   int? restaurantId;
   List<int>? tableIds;
