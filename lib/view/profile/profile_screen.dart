@@ -23,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () {
                 context.read<ApplicationViewModel>().logout();
                 Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen()));
               },
               color: Theme.of(context).colorScheme.error,
               icon: const Icon(Icons.exit_to_app))
