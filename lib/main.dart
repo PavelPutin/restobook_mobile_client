@@ -52,18 +52,27 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ApplicationViewModel>(context, listen: false)
-        .initIsFirstEnter();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget home = context.read<ApplicationViewModel>().firstEnter
-        ? const OnboardingScreen()
-        : context.read<ApplicationViewModel>().authorized
+    Widget home = FutureBuilder(
+      future: Provider.of<ApplicationViewModel>(context, listen: false)
+          .initIsFirstEnter(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        Widget inner = context.read<ApplicationViewModel>().firstEnter
+            ? const OnboardingScreen()
+            : context.read<ApplicationViewModel>().authorized
             ? const MainScreen()
             : const LoginScreen();
-    context.read<ApplicationViewModel>().enter();
+        context.read<ApplicationViewModel>().enter();
+        return inner;
+      },
+    );
+
     return MaterialApp(
       title: 'Flutter Demo',
       localizationsDelegates: const [
