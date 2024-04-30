@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
 
 import '../../view_model/application_view_model.dart';
 import '../shared_widget/password_textfield.dart';
@@ -16,7 +17,6 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   Future<void> submiting = Future.delayed(const Duration(seconds: 0));
   final _oldPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
-  var _oldPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -24,43 +24,45 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
       appBar: AppBar(
         title: const Text("Изменить пароль"),
       ),
-      body: Form(
-        key: _passwordEditingFormKey,
-        child: Column(
-          children: [
-            Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: PasswordTextField(
-                    controller: _oldPasswordController,
-                    labelText: "Старый пароль",
+      body: ScaffoldBodyPadding(
+        child: Form(
+          key: _passwordEditingFormKey,
+          child: Column(
+            children: [
+              Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: PasswordTextField(
+                      controller: _oldPasswordController,
+                      labelText: "Старый пароль",
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Поле обязательное";
+                        }
+                        return null;
+                      })),
+              Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: PasswordTextField(
+                    controller: _passwordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Поле обязательное";
                       }
                       return null;
-                    })),
-            Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: PasswordTextField(
-                  controller: _passwordController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Поле обязательное";
                     }
-                    return null;
-                  }
-                )),
-            ElevatedButton(
-                onPressed: submit,
-                child: FutureBuilder(
-                    future: submiting,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      }
-                      return const Text("Войти");
-                    })),
-          ],
+                  )),
+              ElevatedButton(
+                  onPressed: submit,
+                  child: FutureBuilder(
+                      future: submiting,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        return const Text("Войти");
+                      })),
+            ],
+          ),
         ),
       ),
     );
