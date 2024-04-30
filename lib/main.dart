@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, applicationViewModel, child) {
         // Widget home =
         //     applicationViewModel.firstEnter ? const OnboardingScreen() : const MainScreen();
-        Widget home = false
+        Widget home = true
             ? const OnboardingScreen()
             : applicationViewModel.authorized
             ? const MainScreen()

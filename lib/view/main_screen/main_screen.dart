@@ -143,7 +143,9 @@ class _MainScreenState extends State<MainScreen> {
           const Row(children: [Text("Restobook")]),
           Row(children: [
             Text(
-                "${DateFormat.MMMEd("ru_RU").format(_date)} ${_time.format(context)}")
+                "${DateFormat.MMMEd("ru_RU").format(_date)} ${_time.format(context)}",
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.secondary),
+            )
           ])
         ],
       );
