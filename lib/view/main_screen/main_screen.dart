@@ -67,6 +67,7 @@ class _MainScreenState extends State<MainScreen> {
               TextButton(
                 child: const Text("Поменять пароль"),
                 onPressed: () {
+                  Navigator.of(context).pop();
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const EditPasswordScreen()));
                 },
               ),
