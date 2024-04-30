@@ -27,6 +27,7 @@ class MockAuthService extends AbstractAuthService {
       for (var ae in authEntities) {
         if (ae.employee.login == authEntity.employee.login && ae.password == authEntity.password) {
           ae.password = newPassword;
+          ae.employee.changedPassword = true;
           return ae;
         }
       }

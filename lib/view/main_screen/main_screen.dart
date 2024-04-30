@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/employees_list.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/reservations_list.dart';
 import 'package:restobook_mobile_client/view/main_screen/widgets/tables_list.dart';
+import 'package:restobook_mobile_client/view/profile/edit_password_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
@@ -49,6 +50,31 @@ class _MainScreenState extends State<MainScreen> {
         }
       });
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      bool? changedPassword =
+          Provider.of<ApplicationViewModel>(context, listen: false)
+              .authorizedUser
+              ?.employee
+              .changedPassword;
+      if (changedPassword != null && !changedPassword) {
+        await showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text("Смените пароль!"),
+            content: const Text("В целях безопасности вы должны поменять выданный вам пароль на новый."),
+            actions: <Widget>[
+              TextButton(
+                child: const Text("Поменять пароль"),
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const EditPasswordScreen()));
+                },
+              ),
+            ],
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -71,8 +97,8 @@ class _MainScreenState extends State<MainScreen> {
             tablesLoading: _tablesLoading,
             onRefresh: () async {
               var promise = Provider.of<TableViewModel>(context, listen: false)
-                  .loadWithDateTime(DateTime(
-                  _date.year, _date.month, _date.day, _time.hour, _time.minute));
+                  .loadWithDateTime(DateTime(_date.year, _date.month, _date.day,
+                      _time.hour, _time.minute));
               setState(() {
                 _tablesLoading = promise;
               });
@@ -143,8 +169,11 @@ class _MainScreenState extends State<MainScreen> {
           const Row(children: [Text("Restobook")]),
           Row(children: [
             Text(
-                "${DateFormat.MMMEd("ru_RU").format(_date)} ${_time.format(context)}",
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.secondary),
+              "${DateFormat.MMMEd("ru_RU").format(_date)} ${_time.format(context)}",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(color: Theme.of(context).colorScheme.secondary),
             )
           ])
         ],
