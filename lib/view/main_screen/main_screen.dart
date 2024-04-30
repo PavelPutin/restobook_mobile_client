@@ -70,7 +70,9 @@ class _MainScreenState extends State<MainScreen> {
         TablesList(
             tablesLoading: _tablesLoading,
             onRefresh: () async {
-              var promise = context.read<TableViewModel>().load();
+              var promise = Provider.of<TableViewModel>(context, listen: false)
+                  .loadWithDateTime(DateTime(
+                  _date.year, _date.month, _date.day, _time.hour, _time.minute));
               setState(() {
                 _tablesLoading = promise;
               });

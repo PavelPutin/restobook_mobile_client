@@ -11,6 +11,7 @@ import 'package:restobook_mobile_client/view/reservation/widgets/start_date_fiel
 import 'package:restobook_mobile_client/view/reservation/widgets/start_time_field.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/table_selection_chips_field.dart';
 import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.dart';
+import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
 import '../shared_widget/scaffold_body_padding.dart';
@@ -160,7 +161,7 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
           DateTime(_startDate.year, _startDate.month, _startDate.day,
               _startTime.hour, _startTime.minute),
           int.parse(_durationIntervalMinutesController.text),
-          "ИМЯ СОТРУДНИКА!!!",
+          context.read<ApplicationViewModel>().authorizedUser!.employee.shortFullName,
           DateTime.now(),
           "WAITING",
           _commentController.text.trim().isEmpty
