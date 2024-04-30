@@ -76,7 +76,15 @@ class MockReservationsRepository extends AbstractReservationRepository {
     return ConnectionSimulator<Reservation>().connect(() {
       for (int i = 0; i < _reservations.length; i++) {
         if (_reservations[i].id == reservation.id) {
+          for (int tId in _reservations[i].tableIds!) {
+            for (var t in _tables) {
+              if (t.id! == tId && !reservation.tableIds!.contains(tId)) {
+                t.reservationIds!.remove(_reservations[i].id!);
+              }
+            }
+          }
           _reservations[i] = reservation;
+
           _reservations.sort(comparator);
           return reservation;
         }

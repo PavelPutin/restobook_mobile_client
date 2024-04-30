@@ -7,16 +7,23 @@ import 'package:restobook_mobile_client/model/model.dart';
 
 class ReservationViewModel extends ChangeNotifier {
   AbstractTableRepository tableRepository = GetIt.I<AbstractTableRepository>();
-  AbstractReservationRepository reservationRepository = GetIt.I<AbstractReservationRepository>();
+  AbstractReservationRepository reservationRepository =
+      GetIt.I<AbstractReservationRepository>();
 
   List<Reservation> _reservations = [];
   Reservation? _activeReservation;
   final List<TableModel> _activeReservationTables = [];
 
-  UnmodifiableListView<Reservation> get reservations => UnmodifiableListView(_reservations);
+  UnmodifiableListView<Reservation> get reservations =>
+      UnmodifiableListView(_reservations);
+
   Reservation? get activeReservation => _activeReservation;
-  UnmodifiableListView<TableModel> get activeReservationTables => UnmodifiableListView(_activeReservationTables);
-  set activeReservation(Reservation? reservation) => _activeReservation = reservation;
+
+  UnmodifiableListView<TableModel> get activeReservationTables =>
+      UnmodifiableListView(_activeReservationTables);
+
+  set activeReservation(Reservation? reservation) =>
+      _activeReservation = reservation;
 
   Future<void> load() async {
     // TODO: ADD HTTP REQUEST TO GET ALL RESERVATIONS
