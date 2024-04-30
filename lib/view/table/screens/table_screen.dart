@@ -65,7 +65,8 @@ class _TableScreenState extends State<TableScreen> {
                 AppMetrica.reportEvent(const String.fromEnvironment("delete_table"));
                 return context
                     .read<TableViewModel>()
-                    .delete(context.read<TableViewModel>().activeTable!);
+                    .delete(context.read<TableViewModel>().activeTable!)
+                .onError((error, stackTrace) => print("$error \n $stackTrace"));
               },
               successLabel: "Стол удалён",
               errorLabel: "Не удалось удалить стол",

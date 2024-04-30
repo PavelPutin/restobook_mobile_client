@@ -168,7 +168,7 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
           _commentController.text.trim().isEmpty
               ? null
               : _commentController.text.trim(),
-          1,
+          context.read<ApplicationViewModel>().authorizedUser?.employee.restaurantId,
           tableIds);
 
       setState(() {

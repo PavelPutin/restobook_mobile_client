@@ -5,6 +5,7 @@ import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding
 import 'package:restobook_mobile_client/view/shared_widget/scrollable_expanded.dart';
 import 'package:restobook_mobile_client/view/table/screens/table_screen.dart';
 import 'package:restobook_mobile_client/view/table/widgets/table_number_text_field.dart';
+import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 
 import '../../../model/entities/table_model.dart';
 import '../../../view_model/table_view_model.dart';
@@ -77,7 +78,7 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
 
   void submit() async {
     if (_tableCreationFormKey.currentState!.validate()) {
-      TableModel updated = TableModel(
+      TableModel created = TableModel(
           null,
           int.parse(_numberController.text),
           int.parse(_seatsNumberController.text),
@@ -85,13 +86,13 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
           _commentController.text.trim().isEmpty
               ? null
               : _commentController.text.trim(),
-          null,
-          null);
+          context.read<ApplicationViewModel>().authorizedUser?.employee.restaurantId,
+          []);
 
       setState(() {
         submiting = context
             .read<TableViewModel>()
-            .add(updated);
+            .add(created);
         submiting.then((value) {
           AppMetrica.reportEvent(const String.fromEnvironment("create_table"));
           Navigator.pushReplacement(

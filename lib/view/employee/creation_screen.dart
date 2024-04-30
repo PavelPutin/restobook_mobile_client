@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/view/employee/employee_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.dart';
-import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
+
+import '../../view_model/application_view_model.dart';
+import '../../view_model/employee_view_model.dart';
 import '../shared_widget/default_text_field.dart';
 import '../shared_widget/password_textfield.dart';
 import '../shared_widget/scaffold_body_padding.dart';
@@ -146,7 +148,7 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
               ? null
               : _commentController.text.trim(),
           false,
-          1);
+          context.read<ApplicationViewModel>().authorizedUser?.employee.restaurantId);
 
       setState(() {
         submiting = context.read<EmployeeViewModel>().add(updated);

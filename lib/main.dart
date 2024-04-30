@@ -28,8 +28,7 @@ void main() {
         MockReservationsRepository());
     GetIt.I.registerSingleton<AbstractEmployeeRepository>(
         MockEmployeeRepository());
-    GetIt.I.registerSingleton<AbstractAuthService>(
-        MockAuthService());
+    GetIt.I.registerSingleton<AbstractAuthService>(MockAuthService());
 
     FlutterError.onError = (details) => print(details);
 
@@ -59,29 +58,25 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ApplicationViewModel>(
-      builder: (context, applicationViewModel, child) {
-        Widget home = applicationViewModel.firstEnter
-            ? const OnboardingScreen()
-            : applicationViewModel.authorized
+    Widget home = context.read<ApplicationViewModel>().firstEnter
+        ? const OnboardingScreen()
+        : context.read<ApplicationViewModel>().authorized
             ? const MainScreen()
             : const LoginScreen();
-        applicationViewModel.enter();
-        return MaterialApp(
-          title: 'Flutter Demo',
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate
-          ],
-          supportedLocales: const [Locale('ru')],
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x008b5350)),
-            useMaterial3: true,
-          ),
-          home: home,
-        );
-      },
+    context.read<ApplicationViewModel>().enter();
+    return MaterialApp(
+      title: 'Flutter Demo',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: const [Locale('ru')],
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x008b5350)),
+        useMaterial3: true,
+      ),
+      home: home,
     );
   }
 }
