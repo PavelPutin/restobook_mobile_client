@@ -33,10 +33,15 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Row(
+                Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("Вход"),
+                    Text("Вход",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary)),
                   ],
                 ),
                 Form(
