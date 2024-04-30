@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/login_screen/login_screen.dart';
 import 'package:restobook_mobile_client/view/profile/edit_password_screen.dart';
+import 'package:restobook_mobile_client/view/reservation/creation_reservation_screen.dart';
+import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator_pop.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
 import 'package:restobook_mobile_client/view_model/application_view_model.dart';
@@ -32,6 +34,7 @@ class ProfileScreen extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton: const FloatingCreationReservationButton(),
       body: ScaffoldBodyPadding(
         child: Consumer<ApplicationViewModel>(
           builder: (context, applicationViewModel, child) {
