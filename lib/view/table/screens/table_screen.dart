@@ -66,7 +66,10 @@ class _TableScreenState extends State<TableScreen> {
                 return context
                     .read<TableViewModel>()
                     .delete(context.read<TableViewModel>().activeTable!)
-                .onError((error, stackTrace) => print("$error \n $stackTrace"));
+                .onError((error, stackTrace) {
+                  print("$error \n $stackTrace");
+                  throw error as Exception;
+                });
               },
               successLabel: "Стол удалён",
               errorLabel: "Не удалось удалить стол",

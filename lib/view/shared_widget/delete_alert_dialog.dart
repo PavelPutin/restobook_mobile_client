@@ -46,6 +46,7 @@ class _DeleteAlertDialogState extends State<DeleteAlertDialog> {
                     .showSnackBar(SnackBar(content: Text(widget.successLabel)));
                 // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Стол удалён")));
               }).onError((error, stackTrace) {
+                Navigator.pop(context);
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(widget.errorLabel)));
                 // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Не удалось удалить стол")));
