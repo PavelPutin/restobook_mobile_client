@@ -46,6 +46,7 @@ dependencies:
   intl: any
   shared_preferences: ^2.2.3
   flutter_launcher_icons: ^0.13.1
+  openid_client: ^0.4.8
 
 dev_dependencies:
   flutter_test:
