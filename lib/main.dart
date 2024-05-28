@@ -2,6 +2,7 @@ import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
@@ -10,7 +11,6 @@ import 'package:restobook_mobile_client/model/repository/mock_reservations_repos
 import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart';
 import 'package:restobook_mobile_client/model/service/api_dio.dart';
 import 'package:restobook_mobile_client/model/service/http_auth_service.dart';
-import 'package:restobook_mobile_client/model/service/mock_auth_service.dart';
 import 'package:restobook_mobile_client/view/login_screen/login_screen.dart';
 import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
 import 'package:restobook_mobile_client/view/onboarding/onboarding_screen.dart';
@@ -24,6 +24,11 @@ void main() {
     AppMetrica.activate(
         const AppMetricaConfig(String.fromEnvironment("AppMetricaKey")));
 
+    var logger = Logger(
+      printer: PrettyPrinter()
+    );
+    GetIt.I.registerSingleton<Logger>(logger);
+    
     final api = Api();
     api.init();
     GetIt.I.registerSingleton<Api>(api);
@@ -72,21 +77,19 @@ class _MyAppState extends State<MyApp> {
       future: initLoading,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
         }
 
-        return Consumer<ApplicationViewModel>(
-          builder: (BuildContext context, ApplicationViewModel value,
-              Widget? child) {
-            Widget inner = context.read<ApplicationViewModel>().firstEnter
-                ? const OnboardingScreen()
-                : context.read<ApplicationViewModel>().authorized
-                ? const MainScreen()
-                : const LoginScreen();
-            context.read<ApplicationViewModel>().enter();
-            return inner;
-          },
-        );
+        if (context.read<ApplicationViewModel>().firstEnter) {
+          context.read<ApplicationViewModel>().enter();
+          return const OnboardingScreen();
+        }
+
+        if (context.read<ApplicationViewModel>().authorized) {
+          return const MainScreen();
+        }
+
+        return const LoginScreen();
       },
     );
 
