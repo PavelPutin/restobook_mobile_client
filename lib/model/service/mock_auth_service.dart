@@ -9,6 +9,7 @@ class MockAuthService extends AbstractAuthService {
       AbstractEmployeeRepository>();
 
   List<AuthEntity> authEntities = [];
+  AuthEntity? authenticated;
 
   MockAuthService() {
     employeeRepository.getAll().then((employees) {
@@ -40,10 +41,18 @@ class MockAuthService extends AbstractAuthService {
     return ConnectionSimulator<AuthEntity>().connect(() {
       for (var authEntity in authEntities) {
           if (authEntity.employee.login == username && authEntity.password == password) {
+            authenticated = authEntity;
             return authEntity;
           }
       }
       throw Exception("Ошибка в логине или пароле");
+    });
+  }
+
+  @override
+  Future<AuthEntity> getMe() {
+    return ConnectionSimulator<AuthEntity>().connect(() {
+      return authenticated;
     });
   }
 }

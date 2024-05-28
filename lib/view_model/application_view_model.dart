@@ -36,6 +36,14 @@ class ApplicationViewModel extends ChangeNotifier {
     });
   }
 
+  Future<void> getMe() async {
+    await authService.getMe()
+        .then((value) => _authorizedUser = value)
+        .onError((error, stackTrace) => null)
+    ;
+    notifyListeners();
+  }
+
   Future<void> login(String username, String password) async {
     await authService.login(username, password)
         .then((value) => _authorizedUser = value);

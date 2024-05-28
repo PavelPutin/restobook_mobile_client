@@ -8,6 +8,8 @@ import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
 import 'package:restobook_mobile_client/model/repository/mock_employee_repository.dart';
 import 'package:restobook_mobile_client/model/repository/mock_reservations_repository.dart';
 import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart';
+import 'package:restobook_mobile_client/model/service/api_dio.dart';
+import 'package:restobook_mobile_client/model/service/http_auth_service.dart';
 import 'package:restobook_mobile_client/model/service/mock_auth_service.dart';
 import 'package:restobook_mobile_client/view/login_screen/login_screen.dart';
 import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
@@ -22,13 +24,17 @@ void main() {
     AppMetrica.activate(
         const AppMetricaConfig(String.fromEnvironment("AppMetricaKey")));
 
+    final api = Api();
+    api.init();
+    GetIt.I.registerSingleton<Api>(api);
+
     GetIt.I.registerSingleton<MockBackend>(MockBackend());
     GetIt.I.registerSingleton<AbstractTableRepository>(MockTablesRepository());
     GetIt.I.registerSingleton<AbstractReservationRepository>(
         MockReservationsRepository());
     GetIt.I.registerSingleton<AbstractEmployeeRepository>(
         MockEmployeeRepository());
-    GetIt.I.registerSingleton<AbstractAuthService>(MockAuthService());
+    GetIt.I.registerSingleton<AbstractAuthService>(HttpAuthService());
 
     FlutterError.onError = (details) => print(details);
 
@@ -49,27 +55,38 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late Future<void> initLoading;
+
   @override
   void initState() {
     super.initState();
+    initLoading = Provider.of<ApplicationViewModel>(context, listen: false)
+        .initIsFirstEnter()
+        .whenComplete(() =>
+            Provider.of<ApplicationViewModel>(context, listen: false).getMe());
   }
 
   @override
   Widget build(BuildContext context) {
     Widget home = FutureBuilder(
-      future: Provider.of<ApplicationViewModel>(context, listen: false)
-          .initIsFirstEnter(),
+      future: initLoading,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-        Widget inner = context.read<ApplicationViewModel>().firstEnter
-            ? const OnboardingScreen()
-            : context.read<ApplicationViewModel>().authorized
-            ? const MainScreen()
-            : const LoginScreen();
-        context.read<ApplicationViewModel>().enter();
-        return inner;
+
+        return Consumer<ApplicationViewModel>(
+          builder: (BuildContext context, ApplicationViewModel value,
+              Widget? child) {
+            Widget inner = context.read<ApplicationViewModel>().firstEnter
+                ? const OnboardingScreen()
+                : context.read<ApplicationViewModel>().authorized
+                ? const MainScreen()
+                : const LoginScreen();
+            context.read<ApplicationViewModel>().enter();
+            return inner;
+          },
+        );
       },
     );
 
