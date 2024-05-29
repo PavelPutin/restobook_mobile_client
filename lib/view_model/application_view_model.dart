@@ -17,7 +17,7 @@ class ApplicationViewModel extends ChangeNotifier {
 
   bool get firstEnter => _firstEnter;
   bool get authorized => _authorizedUser != null;
-  bool get isAdmin => _authorizedUser != null && _authorizedUser!.role == "ROLE_ADMIN";
+  bool get isAdmin => _authorizedUser != null && _authorizedUser!.role == "ROLE_restobook_admin";
 
   Future<void> initIsFirstEnter() async {
     await SharedPreferences.getInstance().then((preferences) {
