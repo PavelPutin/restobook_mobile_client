@@ -83,7 +83,8 @@ class ApplicationViewModel extends ChangeNotifier {
     }
   }
 
-  void logout() {
+  Future<void> logout() async {
+    await authService.logout();
     _authorizedUser = null;
     notifyListeners();
   }

@@ -86,4 +86,11 @@ class HttpAuthService extends AbstractAuthService {
     logger.t("Throw 'Not authorized'");
     return null;
   }
+
+  @override
+  Future<void> logout() async {
+    logger.t("Process logout");
+    await api.secureStorage.delete(key: Api.accessTokenKey);
+    await api.secureStorage.delete(key: Api.refreshTokenKey);
+  }
 }
