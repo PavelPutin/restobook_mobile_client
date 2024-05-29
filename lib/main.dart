@@ -20,6 +20,8 @@ import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
+import 'model/repository/http_employee_repository.dart';
+
 void main() {
   AppMetrica.runZoneGuarded(() {
     AppMetrica.activate(
@@ -39,7 +41,7 @@ void main() {
     GetIt.I.registerSingleton<AbstractReservationRepository>(
         MockReservationsRepository());
     GetIt.I.registerSingleton<AbstractEmployeeRepository>(
-        MockEmployeeRepository());
+        HttpEmployeeRepository());
     GetIt.I.registerSingleton<AbstractAuthService>(HttpAuthService());
 
     FlutterError.onError = (details) => print(details);
