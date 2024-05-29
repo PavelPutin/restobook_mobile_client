@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
+import 'package:logger/web.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
@@ -60,6 +61,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Logger logger = GetIt.I<Logger>();
+
   late Future<void> initLoading;
 
   @override
@@ -81,14 +84,17 @@ class _MyAppState extends State<MyApp> {
         }
 
         if (context.read<ApplicationViewModel>().firstEnter) {
+          logger.t("Start build onboarding");
           context.read<ApplicationViewModel>().enter();
           return const OnboardingScreen();
         }
 
         if (context.read<ApplicationViewModel>().authorized) {
+          logger.t("Start build main screen");
           return const MainScreen();
         }
 
+        logger.t("Start build login screen");
         return const LoginScreen();
       },
     );

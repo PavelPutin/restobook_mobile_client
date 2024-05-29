@@ -40,6 +40,8 @@ class Api {
         options.headers['Authorization'] = 'Bearer ${token ?? ""}';
         return handler.next(options);
 
+      }, onResponse: (response, handler) {
+        return handler.resolve(response);
       }, onError: (DioException error, ErrorInterceptorHandler handler) async {
         logger.e("Api got error\n", error: error);
         logger.e("Response status code\n${error.response?.statusCode}");
@@ -55,6 +57,12 @@ class Api {
             }
 
             logger.e("Access token expired error");
+            final tokenDio = Dio(
+              BaseOptions(
+                  baseUrl: error.requestOptions.baseUrl,
+              ),
+            );
+
             final refreshToken = await secureStorage.read(key: refreshTokenKey);
             logger.t("Contains refresh token ${refreshToken != null}");
             if (refreshToken == null) {
@@ -62,7 +70,8 @@ class Api {
               return handler.reject(error);
             }
 
-            final response = await dio.post(
+
+            final response = await tokenDio.post(
                 '/realms/restaurant/protocol/openid-connect/token',
                 data: {
                   'grant_type': 'refresh_token',
@@ -71,7 +80,7 @@ class Api {
                   'refresh_token': refreshToken
                 },
                 options:
-                    Options(contentType: Headers.formUrlEncodedContentType));
+                Options(contentType: Headers.formUrlEncodedContentType));
 
             logger.t("Refresh response status ${response.statusCode} ${response.statusMessage}");
             logger.t("Refresh response\n${response.data.toString()}");
@@ -92,10 +101,10 @@ class Api {
             logger.t("Set refreshToken");
             logger.t("Finish process anauthorized request");
             return handler.next(error);
-          } catch (e) {
+          } on DioException catch (e) {
             logger.e("Dio exception in anauthorized request processing", error: e);
             // return handler.reject(e);
-            return handler.next(error);
+            return handler.reject(error);
           }
         }
         logger.e("Reject errored request");
