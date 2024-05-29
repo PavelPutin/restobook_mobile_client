@@ -55,4 +55,10 @@ class MockAuthService extends AbstractAuthService {
       return authenticated;
     });
   }
+
+  @override
+  Future<void> logout() {
+    // TODO: implement logout
+    throw UnimplementedError();
+  }
 }

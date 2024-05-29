@@ -14,10 +14,16 @@ class HttpAuthService extends AbstractAuthService {
   Logger logger = GetIt.I<Logger>();
 
   @override
-  Future<AuthEntity?> changePassword(AuthEntity authEntity, String newPassword) {
-    return ConnectionSimulator<AuthEntity>().connect(() {
-
-    });
+  Future<AuthEntity?> changePassword(AuthEntity authEntity, String newPassword) async {
+    logger.t("Change password");
+    final response = await api.dio.put(
+        "/restobook-api/auth/password",
+        data: {
+          "newPassword": newPassword,
+          "oldPassword": ""
+        }
+    );
+    return authEntity;
   }
 
   @override
