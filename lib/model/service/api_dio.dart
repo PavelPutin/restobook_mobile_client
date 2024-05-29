@@ -59,7 +59,7 @@ class Api {
             logger.e("Access token expired error");
             final tokenDio = Dio(
               BaseOptions(
-                  baseUrl: error.requestOptions.baseUrl,
+                  baseUrl: basePath,
               ),
             );
 
