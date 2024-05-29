@@ -29,8 +29,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   @override
   void initState() {
     super.initState();
+    int restaurantId = Provider.of<ApplicationViewModel>(context, listen: false).authorizedUser!.employee.restaurantId!;
     employeeLoading = Provider.of<EmployeeViewModel>(context, listen: false)
-        .loadActiveEmployee(widget.employee.id!);
+        .loadActiveEmployee(restaurantId, widget.employee.id!);
   }
 
   @override
@@ -83,11 +84,12 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                           ElevatedButton(
                               onPressed: () async {
                                 setState(() {
+                                  int restaurantId = Provider.of<ApplicationViewModel>(context, listen: false).authorizedUser!.employee.restaurantId!;
                                   employeeLoading =
                                       Provider.of<EmployeeViewModel>(context,
                                               listen: false)
                                           .loadActiveEmployee(
-                                              widget.employee.id!);
+                                          restaurantId, widget.employee.id!);
                                 });
                               },
                               child: const Text("Попробовать ещё раз"))

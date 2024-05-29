@@ -13,18 +13,36 @@ class HttpEmployeeRepository extends AbstractEmployeeRepository {
   final logger = GetIt.I<Logger>();
 
   @override
-  Future<Employee> create(Employee employee) {
-    return ConnectionSimulator<Employee>().connect(() {
-      int maxId = 0;
-      for (var e in _employees) {
-        if (e.id! > maxId) {
-          maxId = e.id!;
-        }
+  Future<Employee> create(int restaurantId, Employee employee, String password) async {
+    try {
+      logger.t("Try create employee");
+      logger.t("Employee data:\n${employee}");
+      Map<String, dynamic> creationData = employee.toJson();
+      creationData["password"] = password;
+      creationData["role"] = "restobook_user";
+      final response = await api.dio.post(
+          "/restobook-api/restaurant/$restaurantId/employee",
+        data: creationData
+      );
+      var isEmpty = (response.data ?? "").toString().isEmpty;
+      logger.t("Response data is empty: $isEmpty");
+      if (!isEmpty) {
+        logger.t("Response data:\n${response.data.toString()}");
       }
-      employee.id = maxId + 1;
-      _employees.add(employee);
-      return employee;
-    });
+      Employee created = Employee.fromJson(response.data);
+      logger.t("Created employee\n$created");
+      return created;
+    } on DioException catch (e) {
+      logger.e("Can't create employee", error: e);
+      if (e.response != null) {
+        logger.e("Response body", error: e.response!.data);
+        // if (e.response!.data != null) {
+        //   throw e.response!.data!;
+        // }
+      }
+
+      rethrow;
+    }
   }
 
   @override
@@ -55,15 +73,30 @@ class HttpEmployeeRepository extends AbstractEmployeeRepository {
   }
 
   @override
-  Future<Employee> getById(int id) {
-    return ConnectionSimulator<Employee>().connect(() {
-      for (var employee in _employees) {
-        if (employee.id == id) {
-          return employee;
-        }
+  Future<Employee> getById(int restaurantId, int id) async {
+    try {
+      logger.t("Try get employee $id");
+      final response = await api.dio.get("/restobook-api/restaurant/$restaurantId/employee/$id");
+      var isEmpty = (response.data ?? "").toString().isEmpty;
+      logger.t("Response data is empty: $isEmpty");
+      if (!isEmpty) {
+        logger.t("Response data:\n${response.data.toString()}");
       }
-      throw Exception("Сотрудник не найден");
-    });
+      Employee fetched = Employee.fromJson(response.data);
+      logger.t("Fetched employee\n$fetched");
+      return fetched;
+    } on DioException catch (e) {
+      logger.e("Can't find employee $id", error: e);
+      rethrow;
+    }
+    // return ConnectionSimulator<Employee>().connect(() {
+    //   for (var employee in _employees) {
+    //     if (employee.id == id) {
+    //       return employee;
+    //     }
+    //   }
+    //   throw Exception("Сотрудник не найден");
+    // });
   }
 
   @override

@@ -104,10 +104,7 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                         controller: _patronymicController,
                         labelText: "Отчество сотрудника",
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Поле обязательное";
-                          }
-                          if (value.length > 512) {
+                          if (value != null && value.length > 512) {
                             return "Отчество не должно быть длиннее 512 символов";
                           }
                           return null;
@@ -136,6 +133,7 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
 
   void submit() async {
     if (_employeeCreationFormKey.currentState!.validate()) {
+      String password = _passwordController.text;
       Employee updated = Employee(
           null,
           _loginController.text,
@@ -151,7 +149,8 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
           context.read<ApplicationViewModel>().authorizedUser?.employee.restaurantId);
 
       setState(() {
-        submiting = context.read<EmployeeViewModel>().add(updated);
+        int restaurantId = context.read<ApplicationViewModel>().authorizedUser!.employee.restaurantId!;
+        submiting = context.read<EmployeeViewModel>().add(restaurantId, updated, password);
         submiting.then((value) {
           Navigator.pushReplacement(
               context,

@@ -2,6 +2,7 @@ import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
+import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
 import '../../model/entities/employee.dart';
@@ -33,8 +34,9 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
   void initState() {
     super.initState();
     submiting = Future.delayed(const Duration(seconds: 0));
+    int restaurantId = Provider.of<ApplicationViewModel>(context, listen: false).authorizedUser!.employee.restaurantId!;
     loading = Provider.of<EmployeeViewModel>(context, listen: false)
-        .loadActiveEmployee(widget.employee.id!);
+        .loadActiveEmployee(restaurantId, widget.employee.id!);
     loading.then((value) {
       String surname = Provider
           .of<EmployeeViewModel>(context, listen: false)

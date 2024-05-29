@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:restobook_mobile_client/model/model.dart';
+import 'package:restobook_mobile_client/view/main_screen/widgets/tables_list.dart';
 
 class EmployeeViewModel extends ChangeNotifier {
   AbstractEmployeeRepository employeeRepository = GetIt.I<AbstractEmployeeRepository>();
@@ -20,15 +21,17 @@ class EmployeeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadActiveEmployee(int employeeId) async {
+  Future<void> loadActiveEmployee(int restaurantId, int employeeId) async {
     // TODO: ADD HTTP REQUEST TO GET EMPLOYEES BY ID
-    activeEmployee = await employeeRepository.getById(employeeId);
+    activeEmployee = await employeeRepository.getById(restaurantId, employeeId);
     notifyListeners();
   }
 
-  Future<void> add(Employee employee) async {
+  Future<void> add(int restaurantId, Employee employee, String password) async {
     // TODO: ADD HTTP REQUEST TO CREATE EMPLOYEE
-    activeEmployee = await employeeRepository.create(employee);
+    logger.t("Employee view model employee creation");
+    activeEmployee = await employeeRepository.create(restaurantId, employee, password);
+    logger.t("New active employee:\n${activeEmployee?.toJson()}");
     notifyListeners();
   }
 
