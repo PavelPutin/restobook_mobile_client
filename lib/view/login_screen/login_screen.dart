@@ -64,6 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                             return null;
                           },
+                          onChange: (value) {
+                            if (value != null) {
+                              _loginController.value =
+                                  TextEditingValue(text: value.toLowerCase());
+                            }
+                          },
                         ),
                       ),
                       Container(

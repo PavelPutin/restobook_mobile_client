@@ -5,7 +5,6 @@ import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/view/employee/employee_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.dart';
 
-
 import '../../view_model/application_view_model.dart';
 import '../../view_model/employee_view_model.dart';
 import '../shared_widget/default_text_field.dart';
@@ -46,17 +45,24 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                   Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     child: DefaultTextField(
-                        controller: _loginController,
-                        labelText: "Логин сотрудника",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Поле обязательное";
-                          }
-                          if (value.length > 512) {
-                            return "Логин не должен быть длиннее 512 символов";
-                          }
-                          return null;
-                        }),
+                      controller: _loginController,
+                      labelText: "Логин сотрудника",
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Поле обязательное";
+                        }
+                        if (value.length > 512) {
+                          return "Логин не должен быть длиннее 512 символов";
+                        }
+                        return null;
+                      },
+                      onChange: (value) {
+                        if (value != null) {
+                          _loginController.value =
+                              TextEditingValue(text: value.toLowerCase());
+                        }
+                      },
+                    ),
                   ),
                   Container(
                       margin: const EdgeInsets.only(bottom: 10),
@@ -146,11 +152,21 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
               ? null
               : _commentController.text.trim(),
           false,
-          context.read<ApplicationViewModel>().authorizedUser?.employee.restaurantId);
+          context
+              .read<ApplicationViewModel>()
+              .authorizedUser
+              ?.employee
+              .restaurantId);
 
       setState(() {
-        int restaurantId = context.read<ApplicationViewModel>().authorizedUser!.employee.restaurantId!;
-        submiting = context.read<EmployeeViewModel>().add(restaurantId, updated, password);
+        int restaurantId = context
+            .read<ApplicationViewModel>()
+            .authorizedUser!
+            .employee
+            .restaurantId!;
+        submiting = context
+            .read<EmployeeViewModel>()
+            .add(restaurantId, updated, password);
         submiting.then((value) {
           Navigator.pushReplacement(
               context,
