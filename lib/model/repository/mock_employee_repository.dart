@@ -45,7 +45,7 @@ class MockEmployeeRepository extends AbstractEmployeeRepository {
   }
 
   @override
-  Future<Employee> update(Employee employee) {
+  Future<Employee> update(int restaurantId, Employee employee) {
     return ConnectionSimulator<Employee>().connect(() {
       for (int i = 0; i < _employees.length; i++) {
         if (_employees[i].id == employee.id) {

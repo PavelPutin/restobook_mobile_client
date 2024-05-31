@@ -112,16 +112,26 @@ class HttpEmployeeRepository extends AbstractEmployeeRepository {
   }
 
   @override
-  Future<Employee> update(Employee employee) {
-    return ConnectionSimulator<Employee>().connect(() {
-      for (int i = 0; i < _employees.length; i++) {
-        if (_employees[i].id == employee.id) {
-          _employees[i] = employee;
-          return employee;
-        }
+  Future<Employee> update(int restaurantId, Employee employee) async {
+    try {
+      logger.t("Try update employee");
+      logger.t("Employee to update\n${employee.toJson()}");
+      final response = await api.dio.put(
+          "/restobook-api/restaurant/$restaurantId/employee/${employee.id!}",
+        data: employee.toJson()
+      );
+      var isEmpty = (response.data ?? "").toString().isEmpty;
+      logger.t("Response data is empty: $isEmpty");
+      if (!isEmpty) {
+        logger.t("Response data:\n${response.data.toString()}");
       }
-      throw Exception("Сотрудник не найден");
-    });
+      Employee fetched = Employee.fromJson(response.data);
+      logger.t("Fetched employee\n$fetched");
+      return fetched;
+    } on DioException catch (e) {
+      logger.e("Can't update employee", error: e);
+      rethrow;
+    }
   }
 
 }

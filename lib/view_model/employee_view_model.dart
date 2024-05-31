@@ -35,9 +35,9 @@ class EmployeeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> update(Employee employee) async {
+  Future<void> update(int restaurantId, Employee employee) async {
     // TODO: ADD HTTP REQUEST TO UPDATE EMPLOYEE
-    activeEmployee = await employeeRepository.update(employee);
+    activeEmployee = await employeeRepository.update(restaurantId, employee);
     notifyListeners();
   }
 

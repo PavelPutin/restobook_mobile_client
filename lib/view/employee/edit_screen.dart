@@ -143,7 +143,12 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
           source.restaurantId);
 
       setState(() {
-        submiting = context.read<EmployeeViewModel>().update(updated);
+        int restaurantId = context
+            .read<ApplicationViewModel>()
+            .authorizedUser!
+            .employee
+            .restaurantId!;
+        submiting = context.read<EmployeeViewModel>().update(restaurantId, updated);
         submiting.then((value) {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
