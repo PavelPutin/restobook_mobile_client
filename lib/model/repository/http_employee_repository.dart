@@ -46,8 +46,20 @@ class HttpEmployeeRepository extends AbstractEmployeeRepository {
   }
 
   @override
-  Future<void> delete(Employee employee) {
-    return ConnectionSimulator<void>().connect(() => _employees.remove(employee));
+  Future<void> delete(int restaurantId, Employee employee) async {
+    // return ConnectionSimulator<void>().connect(() => _employees.remove(employee));
+    try {
+      logger.t("Try to delete employee");
+      await api.dio.delete("/restobook-api/restaurant/$restaurantId/employee/${employee.id!}");
+      logger.t("Successfully delete employee");
+    } on DioException catch (e) {
+      logger.e("Can't delete employee", error: e);
+      if (e.response != null) {
+        logger.e("Response body", error: e.response!.data);
+      }
+
+      rethrow;
+    }
   }
 
   @override

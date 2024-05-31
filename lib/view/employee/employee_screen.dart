@@ -55,7 +55,13 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                 dialogTitle: const Text("Удалить сотрудника"),
                 onSubmit: () {
                   AppMetrica.reportEvent(const String.fromEnvironment("delete_employee"));
+                  int restaurantId = context
+                      .read<ApplicationViewModel>()
+                      .authorizedUser!
+                      .employee
+                      .restaurantId!;
                   return context.read<EmployeeViewModel>().delete(
+                      restaurantId,
                       context.read<EmployeeViewModel>().activeEmployee!);
                 },
                 successLabel: "Сотрудник удалён",

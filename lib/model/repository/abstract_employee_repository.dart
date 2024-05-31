@@ -5,5 +5,5 @@ abstract class AbstractEmployeeRepository {
   Future<Employee> getById(int restaurantId, int id);
   Future<Employee> create(int restaurantId, Employee employee, String password);
   Future<Employee> update(Employee employee);
-  Future<void> delete(Employee employee);
+  Future<void> delete(int restaurantId, Employee employee);
 }

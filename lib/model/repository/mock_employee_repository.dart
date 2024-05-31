@@ -23,7 +23,7 @@ class MockEmployeeRepository extends AbstractEmployeeRepository {
   }
 
   @override
-  Future<void> delete(Employee employee) {
+  Future<void> delete(int restaurantId, Employee employee) {
     return ConnectionSimulator<void>().connect(() => _employees.remove(employee));
   }
 
