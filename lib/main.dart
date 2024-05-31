@@ -7,7 +7,6 @@ import 'package:logger/web.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
-import 'package:restobook_mobile_client/model/repository/mock_employee_repository.dart';
 import 'package:restobook_mobile_client/model/repository/mock_reservations_repository.dart';
 import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart';
 import 'package:restobook_mobile_client/model/service/api_dio.dart';
@@ -44,7 +43,7 @@ void main() {
         HttpEmployeeRepository());
     GetIt.I.registerSingleton<AbstractAuthService>(HttpAuthService());
 
-    FlutterError.onError = (details) => print(details);
+    FlutterError.onError = (details) => logger.e("Error occured", error: details);
 
     runApp(MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => EmployeeViewModel()),

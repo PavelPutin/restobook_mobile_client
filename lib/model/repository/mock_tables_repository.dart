@@ -34,14 +34,12 @@ class MockTablesRepository extends AbstractTableRepository {
       for (var reservation in _reservations) {
         if (reservation.id! == reservationId) {
           if (reservation.tableIds?.length == 1) {
-            print("exception");
             throw Exception("Нельзя удалить стол, так как он единственный для брони");
           }
           reservation.tableIds?.remove(table.id!);
         }
       }
     }
-    print("working");
     return ConnectionSimulator<void>().connect(() => _tables.remove(table));
   }
 

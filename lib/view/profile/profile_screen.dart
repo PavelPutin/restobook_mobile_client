@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/login_screen/login_screen.dart';
 import 'package:restobook_mobile_client/view/profile/edit_password_screen.dart';
-import 'package:restobook_mobile_client/view/reservation/creation_reservation_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/floating_creation_reservation_button.dart';
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_navigator_pop.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';

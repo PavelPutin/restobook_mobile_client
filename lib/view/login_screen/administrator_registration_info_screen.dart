@@ -13,7 +13,7 @@ class AdministratorRegistrationInfoScreen extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            margin: EdgeInsets.all(25),
+            margin: const EdgeInsets.all(25),
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(10),

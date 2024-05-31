@@ -2,13 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:restobook_mobile_client/model/model.dart';
-import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
 
 import '../service/api_dio.dart';
-import '../utils/utils.dart';
 
 class HttpEmployeeRepository extends AbstractEmployeeRepository {
-  final List<Employee> _employees = GetIt.I<MockBackend>().employee;
   final api = GetIt.I<Api>();
   final logger = GetIt.I<Logger>();
 
@@ -16,7 +13,7 @@ class HttpEmployeeRepository extends AbstractEmployeeRepository {
   Future<Employee> create(int restaurantId, Employee employee, String password) async {
     try {
       logger.t("Try create employee");
-      logger.t("Employee data:\n${employee}");
+      logger.t("Employee data:\n${employee.toJson()}");
       Map<String, dynamic> creationData = employee.toJson();
       creationData["password"] = password;
       creationData["role"] = "restobook_user";
