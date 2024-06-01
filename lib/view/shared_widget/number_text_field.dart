@@ -6,11 +6,12 @@ class NumberTextField extends StatelessWidget {
       {super.key,
       required this.controller,
       required this.labelText,
-      this.validator});
+      this.validator, this.errorText});
 
   final TextEditingController controller;
   final String labelText;
   final String? Function(String? value)? validator;
+  final String? errorText;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class NumberTextField extends StatelessWidget {
       keyboardType: TextInputType.number,
       maxLines: null,
       decoration: InputDecoration(
-          border: const OutlineInputBorder(), labelText: labelText),
+          border: const OutlineInputBorder(), labelText: labelText, errorText: errorText),
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
       ],

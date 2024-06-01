@@ -1,4 +1,5 @@
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
@@ -26,6 +27,8 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
   final TextEditingController _seatsNumberController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
 
+  bool _tableNumberUnique = true;
+
   @override
   void dispose() {
     _seatsNumberController.dispose();
@@ -47,7 +50,10 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
               children: [
                 Container(
                     margin: const EdgeInsets.only(bottom: 10),
-                    child: TableNumberTextField(controller: _numberController)
+                    child: TableNumberTextField(
+                        controller: _numberController,
+                      errorText: _tableNumberUnique ? null : "Номер столика уже занят",
+                    )
                 ),
                 Container(
                     margin: const EdgeInsets.only(bottom: 10),
@@ -77,6 +83,7 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
   }
 
   void submit() async {
+    setState(() => _tableNumberUnique = true);
     if (_tableCreationFormKey.currentState!.validate()) {
       TableModel created = TableModel(
           null,
@@ -111,6 +118,18 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
                   Text("Стол успешно добавлен")));
         });
         submiting.onError((error, stackTrace) {
+          // setState(() => _tableNumberUnique = false);
+          if (error is DioException) {
+            final data = error.response?.data;
+            if (data != null && data is Map<String, dynamic> && data.containsKey("messages")) {
+              final messages = data["messages"] as List<dynamic>;
+              for (var message in messages) {
+                if (message.startsWith("Table number must be unique in restaurant")) {
+                  setState(() => _tableNumberUnique = false);
+                }
+              }
+            }
+          }
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                   content:
