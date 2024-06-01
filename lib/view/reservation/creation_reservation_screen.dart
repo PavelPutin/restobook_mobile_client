@@ -114,7 +114,7 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
                   margin: const EdgeInsets.only(bottom: 10),
                   child: TableSelectionChipsField(
                     tables: tables,
-                    targetDateTime: DateTime(_startDate.year, _startDate.month,
+                    targetDateTime: DateTime.utc(_startDate.year, _startDate.month,
                         _startDate.day, _startTime.hour, _startTime.minute),
                     onDeleted: (value) => setState(() {
                       tables.remove(value);
@@ -159,7 +159,7 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
           int.parse(_personsNumberController.text),
           _clientPhoneNumberController.text,
           _clientNameController.text,
-          DateTime(_startDate.year, _startDate.month, _startDate.day,
+          DateTime.utc(_startDate.year, _startDate.month, _startDate.day,
               _startTime.hour, _startTime.minute),
           int.parse(_durationIntervalMinutesController.text),
           context.read<ApplicationViewModel>().authorizedUser!.employee.shortFullName,

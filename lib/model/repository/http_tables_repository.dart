@@ -36,11 +36,18 @@ class HttpTablesRepository extends AbstractTableRepository {
       logger.t("Try create table");
       table.restaurantId = restaurantId;
       final response = await api.dio.post(
-        "/restobook-api/table/$restaurantId/table",
-        data: table
+        "/restobook-api/restaurant/$restaurantId/table",
+        data: table.toJson()
       );
+
+      var isEmpty = (response.data ?? "").toString().isEmpty;
+      logger.t("Response data is empty: $isEmpty");
+      if (!isEmpty) {
+        logger.t("Response data:\n${response.data.toString()}");
+      }
+
       TableModel created = TableModel.fromJson(response.data);
-      logger.t("Created table\n$created");
+      logger.t("Created table\n${created.toJson()}");
       return created;
     } on DioException catch (e) {
       logger.e("Can't create table", error: e);
@@ -69,8 +76,15 @@ class HttpTablesRepository extends AbstractTableRepository {
     try {
       logger.t("Try get all tables");
       final response = await api.dio.get(
-          "/restobook-api/table/$restaurantId/table"
+          "/restobook-api/restaurant/$restaurantId/table"
       );
+
+      var isEmpty = (response.data ?? "").toString().isEmpty;
+      logger.t("Response data is empty: $isEmpty");
+      if (!isEmpty) {
+        logger.t("Response data:\n${response.data.toString()}");
+      }
+
       List<TableModel> result = [];
       for (var e in response.data) {
         result.add(TableModel.fromJson(e));
@@ -78,6 +92,9 @@ class HttpTablesRepository extends AbstractTableRepository {
       logger.t("Get all tables");
       return result;
     } on DioException catch (e) {
+      logger.e("Can't get all tables", error: e);
+      rethrow;
+    } catch (e) {
       logger.e("Can't get all tables", error: e);
       rethrow;
     }
@@ -96,13 +113,16 @@ class HttpTablesRepository extends AbstractTableRepository {
     try {
       logger.t("Try get table $id");
       final response = await api.dio.get(
-          "/restobook-api/table/$restaurantId/table"
+          "/restobook-api/restaurant/$restaurantId/table/$id"
       );
       TableModel fetched = TableModel.fromJson(response.data);
-      logger.t("Fetched table\n$fetched");
+      logger.t("Fetched table\n${fetched.toJson()}");
       return fetched;
     } on DioException catch (e) {
-      logger.e("Can't get all tables", error: e);
+      logger.e("Can't get table $id", error: e);
+      rethrow;
+    } catch (e) {
+      logger.e("Can't get table $id", error: e);
       rethrow;
     }
   }

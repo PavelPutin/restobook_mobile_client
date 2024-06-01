@@ -73,7 +73,7 @@ class HttpReservationsRepository extends AbstractReservationRepository {
     // _reservations.sort(comparator);
 
     try {
-      logger.t("Try get reservations by time $dateTime");
+      logger.t("Try get reservations by time ${dateTime.toUtc().toIso8601String()}");
       final response = await api.dio.get(
         "/restobook-api/restaurant/$restaurantId/reservation",
         queryParameters: {
@@ -88,7 +88,7 @@ class HttpReservationsRepository extends AbstractReservationRepository {
       logger.t("Get all reservations by time $dateTime");
       return result;
     } on DioException catch (e) {
-      logger.e("Can't get reservations $dateTime", error: e);
+      logger.e("Can't get reservations ${dateTime.toIso8601String()}", error: e);
       rethrow;
     }
   }
@@ -98,7 +98,7 @@ class HttpReservationsRepository extends AbstractReservationRepository {
     try {
       logger.t("Try get reservation $id");
       final response = await api.dio.get(
-          "/restobook-api/table/$restaurantId/table"
+          "/restobook-api/restaurant/$restaurantId/table"
       );
       Reservation fetched = Reservation.fromJson(response.data);
       logger.t("Fetched reservation\n$fetched");

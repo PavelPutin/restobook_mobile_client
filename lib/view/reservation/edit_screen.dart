@@ -210,7 +210,7 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
                   margin: const EdgeInsets.only(bottom: 10),
                   child: TableSelectionChipsField(
                     tables: tables,
-                    targetDateTime: DateTime(
+                    targetDateTime: DateTime.utc(
                         _startDate.year,
                         _startDate.month,
                         _startDate.day,
@@ -262,7 +262,7 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
           int.parse(_personsNumberController.text),
           _clientPhoneNumberController.text,
           _clientNameController.text,
-          DateTime(_startDate.year, _startDate.month, _startDate.day,
+          DateTime.utc(_startDate.year, _startDate.month, _startDate.day,
               _startTime.hour, _startTime.minute),
           int.parse(_durationIntervalMinutesController.text),
           source.employeeFullName,

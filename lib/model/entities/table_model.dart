@@ -20,11 +20,13 @@ class TableModel {
   String? comment;
   int? restaurantId;
   List<int>? reservationIds;
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String _reservedState = "FREE"; // FREE, NEAR_RESERVED, RESERVED
 
   factory TableModel.fromJson(Map<String, dynamic> json) => _$TableModelFromJson(json);
   Map<String, dynamic> toJson() => _$TableModelToJson(this);
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String get reservedState => _reservedState;
   set reservedState(String value) => _reservedState = value;
 }

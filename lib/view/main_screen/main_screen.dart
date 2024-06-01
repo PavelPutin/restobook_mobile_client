@@ -261,7 +261,7 @@ class _MainScreenState extends State<MainScreen> {
           .employee
           .restaurantId!;
       _tablesLoading = Provider.of<TableViewModel>(context, listen: false)
-          .loadWithDateTime(restaurantId, DateTime(
+          .loadWithDateTime(restaurantId, DateTime.utc(
               _date.year, _date.month, _date.day, _time.hour, _time.minute));
     });
   }
