@@ -5,6 +5,8 @@ import 'package:get_it/get_it.dart';
 
 import 'package:restobook_mobile_client/model/model.dart';
 
+import 'application_view_model.dart';
+
 class TableViewModel extends ChangeNotifier {
   AbstractTableRepository tableRepository = GetIt.I<AbstractTableRepository>();
   AbstractReservationRepository reservationRepository = GetIt.I<
@@ -29,9 +31,9 @@ class TableViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadWithDateTime(DateTime dateTime) async {
+  Future<void> loadWithDateTime(int restaurantId, DateTime dateTime) async {
     _tables = await tableRepository.getAll();
-    var reservations = await reservationRepository.getByDateTime(dateTime);
+    var reservations = await reservationRepository.getByDateTime(restaurantId, dateTime);
     for (var t in _tables) {
       t.reservedState = "FREE";
       for (var r in reservations) {

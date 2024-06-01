@@ -69,18 +69,28 @@ class HttpReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
-  Future<List<Reservation>> getByDateTime(DateTime dateTime) {
-    _reservations.sort(comparator);
-    return ConnectionSimulator<List<Reservation>>().connect(() {
-      List<Reservation> result = [];
-      for (var r in _reservations) {
-        int diff = r.startDateTime.difference(dateTime).inMinutes;
-        if (-r.durationIntervalMinutes <= diff && diff <= 60) {
-          result.add(r);
+  Future<List<Reservation>> getByDateTime(int restaurantId, DateTime dateTime) async {
+    // _reservations.sort(comparator);
+
+    try {
+      logger.t("Try get reservations by time $dateTime");
+      final response = await api.dio.get(
+        "/restobook-api/restaurant/$restaurantId/reservation",
+        queryParameters: {
+          "dateTime": dateTime.toIso8601String()
         }
+      );
+
+      List<Reservation> result = [];
+      for (var e in response.data) {
+        result.add(Reservation.fromJson(e));
       }
+      logger.t("Get all reservations by time $dateTime");
       return result;
-    });
+    } on DioException catch (e) {
+      logger.e("Can't get reservations $dateTime", error: e);
+      rethrow;
+    }
   }
 
   @override

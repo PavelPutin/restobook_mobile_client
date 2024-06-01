@@ -45,7 +45,7 @@ class MockReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
-  Future<List<Reservation>> getByDateTime(DateTime dateTime) {
+  Future<List<Reservation>> getByDateTime(int restaurantId, DateTime dateTime) {
     _reservations.sort(comparator);
     return ConnectionSimulator<List<Reservation>>().connect(() {
       List<Reservation> result = [];

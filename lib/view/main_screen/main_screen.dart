@@ -98,8 +98,13 @@ class _MainScreenState extends State<MainScreen> {
         TablesList(
             tablesLoading: _tablesLoading,
             onRefresh: () async {
+              int restaurantId = context
+                  .read<ApplicationViewModel>()
+                  .authorizedUser!
+                  .employee
+                  .restaurantId!;
               var promise = Provider.of<TableViewModel>(context, listen: false)
-                  .loadWithDateTime(DateTime(_date.year, _date.month, _date.day,
+                  .loadWithDateTime(restaurantId, DateTime(_date.year, _date.month, _date.day,
                       _time.hour, _time.minute));
               setState(() {
                 _tablesLoading = promise;
@@ -245,8 +250,13 @@ class _MainScreenState extends State<MainScreen> {
 
   void loadByTime() {
     setState(() {
+      int restaurantId = context
+          .read<ApplicationViewModel>()
+          .authorizedUser!
+          .employee
+          .restaurantId!;
       _tablesLoading = Provider.of<TableViewModel>(context, listen: false)
-          .loadWithDateTime(DateTime(
+          .loadWithDateTime(restaurantId, DateTime(
               _date.year, _date.month, _date.day, _time.hour, _time.minute));
     });
   }

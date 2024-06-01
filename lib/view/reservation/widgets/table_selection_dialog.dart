@@ -4,6 +4,7 @@ import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/view/reservation/widgets/table_selection_tile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_list_view.dart';
 
+import '../../../view_model/application_view_model.dart';
 import '../../../view_model/table_view_model.dart';
 
 class TableSelectionDialog extends StatefulWidget {
@@ -38,8 +39,13 @@ class _TableSelectionDialogState extends State<TableSelectionDialog> {
   }
 
   void loadTables() {
+    int restaurantId = context
+        .read<ApplicationViewModel>()
+        .authorizedUser!
+        .employee
+        .restaurantId!;
     tablesLoading = Provider.of<TableViewModel>(context, listen: false)
-        .loadWithDateTime(widget.targetDateTime);
+        .loadWithDateTime(restaurantId, widget.targetDateTime);
     tablesLoading.then((value) {
       for (var t
           in Provider.of<TableViewModel>(context, listen: false).tables) {
@@ -60,9 +66,14 @@ class _TableSelectionDialogState extends State<TableSelectionDialog> {
         child: RefreshableFutureListView(
             tablesLoading: tablesLoading,
             onRefresh: () async {
+              int restaurantId = context
+                  .read<ApplicationViewModel>()
+                  .authorizedUser!
+                  .employee
+                  .restaurantId!;
               var promise = context
                   .read<TableViewModel>()
-                  .loadWithDateTime(widget.targetDateTime);
+                  .loadWithDateTime(restaurantId, widget.targetDateTime);
               setState(() => loadTables());
               await promise;
             },
