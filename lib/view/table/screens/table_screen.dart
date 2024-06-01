@@ -30,8 +30,12 @@ class _TableScreenState extends State<TableScreen> {
   @override
   void initState() {
     super.initState();
+    int restaurantId = Provider.of<ApplicationViewModel>(context, listen: false)
+        .authorizedUser!
+        .employee
+        .restaurantId!;
     tableLoading = Provider.of<TableViewModel>(context, listen: false)
-        .loadActiveTable(widget.table.id!);
+        .loadActiveTable(restaurantId, widget.table.id!);
   }
 
   @override
@@ -40,9 +44,16 @@ class _TableScreenState extends State<TableScreen> {
     List<Widget> bodyWidgets = [
       TableInfo(
           tableLoading: tableLoading,
-          onRetry: () async => setState(() => tableLoading = context
+          onRetry: () async {
+            int restaurantId = context
+                .read<ApplicationViewModel>()
+                .authorizedUser!
+                .employee
+                .restaurantId!;
+            setState(() => tableLoading = context
               .read<TableViewModel>()
-              .loadActiveTable(widget.table.id!))),
+              .loadActiveTable(restaurantId, widget.table.id!));
+          }),
       const TableReservations()
     ];
     return Scaffold(

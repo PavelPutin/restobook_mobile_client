@@ -54,9 +54,9 @@ class TableViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadActiveTable(int tableId) async {
+  Future<void> loadActiveTable(int restaurantId, int tableId) async {
     // TODO: ADD HTTP REQUEST TO GET TABLE BY ID
-    activeTable = await tableRepository.getById(tableId);
+    activeTable = await tableRepository.getById(restaurantId, tableId);
     notifyListeners();
   }
 

@@ -84,15 +84,27 @@ class HttpTablesRepository extends AbstractTableRepository {
   }
 
   @override
-  Future<TableModel> getById(int id) {
-    return ConnectionSimulator<TableModel>().connect(() {
-      for (var table in _tables) {
-        if (table.id == id) {
-          return table;
-        }
-      }
-      throw Exception("Стол не найден");
-    });
+  Future<TableModel> getById(int restaurantId, int id) async {
+    // return ConnectionSimulator<TableModel>().connect(() {
+    //   for (var table in _tables) {
+    //     if (table.id == id) {
+    //       return table;
+    //     }
+    //   }
+    //   throw Exception("Стол не найден");
+    // });
+    try {
+      logger.t("Try get table $id");
+      final response = await api.dio.get(
+          "/restobook-api/table/$restaurantId/table"
+      );
+      TableModel fetched = TableModel.fromJson(response.data);
+      logger.t("Fetched table\n$fetched");
+      return fetched;
+    } on DioException catch (e) {
+      logger.e("Can't get all tables", error: e);
+      rethrow;
+    }
   }
 
   @override

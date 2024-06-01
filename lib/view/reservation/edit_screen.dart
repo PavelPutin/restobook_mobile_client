@@ -13,6 +13,7 @@ import 'package:restobook_mobile_client/view/reservation/widgets/table_selection
 import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.dart';
 import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
+import '../../view_model/application_view_model.dart';
 import '../shared_widget/scaffold_body_padding.dart';
 import '../shared_widget/title_future_builder.dart';
 import '../table/widgets/scrollable_expanded_future_builder.dart';
@@ -262,7 +263,12 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
           tableIds);
 
       setState(() {
-        submiting = context.read<ReservationViewModel>().update(updated);
+        int restaurantId = context
+            .read<ApplicationViewModel>()
+            .authorizedUser!
+            .employee
+            .restaurantId!;
+        submiting = context.read<ReservationViewModel>().update(restaurantId, updated);
         submiting.then((value) {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(

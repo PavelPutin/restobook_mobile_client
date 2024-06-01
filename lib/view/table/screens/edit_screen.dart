@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/view/table/widgets/scrollable_expanded_future_builder.dart';
+import '../../../view_model/application_view_model.dart';
 import '../../../view_model/table_view_model.dart';
 import '../../shared_widget/scaffold_body_padding.dart';
 import '../../shared_widget/title_future_builder.dart';
@@ -32,8 +33,12 @@ class _TableEditScreenState extends State<TableEditScreen> {
   void initState() {
     super.initState();
     submiting = Future.delayed(const Duration(seconds: 0));
+    int restaurantId = Provider.of<ApplicationViewModel>(context, listen: false)
+        .authorizedUser!
+        .employee
+        .restaurantId!;
     loading = Provider.of<TableViewModel>(context, listen: false)
-        .loadActiveTable(widget.table.id!);
+        .loadActiveTable(restaurantId, widget.table.id!);
     loading.then((value) {
       setState(() {
         _selectedTableState = Provider.of<TableViewModel>(context, listen: false)
@@ -76,9 +81,16 @@ class _TableEditScreenState extends State<TableEditScreen> {
         body: ScaffoldBodyPadding(
           child: ScrollableExpandedFutureBuilder(
               loading: loading,
-              onRefresh: () async => setState(() => loading = context
+              onRefresh: () async {
+                int restaurantId = context
+                    .read<ApplicationViewModel>()
+                    .authorizedUser!
+                    .employee
+                    .restaurantId!;
+                setState(() => loading = context
                   .read<TableViewModel>()
-                  .loadActiveTable(widget.table.id!)),
+                  .loadActiveTable(restaurantId, widget.table.id!));
+                },
               errorLabel: const Text("Не удалось загрузить стол"),
               child: Form(
                   key: _formKey,

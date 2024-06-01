@@ -37,11 +37,11 @@ class ReservationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadActiveReservationTables() async {
+  Future<void> loadActiveReservationTables(int restaurantId) async {
     await Future.delayed(const Duration(seconds: 1));
     _activeReservationTables.clear();
     for (int id in activeReservation!.tableIds!) {
-      _activeReservationTables.add(await tableRepository.getById(id));
+      _activeReservationTables.add(await tableRepository.getById(restaurantId, id));
     }
     notifyListeners();
   }
@@ -60,10 +60,10 @@ class ReservationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> update(Reservation reservation) async {
+  Future<void> update(int restaurantId, Reservation reservation) async {
     // TODO: ADD HTTP REQUEST TO UPDATE RESERVATION
     activeReservation = await reservationRepository.update(reservation);
-    await loadActiveReservationTables();
+    await loadActiveReservationTables(restaurantId);
     for (var t in activeReservationTables) {
       t.reservationIds ??= [];
       if (!t.reservationIds!.contains(activeReservation!.id!)) {

@@ -33,11 +33,15 @@ class _ReservationScreenState extends State<ReservationScreen> {
   @override
   void initState() {
     super.initState();
+    int restaurantId = Provider.of<ApplicationViewModel>(context, listen: false)
+        .authorizedUser!
+        .employee
+        .restaurantId!;
     reservationLoading =
         Provider.of<ReservationViewModel>(context, listen: false)
             .loadActiveReservation(widget.reservation.id!);
     reservationLoading.then((value) => tablesLoading =
-        context.read<ReservationViewModel>().loadActiveReservationTables());
+        Provider.of<ReservationViewModel>(context, listen: false).loadActiveReservationTables(restaurantId));
   }
 
   @override
@@ -93,10 +97,16 @@ class _ReservationScreenState extends State<ReservationScreen> {
                                             listen: false)
                                         .loadActiveReservation(
                                             widget.reservation.id!);
-                                reservationLoading.then((value) => tablesLoading =
-                                    context
+                                reservationLoading.then((value) {
+                                  int restaurantId = context
+                                      .read<ApplicationViewModel>()
+                                      .authorizedUser!
+                                      .employee
+                                      .restaurantId!;
+                                  tablesLoading = context
                                         .read<ReservationViewModel>()
-                                        .loadActiveReservationTables());
+                                        .loadActiveReservationTables(restaurantId);
+                                });
                               });
                             },
                             child: const Text("Попробовать ещё раз"))
@@ -185,9 +195,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         tablesLoading: tablesLoading,
                         errorLabel: 'Не удалось загрузить столы',
                         onRefresh: () async {
+                          int restaurantId = context
+                              .read<ApplicationViewModel>()
+                              .authorizedUser!
+                              .employee
+                              .restaurantId!;
                           var promise = context
                               .read<ReservationViewModel>()
-                              .loadActiveReservationTables();
+                              .loadActiveReservationTables(restaurantId);
                           setState(() {
                             tablesLoading = promise;
                           });

@@ -49,7 +49,7 @@ class MockTablesRepository extends AbstractTableRepository {
   }
 
   @override
-  Future<TableModel> getById(int id) {
+  Future<TableModel> getById(int restaurantId, int id) {
     return ConnectionSimulator<TableModel>().connect(() {
       for (var table in _tables) {
         if (table.id == id) {
