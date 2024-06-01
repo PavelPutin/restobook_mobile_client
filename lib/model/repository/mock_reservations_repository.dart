@@ -39,7 +39,7 @@ class MockReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
-  Future<List<Reservation>> getAll() {
+  Future<List<Reservation>> getAll(int restaurantId) {
     _reservations.sort(comparator);
     return ConnectionSimulator<List<Reservation>>().connect(() => _reservations);
   }

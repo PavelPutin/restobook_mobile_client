@@ -50,9 +50,22 @@ class HttpReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
-  Future<List<Reservation>> getAll() {
-    _reservations.sort(comparator);
-    return ConnectionSimulator<List<Reservation>>().connect(() => _reservations);
+  Future<List<Reservation>> getAll(int restaurantId) async {
+    // _reservations.sort(comparator);
+    // return ConnectionSimulator<List<Reservation>>().connect(() => _reservations);
+    try {
+      logger.t("Try get all reservations");
+      final response = await api.dio.get("/restobook-api/restaurant/$restaurantId/reservation");
+      List<Reservation> result = [];
+      for (var e in response.data) {
+        result.add(Reservation.fromJson(e));
+      }
+      logger.t("Get all reservations");
+      return result;
+    } on DioException catch (e) {
+      logger.e("Can't get all reservations", error: e);
+      rethrow;
+    }
   }
 
   @override
