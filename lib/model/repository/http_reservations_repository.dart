@@ -20,7 +20,7 @@ class HttpReservationsRepository extends AbstractReservationRepository {
       logger.t("Try to create reservation");
       final response = await api.dio.post(
           "/restobook-api/restaurant/$restaurantId/reservation",
-        data: reservation
+        data: reservation.toJson()
       );
 
       var isEmpty = (response.data ?? "").toString().isEmpty;
@@ -32,6 +32,9 @@ class HttpReservationsRepository extends AbstractReservationRepository {
       logger.t("Created reservation\n$created");
       return created;
     } on DioException catch (e) {
+      logger.e("Can't create reservation", error: e);
+      rethrow;
+    } catch (e) {
       logger.e("Can't create reservation", error: e);
       rethrow;
     }
@@ -98,12 +101,15 @@ class HttpReservationsRepository extends AbstractReservationRepository {
     try {
       logger.t("Try get reservation $id");
       final response = await api.dio.get(
-          "/restobook-api/restaurant/$restaurantId/table"
+          "/restobook-api/restaurant/$restaurantId/reservation/$id"
       );
       Reservation fetched = Reservation.fromJson(response.data);
       logger.t("Fetched reservation\n$fetched");
       return fetched;
     } on DioException catch (e) {
+      logger.e("Can't get all reservations", error: e);
+      rethrow;
+    } catch (e) {
       logger.e("Can't get all reservations", error: e);
       rethrow;
     }

@@ -163,7 +163,7 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
               _startTime.hour, _startTime.minute),
           int.parse(_durationIntervalMinutesController.text),
           context.read<ApplicationViewModel>().authorizedUser!.employee.shortFullName,
-          DateTime.now(),
+          DateTime.now().toUtc(),
           "WAITING",
           _commentController.text.trim().isEmpty
               ? null
