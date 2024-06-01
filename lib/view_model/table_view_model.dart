@@ -71,9 +71,9 @@ class TableViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> add(TableModel table) async {
+  Future<void> add(int restaurantId, TableModel table) async {
     // TODO: ADD HTTP REQUEST TO CREATE TABLE
-    activeTable = await tableRepository.create(table);
+    activeTable = await tableRepository.create(restaurantId, table);
     notifyListeners();
   }
 
