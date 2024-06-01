@@ -128,15 +128,30 @@ class HttpTablesRepository extends AbstractTableRepository {
   }
 
   @override
-  Future<TableModel> update(TableModel table) {
-    return ConnectionSimulator<TableModel>().connect(() {
-      for (int i = 0; i < _tables.length; i++) {
-        if (_tables[i].id == table.id) {
-          _tables[i] = table;
-          return table;
-        }
+  Future<TableModel> update(int restaurantId, TableModel table) async {
+    try {
+      logger.t("Try update table");
+      table.restaurantId = restaurantId;
+      final response = await api.dio.put(
+          "/restobook-api/restaurant/$restaurantId/table/${table.id!}",
+          data: table.toJson()
+      );
+
+      var isEmpty = (response.data ?? "").toString().isEmpty;
+      logger.t("Response data is empty: $isEmpty");
+      if (!isEmpty) {
+        logger.t("Response data:\n${response.data.toString()}");
       }
-      throw Exception("Стол не найден");
-    });
+
+      TableModel updated = TableModel.fromJson(response.data);
+      logger.t("Updated table\n${updated.toJson()}");
+      return updated;
+    } on DioException catch (e) {
+      logger.e("Can't update table", error: e);
+      rethrow;
+    } catch (e) {
+      logger.e("Can't update table", error: e);
+      rethrow;
+    }
   }
 }

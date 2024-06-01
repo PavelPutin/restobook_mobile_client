@@ -77,9 +77,9 @@ class TableViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> update(TableModel table) async {
+  Future<void> update(int restaurantId, TableModel table) async {
     // TODO: ADD HTTP REQUEST TO UPDATE TABLE
-    activeTable = await tableRepository.update(table);
+    activeTable = await tableRepository.update(restaurantId, table);
     notifyListeners();
   }
 

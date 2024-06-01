@@ -61,7 +61,7 @@ class MockTablesRepository extends AbstractTableRepository {
   }
 
   @override
-  Future<TableModel> update(TableModel table) {
+  Future<TableModel> update(int restaurantId, TableModel table) {
     return ConnectionSimulator<TableModel>().connect(() {
       for (int i = 0; i < _tables.length; i++) {
         if (_tables[i].id == table.id) {

@@ -155,9 +155,14 @@ class _TableEditScreenState extends State<TableEditScreen> {
               .reservationIds);
 
       setState(() {
+        int restaurantId = context
+            .read<ApplicationViewModel>()
+            .authorizedUser!
+            .employee
+            .restaurantId!;
         submiting = context
             .read<TableViewModel>()
-            .update(updated);
+            .update(restaurantId, updated);
         submiting.then((value) {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(

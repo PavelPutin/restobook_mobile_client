@@ -4,6 +4,6 @@ abstract class AbstractTableRepository {
   Future<List<TableModel>> getAll(int restaurantId);
   Future<TableModel> getById(int restaurantId, int id);
   Future<TableModel> create(int restaurantId, TableModel table);
-  Future<TableModel> update(TableModel table);
+  Future<TableModel> update(int restaurantId, TableModel table);
   Future<void> delete(TableModel table);
 }

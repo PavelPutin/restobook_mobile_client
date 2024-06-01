@@ -54,7 +54,7 @@ class ReservationViewModel extends ChangeNotifier {
       for (var t in tables) {
         t.reservationIds ??= [];
         t.reservationIds!.add(activeReservation!.id!);
-        tableRepository.update(t);
+        tableRepository.update(restaurantId, t);
       }
     });
     notifyListeners();
@@ -68,7 +68,7 @@ class ReservationViewModel extends ChangeNotifier {
       t.reservationIds ??= [];
       if (!t.reservationIds!.contains(activeReservation!.id!)) {
         t.reservationIds?.add(activeReservation!.id!);
-        tableRepository.update(t);
+        tableRepository.update(restaurantId, t);
       }
     }
     notifyListeners();
