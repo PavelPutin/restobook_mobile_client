@@ -7,7 +7,6 @@ import 'package:logger/web.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
-import 'package:restobook_mobile_client/model/repository/mock_reservations_repository.dart';
 import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart';
 import 'package:restobook_mobile_client/model/service/api_dio.dart';
 import 'package:restobook_mobile_client/model/service/http_auth_service.dart';
@@ -20,6 +19,7 @@ import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
 import 'model/repository/http_employee_repository.dart';
+import 'model/repository/http_reservations_repository.dart';
 
 void main() {
   AppMetrica.runZoneGuarded(() {
@@ -38,7 +38,7 @@ void main() {
     GetIt.I.registerSingleton<MockBackend>(MockBackend());
     GetIt.I.registerSingleton<AbstractTableRepository>(MockTablesRepository());
     GetIt.I.registerSingleton<AbstractReservationRepository>(
-        MockReservationsRepository());
+        HttpReservationsRepository());
     GetIt.I.registerSingleton<AbstractEmployeeRepository>(
         HttpEmployeeRepository());
     GetIt.I.registerSingleton<AbstractAuthService>(HttpAuthService());

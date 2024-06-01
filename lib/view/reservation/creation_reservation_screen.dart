@@ -172,7 +172,12 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
           tableIds);
 
       setState(() {
-        submiting = context.read<ReservationViewModel>().add(created, tables);
+        int restaurantId = context
+            .read<ApplicationViewModel>()
+            .authorizedUser!
+            .employee
+            .restaurantId!;
+        submiting = context.read<ReservationViewModel>().add(restaurantId, created, tables);
         submiting.then((value) {
           AppMetrica.reportEvent(const String.fromEnvironment("create_reservation"));
           Navigator.pushReplacement(

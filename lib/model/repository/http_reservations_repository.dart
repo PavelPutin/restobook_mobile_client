@@ -1,29 +1,40 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
 
+import '../service/api_dio.dart';
 import '../utils/utils.dart';
 
-class MockReservationsRepository extends AbstractReservationRepository {
+class HttpReservationsRepository extends AbstractReservationRepository {
   final List<TableModel> _tables = GetIt.I<MockBackend>().tables;
   final List<Reservation> _reservations = GetIt.I<MockBackend>().reservations;
 
+  final api = GetIt.I<Api>();
+  final logger = GetIt.I<Logger>();
+
   @override
   Future<Reservation> create(int restaurantId, Reservation reservation) async {
-    return ConnectionSimulator<Reservation>().connect(() {
-      int maxId = 0;
-      for (var r in _reservations) {
-        if (r.id! > maxId) {
-          maxId = r.id!;
-        }
+    try {
+      logger.t("Try to create reservation");
+      final response = await api.dio.post(
+          "/restobook-api/restaurant/$restaurantId/reservation",
+        data: reservation
+      );
+
+      var isEmpty = (response.data ?? "").toString().isEmpty;
+      logger.t("Response data is empty: $isEmpty");
+      if (!isEmpty) {
+        logger.t("Response data:\n${response.data.toString()}");
       }
-      reservation.id = maxId + 1;
-      reservation.state = "WAITING";
-      reservation.restaurantId = 1;
-      _reservations.add(reservation);
-      _reservations.sort(comparator);
-      return reservation;
-    });
+      Reservation created = Reservation.fromJson(response.data);
+      logger.t("Created reservation\n$created");
+      return created;
+    } on DioException catch (e) {
+      logger.e("Can't create reservation", error: e);
+      rethrow;
+    }
   }
 
   @override
@@ -94,11 +105,11 @@ class MockReservationsRepository extends AbstractReservationRepository {
   }
 
   int comparator(Reservation a, Reservation b) {
-      if (a.state == "CLOSED" && b.state != "CLOSED") return 1;
-      if (a.state == "WAITING" && b.state == "CLOSED") return -1;
-      if (a.state == "WAITING" && b.state == "OPEN") return 1;
-      if (a.state == "OPEN" && b.state != "OPEN") return -1;
-      if (a.startDateTime.isBefore(b.startDateTime)) return 1;
-      return a.id! < b.id! ? 1 : -1;
+    if (a.state == "CLOSED" && b.state != "CLOSED") return 1;
+    if (a.state == "WAITING" && b.state == "CLOSED") return -1;
+    if (a.state == "WAITING" && b.state == "OPEN") return 1;
+    if (a.state == "OPEN" && b.state != "OPEN") return -1;
+    if (a.startDateTime.isBefore(b.startDateTime)) return 1;
+    return a.id! < b.id! ? 1 : -1;
   }
 }
