@@ -72,7 +72,7 @@ class MockReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
-  Future<Reservation> update(Reservation reservation) {
+  Future<Reservation> update(int restaurantId, Reservation reservation) {
     return ConnectionSimulator<Reservation>().connect(() {
       for (int i = 0; i < _reservations.length; i++) {
         if (_reservations[i].id == reservation.id) {

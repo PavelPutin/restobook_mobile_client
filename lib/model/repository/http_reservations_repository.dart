@@ -116,25 +116,29 @@ class HttpReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
-  Future<Reservation> update(Reservation reservation) {
-    return ConnectionSimulator<Reservation>().connect(() {
-      for (int i = 0; i < _reservations.length; i++) {
-        if (_reservations[i].id == reservation.id) {
-          for (int tId in _reservations[i].tableIds!) {
-            for (var t in _tables) {
-              if (t.id! == tId && !reservation.tableIds!.contains(tId)) {
-                t.reservationIds!.remove(_reservations[i].id!);
-              }
-            }
-          }
-          _reservations[i] = reservation;
+  Future<Reservation> update(int restaurantId, Reservation reservation) async {
+    try {
+      logger.t("Try to update reservation");
+      final response = await api.dio.put(
+          "/restobook-api/restaurant/$restaurantId/reservation/${reservation.id!}",
+          data: reservation.toJson()
+      );
 
-          _reservations.sort(comparator);
-          return reservation;
-        }
+      var isEmpty = (response.data ?? "").toString().isEmpty;
+      logger.t("Response data is empty: $isEmpty");
+      if (!isEmpty) {
+        logger.t("Response data:\n${response.data.toString()}");
       }
-      throw Exception("Бронь не найдена");
-    });
+      Reservation updated = Reservation.fromJson(response.data);
+      logger.t("Updated reservation\n$updated");
+      return updated;
+    } on DioException catch (e) {
+      logger.e("Can't update reservation", error: e);
+      rethrow;
+    } catch (e) {
+      logger.e("Can't update reservation", error: e);
+      rethrow;
+    }
   }
 
   int comparator(Reservation a, Reservation b) {
