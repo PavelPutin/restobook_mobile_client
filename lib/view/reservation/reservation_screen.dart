@@ -39,7 +39,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
         .restaurantId!;
     reservationLoading =
         Provider.of<ReservationViewModel>(context, listen: false)
-            .loadActiveReservation(widget.reservation.id!);
+            .loadActiveReservation(restaurantId, widget.reservation.id!);
     reservationLoading.then((value) => tablesLoading =
         Provider.of<ReservationViewModel>(context, listen: false).loadActiveReservationTables(restaurantId));
   }
@@ -92,10 +92,15 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         ElevatedButton(
                             onPressed: () async {
                               setState(() {
+                                int restaurantId = context
+                                    .read<ApplicationViewModel>()
+                                    .authorizedUser!
+                                    .employee
+                                    .restaurantId!;
                                 reservationLoading =
                                     Provider.of<ReservationViewModel>(context,
                                             listen: false)
-                                        .loadActiveReservation(
+                                        .loadActiveReservation(restaurantId,
                                             widget.reservation.id!);
                                 reservationLoading.then((value) {
                                   int restaurantId = context

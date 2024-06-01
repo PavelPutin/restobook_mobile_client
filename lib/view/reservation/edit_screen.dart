@@ -53,8 +53,13 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
   void initState() {
     super.initState();
     submiting = Future.delayed(const Duration(seconds: 0));
+    int restaurantId = context
+        .read<ApplicationViewModel>()
+        .authorizedUser!
+        .employee
+        .restaurantId!;
     loading = Provider.of<ReservationViewModel>(context, listen: false)
-        .loadActiveReservation(widget.reservation.id!);
+        .loadActiveReservation(restaurantId, widget.reservation.id!);
     loading.then((value) {
       setState(() {
         var personsNumber =
@@ -130,9 +135,16 @@ class _ReservationEditScreenState extends State<ReservationEditScreen> {
       body: ScaffoldBodyPadding(
         child: ScrollableExpandedFutureBuilder(
           loading: loading,
-          onRefresh: () async => setState(() => loading = context
+          onRefresh: () async {
+            int restaurantId = context
+                .read<ApplicationViewModel>()
+                .authorizedUser!
+                .employee
+                .restaurantId!;
+            setState(() => loading = context
               .read<ReservationViewModel>()
-              .loadActiveReservation(widget.reservation.id!)),
+              .loadActiveReservation(restaurantId, widget.reservation.id!));
+            },
           errorLabel: const Text("Не удалось загрузить бронь"),
           child: Form(
             key: _reservationEditingFormKey,

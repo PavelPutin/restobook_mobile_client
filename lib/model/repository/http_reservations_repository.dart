@@ -94,15 +94,19 @@ class HttpReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
-  Future<Reservation> getById(int id) {
-    return ConnectionSimulator<Reservation>().connect(() {
-      for (var reservation in _reservations) {
-        if (reservation.id == id) {
-          return reservation;
-        }
-      }
-      throw Exception("Бронь не найдена");
-    });
+  Future<Reservation> getById(int restaurantId, int id) async {
+    try {
+      logger.t("Try get reservation $id");
+      final response = await api.dio.get(
+          "/restobook-api/table/$restaurantId/table"
+      );
+      Reservation fetched = Reservation.fromJson(response.data);
+      logger.t("Fetched reservation\n$fetched");
+      return fetched;
+    } on DioException catch (e) {
+      logger.e("Can't get all reservations", error: e);
+      rethrow;
+    }
   }
 
   @override

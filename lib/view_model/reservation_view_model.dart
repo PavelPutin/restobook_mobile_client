@@ -31,9 +31,9 @@ class ReservationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadActiveReservation(int reservationId) async {
+  Future<void> loadActiveReservation(int restaurantId, int reservationId) async {
     // TODO: ADD HTTP REQUEST TO GET RESERVATIONS BY ID
-    activeReservation = await reservationRepository.getById(reservationId);
+    activeReservation = await reservationRepository.getById(restaurantId, reservationId);
     notifyListeners();
   }
 

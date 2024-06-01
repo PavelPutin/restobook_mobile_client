@@ -4,6 +4,8 @@ import 'package:restobook_mobile_client/view/shared_widget/refreshable_future_li
 import 'package:restobook_mobile_client/view/main_screen/widgets/reservation_list_tile.dart';
 import 'package:restobook_mobile_client/view_model/table_view_model.dart';
 
+import '../../../view_model/application_view_model.dart';
+
 class TableReservations extends StatefulWidget {
   const TableReservations({super.key});
 
@@ -17,7 +19,11 @@ class _TableReservationsState extends State<TableReservations> {
   @override
   void initState() {
     super.initState();
-    reservationsLoading = Provider.of<TableViewModel>(context, listen: false).loadActiveTableReservations();
+    int restaurantId = Provider.of<ApplicationViewModel>(context, listen: false)
+        .authorizedUser!
+        .employee
+        .restaurantId!;
+    reservationsLoading = Provider.of<TableViewModel>(context, listen: false).loadActiveTableReservations(restaurantId);
   }
 
   @override
@@ -37,7 +43,12 @@ class _TableReservationsState extends State<TableReservations> {
           return RefreshableFutureListView(
             tablesLoading: reservationsLoading,
             onRefresh: () async {
-              var promise = context.read<TableViewModel>().loadActiveTableReservations();
+              int restaurantId = context
+                  .read<ApplicationViewModel>()
+                  .authorizedUser!
+                  .employee
+                  .restaurantId!;
+              var promise = context.read<TableViewModel>().loadActiveTableReservations(restaurantId);
               setState(() {
                 reservationsLoading = promise;
               });
