@@ -20,7 +20,7 @@ class Api {
   static const accessTokenKey = 'access_token';
   static const refreshTokenKey = 'refresh_token';
   static const clientId = 'restobook-rest-api';
-  static const clientSecret = 'm7Qpp1SGt63mdnrw9EDVdYBZ3TwH3t0W';
+  static const clientSecret = 'YXgYE054ui30G3JlXLF44avB8eN3JsIt';
 
   void init() {
     dio.interceptors.addAll([
