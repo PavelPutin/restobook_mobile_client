@@ -27,7 +27,7 @@ class MockReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
-  Future<void> delete(Reservation reservation) {
+  Future<void> delete(int restaurantId, Reservation reservation) {
     for (int tableId in reservation.tableIds!) {
       for (var table in _tables) {
         if (table.id! == tableId) {

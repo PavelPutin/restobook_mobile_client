@@ -74,9 +74,9 @@ class ReservationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> delete(Reservation reservation) async {
+  Future<void> delete(int restaurantId, Reservation reservation) async {
     // TODO: ADD HTTP REQUEST TO DELETE RESERVATION
-    await reservationRepository.delete(reservation);
+    await reservationRepository.delete(restaurantId, reservation);
     notifyListeners();
   }
 }

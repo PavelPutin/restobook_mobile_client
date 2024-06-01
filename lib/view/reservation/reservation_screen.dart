@@ -64,7 +64,12 @@ class _ReservationScreenState extends State<ReservationScreen> {
               dialogTitle: const Text("Удалить бронь"),
               onSubmit: () {
                 AppMetrica.reportEvent(const String.fromEnvironment("delete_reservation"));
-                return context.read<ReservationViewModel>().delete(
+                int restaurantId = context
+                    .read<ApplicationViewModel>()
+                    .authorizedUser!
+                    .employee
+                    .restaurantId!;
+                return context.read<ReservationViewModel>().delete(restaurantId,
                     context.read<ReservationViewModel>().activeReservation!);
               },
               successLabel: "Бронь удалёна",

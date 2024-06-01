@@ -6,5 +6,5 @@ abstract class AbstractReservationRepository {
   Future<Reservation> getById(int restaurantId, int id);
   Future<Reservation> create(int restaurantId, Reservation reservation);
   Future<Reservation> update(int restaurantId, Reservation reservation);
-  Future<void> delete(Reservation reservation);
+  Future<void> delete(int restaurantId, Reservation reservation);
 }

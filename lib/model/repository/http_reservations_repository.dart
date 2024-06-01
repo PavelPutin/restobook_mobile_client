@@ -41,15 +41,20 @@ class HttpReservationsRepository extends AbstractReservationRepository {
   }
 
   @override
-  Future<void> delete(Reservation reservation) {
-    for (int tableId in reservation.tableIds!) {
-      for (var table in _tables) {
-        if (table.id! == tableId) {
-          table.reservationIds!.remove(reservation.id!);
-        }
-      }
+  Future<void> delete(int restaurantId, Reservation reservation) async {
+    try {
+      logger.t("Try delete reservation ${reservation.id}");
+      final response = await api.dio.delete(
+          "/restobook-api/restaurant/$restaurantId/reservation/${reservation.id}"
+      );
+      logger.t("Deleted reservation");
+    } on DioException catch (e) {
+      logger.e("Can't delete reservation ${reservation.id}", error: e);
+      rethrow;
+    } catch (e) {
+      logger.e("Can't delete reservation ${reservation.id}", error: e);
+      rethrow;
     }
-    return ConnectionSimulator<void>().connect(() => _reservations.remove(reservation));
   }
 
   @override
