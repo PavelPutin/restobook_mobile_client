@@ -25,14 +25,14 @@ class TableViewModel extends ChangeNotifier {
   UnmodifiableListView<Reservation> get activeTableReservations =>
       UnmodifiableListView(_activeTableReservations);
 
-  Future<void> load() async {
+  Future<void> load(int restaurantId) async {
     // TODO: ADD HTTP REQUEST TO GET ALL TABLES
-    _tables = await tableRepository.getAll();
+    _tables = await tableRepository.getAll(restaurantId);
     notifyListeners();
   }
 
   Future<void> loadWithDateTime(int restaurantId, DateTime dateTime) async {
-    _tables = await tableRepository.getAll();
+    _tables = await tableRepository.getAll(restaurantId);
     var reservations = await reservationRepository.getByDateTime(restaurantId, dateTime);
     for (var t in _tables) {
       t.reservedState = "FREE";

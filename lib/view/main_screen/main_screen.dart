@@ -133,7 +133,12 @@ class _MainScreenState extends State<MainScreen> {
         TablesList(
             tablesLoading: _tablesLoading,
             onRefresh: () async {
-              var promise = context.read<TableViewModel>().load();
+              int restaurantId = context
+                  .read<ApplicationViewModel>()
+                  .authorizedUser!
+                  .employee
+                  .restaurantId!;
+              var promise = context.read<TableViewModel>().load(restaurantId);
               setState(() {
                 _tablesLoading = promise;
               });

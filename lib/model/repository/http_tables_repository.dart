@@ -64,8 +64,23 @@ class HttpTablesRepository extends AbstractTableRepository {
   }
 
   @override
-  Future<List<TableModel>> getAll() {
-    return ConnectionSimulator<List<TableModel>>().connect(() => _tables);
+  Future<List<TableModel>> getAll(int restaurantId) async {
+    // return ConnectionSimulator<List<TableModel>>().connect(() => _tables);
+    try {
+      logger.t("Try get all tables");
+      final response = await api.dio.get(
+          "/restobook-api/table/$restaurantId/table"
+      );
+      List<TableModel> result = [];
+      for (var e in response.data) {
+        result.add(TableModel.fromJson(e));
+      }
+      logger.t("Get all tables");
+      return result;
+    } on DioException catch (e) {
+      logger.e("Can't get all tables", error: e);
+      rethrow;
+    }
   }
 
   @override

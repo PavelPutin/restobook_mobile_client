@@ -44,7 +44,7 @@ class MockTablesRepository extends AbstractTableRepository {
   }
 
   @override
-  Future<List<TableModel>> getAll() {
+  Future<List<TableModel>> getAll(int restaurantId) {
     return ConnectionSimulator<List<TableModel>>().connect(() => _tables);
   }
 
