@@ -74,9 +74,14 @@ class _TableScreenState extends State<TableScreen> {
               dialogTitle: const Text("Удалить стол"),
               onSubmit: () {
                 AppMetrica.reportEvent(const String.fromEnvironment("delete_table"));
+                int restaurantId = context
+                    .read<ApplicationViewModel>()
+                    .authorizedUser!
+                    .employee
+                    .restaurantId!;
                 return context
                     .read<TableViewModel>()
-                    .delete(context.read<TableViewModel>().activeTable!);
+                    .delete(restaurantId, context.read<TableViewModel>().activeTable!);
               },
               successLabel: "Стол удалён",
               errorLabel: "Не удалось удалить стол",

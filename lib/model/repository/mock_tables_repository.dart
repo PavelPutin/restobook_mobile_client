@@ -29,7 +29,7 @@ class MockTablesRepository extends AbstractTableRepository {
   }
 
   @override
-  Future<void> delete(TableModel table) {
+  Future<void> delete(int restaurantId, TableModel table) {
     for (int reservationId in table.reservationIds!) {
       for (var reservation in _reservations) {
         if (reservation.id! == reservationId) {

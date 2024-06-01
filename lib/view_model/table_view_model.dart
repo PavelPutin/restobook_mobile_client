@@ -83,9 +83,9 @@ class TableViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> delete(TableModel table) async {
+  Future<void> delete(int restaurantId, TableModel table) async {
     // TODO: ADD HTTP REQUEST TO DELETE TABLE
-    await tableRepository.delete(table);
+    await tableRepository.delete(restaurantId, table);
     notifyListeners();
   }
 }

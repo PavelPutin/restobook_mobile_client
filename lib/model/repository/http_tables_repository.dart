@@ -56,18 +56,20 @@ class HttpTablesRepository extends AbstractTableRepository {
   }
 
   @override
-  Future<void> delete(TableModel table) {
-    for (int reservationId in table.reservationIds!) {
-      for (var reservation in _reservations) {
-        if (reservation.id! == reservationId) {
-          if (reservation.tableIds?.length == 1) {
-            throw Exception("Нельзя удалить стол, так как он единственный для брони");
-          }
-          reservation.tableIds?.remove(table.id!);
-        }
-      }
+  Future<void> delete(int restaurantId, TableModel table) async {
+    try {
+      logger.t("Try delete table ${table.id}");
+      final response = await api.dio.delete(
+          "/restobook-api/restaurant/$restaurantId/table/${table.id}"
+      );
+      logger.t("Deleted table");
+    } on DioException catch (e) {
+      logger.e("Can't delete table ${table.id}", error: e);
+      rethrow;
+    } catch (e) {
+      logger.e("Can't delete table ${table.id}", error: e);
+      rethrow;
     }
-    return ConnectionSimulator<void>().connect(() => _tables.remove(table));
   }
 
   @override
