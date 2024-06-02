@@ -58,7 +58,15 @@ class HttpAuthService extends AbstractAuthService {
         await api.secureStorage.write(
             key: Api.refreshTokenKey, value: refreshToken);
         logger.t("Save refreshToken");
-        return await getMe();
+        final getMeResult = await getMe();
+        if (getMeResult == null) {
+          await api.secureStorage.delete(
+              key: Api.accessTokenKey);
+          await api.secureStorage.delete(
+              key: Api.refreshTokenKey);
+          throw "Can't login";
+        }
+        return getMeResult;
       }
     } on dio.DioException catch (e) {
       logger.e("Catch DioException", error: e);
