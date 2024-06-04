@@ -62,7 +62,7 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
             child: Column(
               children: [
                 Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 10, top: 25),
                     child: PersonsNumberTextField(controller: _personsNumberController)
                 ),
                 Container(

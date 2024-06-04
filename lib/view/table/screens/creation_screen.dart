@@ -49,7 +49,7 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
             child: Column(
               children: [
                 Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 10, top: 25),
                     child: TableNumberTextField(
                         controller: _numberController,
                       errorText: _tableNumberUnique ? null : "Номер столика уже занят",

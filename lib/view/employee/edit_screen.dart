@@ -85,7 +85,7 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 10, top: 25),
                     child: DefaultTextField(
                         controller: _surnameController,
                         labelText: "Фамилия сотрудника"),

@@ -32,7 +32,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
           child: Column(
             children: [
               Container(
-                  margin: const EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 10, top: 25),
                   child: PasswordTextField(
                       controller: _oldPasswordController,
                       labelText: "Старый пароль",

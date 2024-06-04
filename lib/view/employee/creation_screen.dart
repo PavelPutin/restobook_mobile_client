@@ -43,7 +43,7 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 10, top: 25),
                     child: DefaultTextField(
                       controller: _loginController,
                       labelText: "Логин сотрудника",
