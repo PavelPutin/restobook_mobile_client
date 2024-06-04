@@ -105,7 +105,7 @@ class _TableCreationScreenState extends State<TableCreationScreen> {
         submiting = context
             .read<TableViewModel>()
             .add(restaurantId, created);
-        submiting.then((value) {
+        submiting.then((value) async {
           AppMetrica.reportEvent(const String.fromEnvironment("create_table"));
           Navigator.pushReplacement(
               context,

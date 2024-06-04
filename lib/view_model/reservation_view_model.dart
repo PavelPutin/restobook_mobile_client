@@ -57,6 +57,7 @@ class ReservationViewModel extends ChangeNotifier {
         tableRepository.update(restaurantId, t);
       }
     });
+    load(restaurantId);
     notifyListeners();
   }
 
@@ -71,12 +72,14 @@ class ReservationViewModel extends ChangeNotifier {
         tableRepository.update(restaurantId, t);
       }
     }
+    load(restaurantId);
     notifyListeners();
   }
 
   Future<void> delete(int restaurantId, Reservation reservation) async {
     // TODO: ADD HTTP REQUEST TO DELETE RESERVATION
     await reservationRepository.delete(restaurantId, reservation);
+    load(restaurantId);
     notifyListeners();
   }
 }

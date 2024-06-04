@@ -32,18 +32,21 @@ class EmployeeViewModel extends ChangeNotifier {
     logger.t("Employee view model employee creation");
     activeEmployee = await employeeRepository.create(restaurantId, employee, password);
     logger.t("New active employee:\n${activeEmployee?.toJson()}");
+    load(restaurantId);
     notifyListeners();
   }
 
   Future<void> update(int restaurantId, Employee employee) async {
     // TODO: ADD HTTP REQUEST TO UPDATE EMPLOYEE
     activeEmployee = await employeeRepository.update(restaurantId, employee);
+    load(restaurantId);
     notifyListeners();
   }
 
   Future<void> delete(int restaurantId, Employee employee) async {
     // TODO: ADD HTTP REQUEST TO DELETE EMPLOYEE
     await employeeRepository.delete(restaurantId, employee);
+    load(restaurantId);
     notifyListeners();
   }
 }

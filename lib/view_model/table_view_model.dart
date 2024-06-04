@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:restobook_mobile_client/model/model.dart';
@@ -11,6 +12,14 @@ class TableViewModel extends ChangeNotifier {
   AbstractTableRepository tableRepository = GetIt.I<AbstractTableRepository>();
   AbstractReservationRepository reservationRepository = GetIt.I<
       AbstractReservationRepository>();
+
+  DateTime _date = DateTime.now();
+  DateTime get date => _date;
+  set date(value) => _date = value;
+
+  TimeOfDay _time = TimeOfDay.now();
+  TimeOfDay get time => _time;
+  set time(value) => _time = value;
 
   List<TableModel> _tables = [];
   final List<Reservation> _activeTableReservations = [];
@@ -74,18 +83,27 @@ class TableViewModel extends ChangeNotifier {
   Future<void> add(int restaurantId, TableModel table) async {
     // TODO: ADD HTTP REQUEST TO CREATE TABLE
     activeTable = await tableRepository.create(restaurantId, table);
+    final selectedTime = DateTime.utc(
+        _date.year, _date.month, _date.day, _time.hour, _time.minute);
+    loadWithDateTime(restaurantId, selectedTime);
     notifyListeners();
   }
 
   Future<void> update(int restaurantId, TableModel table) async {
     // TODO: ADD HTTP REQUEST TO UPDATE TABLE
     activeTable = await tableRepository.update(restaurantId, table);
+    final selectedTime = DateTime.utc(
+        _date.year, _date.month, _date.day, _time.hour, _time.minute);
+    loadWithDateTime(restaurantId, selectedTime);
     notifyListeners();
   }
 
   Future<void> delete(int restaurantId, TableModel table) async {
     // TODO: ADD HTTP REQUEST TO DELETE TABLE
     await tableRepository.delete(restaurantId, table);
+    final selectedTime = DateTime.utc(
+        _date.year, _date.month, _date.day, _time.hour, _time.minute);
+    loadWithDateTime(restaurantId, selectedTime);
     notifyListeners();
   }
 }
