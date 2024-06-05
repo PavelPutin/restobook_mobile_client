@@ -77,13 +77,14 @@ class _TableSelectionDialogState extends State<TableSelectionDialog> {
               setState(() => loadTables());
               await promise;
             },
-            listView: Consumer<TableViewModel>(
-              builder: (context, tableViewModel, child) => values.isEmpty
+            listView: Builder(
+              builder: (context) => values.isEmpty
                   ? const Center(child: Text("Нет доступных столов"))
                   : ListView.separated(
                       itemCount: values.length,
                       itemBuilder: (context, index) {
                         return TableSelectionTile(
+                            table: values[index],
                             title: Text("Стол ${values[index].number}"),
                             onTap: () {
                               setState(() {
