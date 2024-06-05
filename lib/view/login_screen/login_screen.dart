@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: [Text("У меня нет аккаунта")],
+                  children: [Text("Как получить учётную запись?")],
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.min,
