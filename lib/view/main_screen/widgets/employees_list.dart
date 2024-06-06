@@ -34,7 +34,7 @@ class _EmployeesListState extends State<EmployeesList> {
   Widget build(BuildContext context) {
     return Consumer<EmployeeViewModel>(
         builder: (context, employeeViewModel, child) {
-      bool isAdmin = const String.fromEnvironment("USER_TYPE") == "ADMIN";
+      bool isAdmin = context.read<ApplicationViewModel>().isAdmin;
       var itemCount = employeeViewModel.employees.length;
       if (isAdmin) {
         itemCount += 1;
