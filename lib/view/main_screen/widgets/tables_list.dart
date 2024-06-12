@@ -28,19 +28,9 @@ class TablesList extends StatelessWidget {
         itemCount += 1;
       }
 
-      return RefreshableFutureListView(
-        tablesLoading: tablesLoading,
-        // onRefresh: () async {
-        //   var promise = context.read<TableViewModel>().load();
-        //   promise.onError((error, stackTrace) {print(error); print(stackTrace);});
-        //   setState(() {
-        //     tablesLoading = promise;
-        //   });
-        //   await promise;
-        // },
-        onRefresh: onRefresh,
-        errorLabel: "Не удалось загрузить столы",
-        listView: ListView.builder(
+      Widget tablesListContent;
+      if (tableViewModel.tables.isNotEmpty) {
+        tablesListContent = ListView.builder(
             itemCount: itemCount,
             itemBuilder: (_, index) {
               if (index == tableViewModel.tables.length && isAdmin) {
@@ -53,7 +43,37 @@ class TablesList extends StatelessWidget {
               }
 
               return ColorIndicatedTableListTile(table: tableViewModel.tables[index]);
-            }),
+            });
+      } else {
+        tablesListContent = Center(
+            child: Column(
+              children: [
+                const Text("Нет столов"),
+                if (isAdmin)
+                  ElevatedButton(
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const TableCreationScreen())),
+                      child: const Text("Добавить стол"))
+              ]
+            )
+        );
+      }
+
+      return RefreshableFutureListView(
+        tablesLoading: tablesLoading,
+        // onRefresh: () async {
+        //   var promise = context.read<TableViewModel>().load();
+        //   promise.onError((error, stackTrace) {print(error); print(stackTrace);});
+        //   setState(() {
+        //     tablesLoading = promise;
+        //   });
+        //   await promise;
+        // },
+        onRefresh: onRefresh,
+        errorLabel: "Не удалось загрузить столы",
+        listView: tablesListContent,
       );
     });
   }

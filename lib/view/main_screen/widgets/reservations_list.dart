@@ -29,6 +29,23 @@ class _ReservationsListState extends State<ReservationsList> {
   Widget build(BuildContext context) {
     return Consumer<ReservationViewModel>(
         builder: (context, reservationViewModel, child) {
+
+          Widget reservationListContent;
+          if (reservationViewModel.reservations.isNotEmpty) {
+            reservationListContent = ListView.builder(
+                itemCount: reservationViewModel.reservations.length,
+                itemBuilder: (_, index) => ReservationListTile(reservation: reservationViewModel.reservations[index])
+            );
+          } else {
+            reservationListContent = const Center(
+                child: Column(
+                    children: [
+                      Text("Нет броней"),
+                    ]
+                )
+            );
+          }
+
           return RefreshableFutureListView(
             tablesLoading: reservationsLoading,
             onRefresh: () async {
@@ -44,10 +61,7 @@ class _ReservationsListState extends State<ReservationsList> {
               await promise;
             },
             errorLabel: "Не удалось загрузить брони",
-            listView: ListView.builder(
-                itemCount: reservationViewModel.reservations.length,
-                itemBuilder: (_, index) => ReservationListTile(reservation: reservationViewModel.reservations[index])
-            ),
+            listView: reservationListContent,
           );
         }
     );
