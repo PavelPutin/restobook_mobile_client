@@ -23,7 +23,7 @@ class MockAuthService extends AbstractAuthService {
   }
 
   @override
-  Future<AuthEntity> changePassword(AuthEntity authEntity, String newPassword) {
+  Future<AuthEntity> changePassword(AuthEntity authEntity, String oldPassword, String newPassword) {
     return ConnectionSimulator<AuthEntity>().connect(() {
       for (var ae in authEntities) {
         if (ae.employee.login == authEntity.employee.login && ae.password == authEntity.password) {
@@ -59,6 +59,12 @@ class MockAuthService extends AbstractAuthService {
   @override
   Future<void> logout() {
     // TODO: implement logout
+    throw UnimplementedError();
+  }
+
+  @override
+  String hashPasswordWithSha256(String password ) {
+    // TODO: implement hashPasswordWithSha256
     throw UnimplementedError();
   }
 }

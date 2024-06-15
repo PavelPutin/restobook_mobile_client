@@ -18,6 +18,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   Future<void> submiting = Future.delayed(const Duration(seconds: 0));
   final _oldPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _oldPasswordValid = true;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                   child: PasswordTextField(
                       controller: _oldPasswordController,
                       labelText: "Старый пароль",
+                      errorText: _oldPasswordValid ? null : "Неправильный пароль",
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Поле обязательное";
@@ -73,6 +75,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   void submit() async {
     if (_passwordEditingFormKey.currentState!.validate()) {
       setState(() {
+        _oldPasswordValid = true;
         submiting = context.read<ApplicationViewModel>().changePassword(
             _oldPasswordController.text, _passwordController.text);
         submiting.then((value) {
@@ -81,6 +84,10 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
               .showSnackBar(const SnackBar(content: Text("Пароль изменён")));
         });
         submiting.onError((error, stackTrace) {
+          if (error == "Invalid old password") {
+            setState(() => _oldPasswordValid = false);
+          }
+
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Не удалось изменить пароль")));
         });

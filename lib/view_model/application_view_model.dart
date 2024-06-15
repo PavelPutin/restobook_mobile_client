@@ -77,10 +77,10 @@ class ApplicationViewModel extends ChangeNotifier {
   Future<void> changePassword(String oldPassword, String newPassword) async {
     // if (_authorizedUser != null && _authorizedUser!.password == oldPassword) {
     if (_authorizedUser != null) {
-      await authService.changePassword(_authorizedUser!, newPassword);
+      await authService.changePassword(_authorizedUser!, oldPassword, newPassword);
       notifyListeners();
     } else {
-      throw Exception("Старый пароль неверный");
+      throw "Старый пароль неверный";
     }
   }
 

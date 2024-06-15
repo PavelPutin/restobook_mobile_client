@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PasswordTextField extends StatefulWidget {
-  const PasswordTextField({super.key, required this.controller, this.validator, this.labelText = "Пароль"});
+  const PasswordTextField({super.key, required this.controller, this.validator, this.labelText = "Пароль", this.errorText});
 
   final TextEditingController controller;
   final String? Function(String? value)? validator;
   final String labelText;
+  final String? errorText;
 
   @override
   State<PasswordTextField> createState() => _PasswordTextFieldState();
@@ -35,7 +36,9 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             },
           ),
           border: const OutlineInputBorder(),
-          labelText: widget.labelText),
+          labelText: widget.labelText,
+          errorText: widget.errorText
+      ),
     );
   }
 }

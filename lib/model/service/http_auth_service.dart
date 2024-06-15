@@ -6,6 +6,8 @@ import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart
 import 'package:restobook_mobile_client/model/service/api_dio.dart';
 import 'package:restobook_mobile_client/model/utils/utils.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class HttpAuthService extends AbstractAuthService {
   AbstractEmployeeRepository employeeRepository = GetIt.I
@@ -14,13 +16,17 @@ class HttpAuthService extends AbstractAuthService {
   Logger logger = GetIt.I<Logger>();
 
   @override
-  Future<AuthEntity?> changePassword(AuthEntity authEntity, String newPassword) async {
+  Future<AuthEntity?> changePassword(AuthEntity authEntity, String oldPassword, String newPassword) async {
     logger.t("Change password");
+    var hashedOldPassword = hashPasswordWithSha256(oldPassword);
+    if (authEntity.password != hashedOldPassword) {
+      throw "Invalid old password";
+    }
     final response = await api.dio.put(
         "/restobook-api/auth/password",
         data: {
           "newPassword": newPassword,
-          "oldPassword": ""
+          "oldPassword": oldPassword
         }
     );
     return authEntity;
@@ -66,6 +72,7 @@ class HttpAuthService extends AbstractAuthService {
               key: Api.refreshTokenKey);
           throw "Can't login";
         }
+        getMeResult.password = hashPasswordWithSha256(password);
         return getMeResult;
       }
     } on dio.DioException catch (e) {
@@ -106,5 +113,12 @@ class HttpAuthService extends AbstractAuthService {
     logger.t("Process logout");
     await api.secureStorage.delete(key: Api.accessTokenKey);
     await api.secureStorage.delete(key: Api.refreshTokenKey);
+  }
+
+  @override
+  String hashPasswordWithSha256(String password) {
+    var bytes = utf8.encode(password);
+    var digest = sha256.convert(bytes);
+    return digest.toString();
   }
 }
