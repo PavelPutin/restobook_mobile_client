@@ -12,7 +12,7 @@ class ClientNameTextField extends StatelessWidget {
       controller: controller,
       labelText: "Имя клиента",
       validator: (value) {
-        if (value == null || value.isEmpty) {
+        if (value == null || value.trim().isEmpty) {
           return "Поле обязательное";
         }
         if (value.length > 512) {

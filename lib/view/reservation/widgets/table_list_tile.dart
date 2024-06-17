@@ -9,14 +9,7 @@ class TableListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var status = switch (table.reservedState) {
-      "FREE" => "Свободен",
-      "NEAR_RESERVED" => "Бронь в течение часа",
-      "RESERVED" => "Занят",
-    // TODO: Handle this case.
-      String() => throw UnimplementedError(),
-    };
-
+    String? status;
     if (table.state == "BROKEN") {
       status = "Сломан";
     }
@@ -28,7 +21,7 @@ class TableListTile extends StatelessWidget {
             child: Text("${table.seatsNumber}"),
           ),
           title: Text("Стол ${table.number}"),
-          subtitle: Text(status),
+          subtitle: status != null ? Text(status) : null,
         ),
       ),
     );

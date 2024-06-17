@@ -15,7 +15,7 @@ class TableStateDropdownMenu extends StatelessWidget {
         DropdownMenuItem<String>(
             value: "NORMAL", child: Text("Нормальный")),
         DropdownMenuItem<String>(
-            value: "BROKEN", child: Text("Сломаный"))
+            value: "BROKEN", child: Text("Сломанный"))
       ],
       onChanged: (String? selected) {
         if (selected is String) {

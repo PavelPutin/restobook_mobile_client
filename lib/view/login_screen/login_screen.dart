@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: _loginController,
                           labelText: "Логин",
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null || value.trim().isEmpty) {
                               return "Поле обязательное";
                             }
                             if (value.length > 512) {
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: PasswordTextField(
                               controller: _passwordController,
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
+                                if (value == null || value.trim().isEmpty) {
                                   return "Поле обязательное";
                                 }
                                 return null;

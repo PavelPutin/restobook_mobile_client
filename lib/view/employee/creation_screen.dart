@@ -48,7 +48,7 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                       controller: _loginController,
                       labelText: "Логин сотрудника",
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
+                        if (value == null || value.trim().isEmpty) {
                           return "Поле обязательное";
                         }
                         if (value.length > 512) {
@@ -69,7 +69,7 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                       child: PasswordTextField(
                           controller: _passwordController,
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null || value.trim().isEmpty) {
                               return "Поле обязательное";
                             }
                             return null;
@@ -80,7 +80,7 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                         controller: _surnameController,
                         labelText: "Фамилия сотрудника",
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value == null || value.trim().isEmpty) {
                             return "Поле обязательное";
                           }
                           if (value.length > 512) {
@@ -95,7 +95,7 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                         controller: _nameController,
                         labelText: "Имя сотрудника",
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value == null || value.trim().isEmpty) {
                             return "Поле обязательное";
                           }
                           if (value.length > 512) {

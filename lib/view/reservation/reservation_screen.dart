@@ -147,8 +147,6 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         InfoLabel(
                             label: "Дата и время начала:",
                             info: "${DateFormat.MMMEd("ru_RU").format(reservationViewModel.activeReservation!.startDateTime)} ${DateFormat.Hm("ru_RU").format(reservationViewModel.activeReservation!.startDateTime)}"),
-                        // Text(
-                        //     "Дата и время начала: ${reservationViewModel.activeReservation?.startDateTime}"),
                       ],
                     ),
                     Row(

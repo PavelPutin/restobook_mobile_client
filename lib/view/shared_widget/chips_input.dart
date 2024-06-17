@@ -122,7 +122,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>> {
       onChanged: (String value) =>
           widget.onTextChanged?.call(controller.textWithoutReplacements),
       validator: (value) {
-        if (value == null || value.isEmpty) {
+        if (value == null || value.trim().isEmpty) {
           return "Поле обязательное";
         }
         return null;

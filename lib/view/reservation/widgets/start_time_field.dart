@@ -23,7 +23,7 @@ class StartTimeField extends StatelessWidget {
             border: OutlineInputBorder(), labelText: "Время"),
         onChanged: (value) => blockEditing(),
         validator: (value) {
-          if (value == null || value.isEmpty) {
+          if (value == null || value.trim().isEmpty) {
             return "Поле обязательное";
           }
           if (value.length > 30) {

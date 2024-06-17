@@ -50,7 +50,7 @@ class TableInfo extends StatelessWidget {
                 Row(
                   children: [
                     InfoLabel(
-                        label: "Количество мест:",
+                        label: "Состояние:",
                         info: switch (tableViewModel.activeTable?.state) {
                           "NORMAL" => "Нормальное",
                           "BROKEN" => "Сломан",

@@ -39,7 +39,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                       labelText: "Старый пароль",
                       errorText: _oldPasswordValid ? null : "Неправильный пароль",
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
+                        if (value == null || value.trim().isEmpty) {
                           return "Поле обязательное";
                         }
                         return null;
@@ -49,7 +49,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                   child: PasswordTextField(
                     controller: _passwordController,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
+                      if (value == null || value.trim().isEmpty) {
                         return "Поле обязательное";
                       }
                       return null;

@@ -16,73 +16,96 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const IconButtonNavigatorPop(),
-        actions: [
-          IconButton(
-              onPressed: () {
-                AppMetrica.reportEvent(const String.fromEnvironment("logout"));
-                context.read<ApplicationViewModel>().logout();
-                Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen()));
-              },
-              color: Theme.of(context).colorScheme.error,
-              icon: const Icon(Icons.exit_to_app))
-        ],
-        title: Consumer<ApplicationViewModel>(
-          builder: (context, applicationViewModel, child) {
-            return Text(applicationViewModel.authorizedUser?.employee.shortFullName ?? "");
-          },
+        appBar: AppBar(
+          leading: const IconButtonNavigatorPop(),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  AppMetrica.reportEvent(
+                      const String.fromEnvironment("logout"));
+                  context.read<ApplicationViewModel>().logout();
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const LoginScreen()));
+                },
+                color: Theme.of(context).colorScheme.error,
+                icon: const Icon(Icons.exit_to_app))
+          ],
+          title: Consumer<ApplicationViewModel>(
+            builder: (context, applicationViewModel, child) {
+              return Text(
+                  applicationViewModel.authorizedUser?.employee.shortFullName ??
+                      "");
+            },
+          ),
         ),
-      ),
-      floatingActionButton: const FloatingCreationReservationButton(),
-      body: ScaffoldBodyPadding(
-        child: Consumer<ApplicationViewModel>(
-          builder: (context, applicationViewModel, child) {
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    InfoLabel(label: "Имя:", info: applicationViewModel.authorizedUser?.employee.name ?? "")
-                  ],
-                ),
-                Row(
-                  children: [
-                    InfoLabel(label: "Фамилия:", info: applicationViewModel.authorizedUser?.employee.surname ?? "")
-                  ],
-                ),
-                Row(
-                  children: [
-                    InfoLabel(label: "Отчество:", info: applicationViewModel.authorizedUser?.employee.patronymic ?? "-")
-                  ],
-                ),
-                Row(
-                  children: [
-                    InfoLabel(label: "Комментарий:", info: applicationViewModel.authorizedUser?.employee.comment ?? "-")
-                  ],
-                ),
-                Row(
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                            MaterialPageRoute(builder: (context) => const EditPasswordScreen())
-                          );
-                        },
-                        child: const Row(
-                          children: [
-                            Icon(Icons.password),
-                            Text("Изменить пароль"),
-                          ],
-                        ))
-                  ],
-                )
-              ],
-            );
-          },
-        ),
-      )
-    );
+        floatingActionButton: const FloatingCreationReservationButton(),
+        body: ScaffoldBodyPadding(
+          child: Consumer<ApplicationViewModel>(
+            builder: (context, applicationViewModel, child) {
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      InfoLabel(
+                          label: "Имя:",
+                          info: applicationViewModel
+                                  .authorizedUser?.employee.name ??
+                              "")
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      InfoLabel(
+                          label: "Фамилия:",
+                          info: applicationViewModel
+                                  .authorizedUser?.employee.surname ??
+                              "")
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      InfoLabel(
+                          label: "Отчество:",
+                          info: applicationViewModel
+                                  .authorizedUser?.employee.patronymic ??
+                              "-")
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      InfoLabel(
+                          label: "Комментарий:",
+                          info: applicationViewModel
+                                  .authorizedUser?.employee.comment ??
+                              "-")
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EditPasswordScreen()));
+                          },
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(right: 5),
+                                  child: const Icon(Icons.password)
+                              ),
+                              const Text("Изменить пароль"),
+                            ],
+                          ))
+                    ],
+                  )
+                ],
+              );
+            },
+          ),
+        ));
   }
 }

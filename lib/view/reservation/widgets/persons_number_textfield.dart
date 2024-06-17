@@ -13,7 +13,7 @@ class PersonsNumberTextField extends StatelessWidget {
       controller: controller,
       labelText: "Количество гостей",
       validator: (value) {
-        if (value == null || value.isEmpty) {
+        if (value == null || value.trim().isEmpty) {
           return "Поле обязательное";
         }
         if (int.parse(value) <= 0) {

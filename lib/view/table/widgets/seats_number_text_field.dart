@@ -13,7 +13,7 @@ class SeatsNumberTextField extends StatelessWidget {
         controller: controller,
         labelText: "Количество мест",
         validator: (value) {
-          if (value == null || value.isEmpty) {
+          if (value == null || value.trim().isEmpty) {
             return "Поле обязательное";
           }
           if (int.parse(value) < 1) {

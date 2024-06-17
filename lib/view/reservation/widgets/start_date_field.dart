@@ -21,7 +21,7 @@ class StartDateField extends StatelessWidget {
             border: OutlineInputBorder(), labelText: "Дата"),
         onChanged: (value) => blockEditing(),
         validator: (value) {
-          if (value == null || value.isEmpty) {
+          if (value == null || value.trim().isEmpty) {
             return "Поле обязательное";
           }
           return null;

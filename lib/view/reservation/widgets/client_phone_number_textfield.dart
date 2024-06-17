@@ -13,7 +13,7 @@ class ClientPhoneNumberTextField extends StatelessWidget {
       labelText: "Номер клиента",
       keyboardType: TextInputType.phone,
       validator: (value) {
-        if (value == null || value.isEmpty) {
+        if (value == null || value.trim().isEmpty) {
           return "Поле обязательное";
         }
         if (value.length > 30) {
