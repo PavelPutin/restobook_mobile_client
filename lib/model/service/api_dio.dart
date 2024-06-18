@@ -8,13 +8,9 @@ class Api {
 
   final Dio dio = Dio();
 
-  //todo: to remove
-  // final Dio retryDio = Dio(BaseOptions(baseUrl: 'https://restobook.fun'));
   final storage.FlutterSecureStorage secureStorage =
       const storage.FlutterSecureStorage();
 
-  // todo: change
-  // static const basePath = 'http://192.168.1.97:8181';
   static const basePath = 'https://restobook.fun';
 
   static const accessTokenKey = 'access_token';
@@ -45,12 +41,10 @@ class Api {
       }, onError: (DioException error, ErrorInterceptorHandler handler) async {
         logger.e("Api got error\n", error: error);
         logger.e("Response status code\n${error.response?.statusCode}");
-        logger.e("Response data\n${error.response?.data.toString()}");
 
         if (error.response?.statusCode == 401) {
           logger.e("Start process anauthorized request");
           try {
-            logger.w("Response error field payload ${error.response?.data.toString()}");
             if ((error.response?.data ?? "").toString().isNotEmpty && error.response?.data['error'] == 'invalid_grant') {
               logger.e("Invalid_grant error");
               return handler.reject(error);
@@ -83,7 +77,6 @@ class Api {
                 Options(contentType: Headers.formUrlEncodedContentType));
 
             logger.t("Refresh response status ${response.statusCode} ${response.statusMessage}");
-            logger.t("Refresh response\n${response.data.toString()}");
 
             if (response.statusCode == null ||
                 response.statusCode! ~/ 100 != 2) {
