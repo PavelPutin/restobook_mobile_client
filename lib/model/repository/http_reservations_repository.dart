@@ -2,15 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:restobook_mobile_client/model/model.dart';
-import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
 
 import '../service/api_dio.dart';
-import '../utils/utils.dart';
 
 class HttpReservationsRepository extends AbstractReservationRepository {
-  final List<TableModel> _tables = GetIt.I<MockBackend>().tables;
-  final List<Reservation> _reservations = GetIt.I<MockBackend>().reservations;
-
   final api = GetIt.I<Api>();
   final logger = GetIt.I<Logger>();
 
@@ -44,7 +39,7 @@ class HttpReservationsRepository extends AbstractReservationRepository {
   Future<void> delete(int restaurantId, Reservation reservation) async {
     try {
       logger.t("Try delete reservation ${reservation.id}");
-      final response = await api.dio.delete(
+      await api.dio.delete(
           "/restobook-api/restaurant/$restaurantId/reservation/${reservation.id}"
       );
       logger.t("Deleted reservation");

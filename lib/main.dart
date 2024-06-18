@@ -7,7 +7,6 @@ import 'package:logger/web.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/model/repository/http_tables_repository.dart';
-import 'package:restobook_mobile_client/model/repository/mock_backend.dart';
 import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart';
 import 'package:restobook_mobile_client/model/service/api_dio.dart';
 import 'package:restobook_mobile_client/model/service/http_auth_service.dart';
@@ -36,7 +35,6 @@ void main() {
     api.init();
     GetIt.I.registerSingleton<Api>(api);
 
-    GetIt.I.registerSingleton<MockBackend>(MockBackend());
     GetIt.I.registerSingleton<AbstractTableRepository>(HttpTablesRepository());
     GetIt.I.registerSingleton<AbstractReservationRepository>(
         HttpReservationsRepository());
