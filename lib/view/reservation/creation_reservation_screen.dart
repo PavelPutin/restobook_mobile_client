@@ -148,7 +148,9 @@ class _CreationReservationScreenState extends State<CreationReservationScreen> {
   }
 
   void submit() async {
+    print(_clientPhoneNumberController.text);
     if (_reservationCreatingFormKey.currentState!.validate()) {
+
       // update reservation
       List<int> tableIds = [];
       for (var t in tables) {
