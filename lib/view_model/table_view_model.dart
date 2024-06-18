@@ -67,6 +67,7 @@ class TableViewModel extends ChangeNotifier {
   Future<void> loadActiveTableReservations(int restaurantId) async {
     _activeTableReservations.clear();
     if (activeTable!.reservationIds != null) {
+      await loadActiveTable(restaurantId, activeTable!.id!);
       for (int id in activeTable!.reservationIds!) {
         _activeTableReservations.add(await reservationRepository.getById(restaurantId, id));
       }

@@ -73,8 +73,6 @@ class HttpReservationsRepository extends AbstractReservationRepository {
 
   @override
   Future<List<Reservation>> getByDateTime(int restaurantId, DateTime dateTime) async {
-    // _reservations.sort(comparator);
-
     try {
       logger.t("Try get reservations by time ${dateTime.toUtc().toIso8601String()}");
       final response = await api.dio.get(
@@ -107,10 +105,10 @@ class HttpReservationsRepository extends AbstractReservationRepository {
       logger.t("Fetched reservation\n$fetched");
       return fetched;
     } on DioException catch (e) {
-      logger.e("Can't get all reservations", error: e);
+      logger.e("Can't get reservation $id due to network error", error: e);
       rethrow;
     } catch (e) {
-      logger.e("Can't get all reservations", error: e);
+      logger.e("Can't get reservation $id", error: e);
       rethrow;
     }
   }
