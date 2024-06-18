@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
 
+import '../../model/utils/validators.dart';
 import '../../view_model/application_view_model.dart';
 import '../shared_widget/password_textfield.dart';
 
@@ -42,6 +43,11 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                         if (value == null || value.trim().isEmpty) {
                           return "Поле обязательное";
                         }
+
+                        var contentCheck = onlyEnglishDigitsAndSomeSpecial(value);
+                        if (contentCheck != null) {
+                          return contentCheck;
+                        }
                         return null;
                       })),
               Container(
@@ -51,6 +57,11 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return "Поле обязательное";
+                      }
+
+                      var contentCheck = onlyEnglishDigitsAndSomeSpecial(value);
+                      if (contentCheck != null) {
+                        return contentCheck;
                       }
                       return null;
                     }

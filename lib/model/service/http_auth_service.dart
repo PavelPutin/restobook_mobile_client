@@ -28,6 +28,8 @@ class HttpAuthService extends AbstractAuthService {
           "oldPassword": oldPassword
         }
     );
+    var hashedNewPassword = hashPasswordWithSha256(newPassword);
+    authEntity.password = hashedNewPassword;
     return authEntity;
   }
 
