@@ -26,13 +26,11 @@ class ReservationViewModel extends ChangeNotifier {
       _activeReservation = reservation;
 
   Future<void> load(int restaurantId) async {
-    // TODO: ADD HTTP REQUEST TO GET ALL RESERVATIONS
     _reservations = await reservationRepository.getAll(restaurantId);
     notifyListeners();
   }
 
   Future<void> loadActiveReservation(int restaurantId, int reservationId) async {
-    // TODO: ADD HTTP REQUEST TO GET RESERVATIONS BY ID
     activeReservation = await reservationRepository.getById(restaurantId, reservationId);
     notifyListeners();
   }
@@ -47,7 +45,6 @@ class ReservationViewModel extends ChangeNotifier {
   }
 
   Future<void> add(int restaurantId, Reservation reservation, List<TableModel> tables) async {
-    // TODO: ADD HTTP REQUEST TO CREATE RESERVATION
     var creating = reservationRepository.create(restaurantId, reservation);
     await creating.then((value) {
       activeReservation = value;
@@ -62,7 +59,6 @@ class ReservationViewModel extends ChangeNotifier {
   }
 
   Future<void> update(int restaurantId, Reservation reservation) async {
-    // TODO: ADD HTTP REQUEST TO UPDATE RESERVATION
     activeReservation = await reservationRepository.update(restaurantId, reservation);
     await loadActiveReservationTables(restaurantId);
     for (var t in activeReservationTables) {
@@ -77,7 +73,6 @@ class ReservationViewModel extends ChangeNotifier {
   }
 
   Future<void> delete(int restaurantId, Reservation reservation) async {
-    // TODO: ADD HTTP REQUEST TO DELETE RESERVATION
     await reservationRepository.delete(restaurantId, reservation);
     load(restaurantId);
     notifyListeners();

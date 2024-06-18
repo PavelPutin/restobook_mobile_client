@@ -32,7 +32,6 @@ class TableViewModel extends ChangeNotifier {
       UnmodifiableListView(_activeTableReservations);
 
   Future<void> load(int restaurantId) async {
-    // TODO: ADD HTTP REQUEST TO GET ALL TABLES
     _tables = await tableRepository.getAll(restaurantId);
     notifyListeners();
   }
@@ -61,13 +60,11 @@ class TableViewModel extends ChangeNotifier {
   }
 
   Future<void> loadActiveTable(int restaurantId, int tableId) async {
-    // TODO: ADD HTTP REQUEST TO GET TABLE BY ID
     activeTable = await tableRepository.getById(restaurantId, tableId);
     notifyListeners();
   }
 
   Future<void> loadActiveTableReservations(int restaurantId) async {
-    // TODO: ADD HTTP REQUEST TO GET RESERVATIONS BY ID
     _activeTableReservations.clear();
     if (activeTable!.reservationIds != null) {
       for (int id in activeTable!.reservationIds!) {
@@ -78,7 +75,6 @@ class TableViewModel extends ChangeNotifier {
   }
 
   Future<void> add(int restaurantId, TableModel table) async {
-    // TODO: ADD HTTP REQUEST TO CREATE TABLE
     activeTable = await tableRepository.create(restaurantId, table);
     final selectedTime = DateTime.utc(
         _date.year, _date.month, _date.day, _time.hour, _time.minute);
@@ -87,7 +83,6 @@ class TableViewModel extends ChangeNotifier {
   }
 
   Future<void> update(int restaurantId, TableModel table) async {
-    // TODO: ADD HTTP REQUEST TO UPDATE TABLE
     activeTable = await tableRepository.update(restaurantId, table);
     final selectedTime = DateTime.utc(
         _date.year, _date.month, _date.day, _time.hour, _time.minute);
@@ -96,7 +91,6 @@ class TableViewModel extends ChangeNotifier {
   }
 
   Future<void> delete(int restaurantId, TableModel table) async {
-    // TODO: ADD HTTP REQUEST TO DELETE TABLE
     await tableRepository.delete(restaurantId, table);
     final selectedTime = DateTime.utc(
         _date.year, _date.month, _date.day, _time.hour, _time.minute);

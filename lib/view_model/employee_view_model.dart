@@ -16,19 +16,16 @@ class EmployeeViewModel extends ChangeNotifier {
   set activeEmployee(Employee? employee) => _activeEmployee = employee;
 
   Future<void> load(int restaurantId) async {
-    // TODO: ADD HTTP REQUEST TO GET ALL EMPLOYEES
     _employees = await employeeRepository.getAll(restaurantId);
     notifyListeners();
   }
 
   Future<void> loadActiveEmployee(int restaurantId, int employeeId) async {
-    // TODO: ADD HTTP REQUEST TO GET EMPLOYEES BY ID
     activeEmployee = await employeeRepository.getById(restaurantId, employeeId);
     notifyListeners();
   }
 
   Future<void> add(int restaurantId, Employee employee, String password) async {
-    // TODO: ADD HTTP REQUEST TO CREATE EMPLOYEE
     logger.t("Employee view model employee creation");
     activeEmployee = await employeeRepository.create(restaurantId, employee, password);
     logger.t("New active employee:\n${activeEmployee?.toJson()}");
@@ -37,14 +34,12 @@ class EmployeeViewModel extends ChangeNotifier {
   }
 
   Future<void> update(int restaurantId, Employee employee) async {
-    // TODO: ADD HTTP REQUEST TO UPDATE EMPLOYEE
     activeEmployee = await employeeRepository.update(restaurantId, employee);
     load(restaurantId);
     notifyListeners();
   }
 
   Future<void> delete(int restaurantId, Employee employee) async {
-    // TODO: ADD HTTP REQUEST TO DELETE EMPLOYEE
     await employeeRepository.delete(restaurantId, employee);
     load(restaurantId);
     notifyListeners();
