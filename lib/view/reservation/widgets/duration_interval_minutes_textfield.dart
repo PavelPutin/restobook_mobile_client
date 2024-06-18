@@ -16,8 +16,12 @@ class DurationIntervalMinutesTextField extends StatelessWidget {
         if (value == null || value.trim().isEmpty) {
           return "Поле обязательное";
         }
-        if (int.parse(value) < 5) {
-          return "Длительность не должна быть меньше 5 минут";
+        try {
+          if (int.parse(value) < 5) {
+            return "Длительность не должна быть меньше 5 минут";
+          }
+        } catch (_) {
+          return "Должно быть числом";
         }
         return null;
       },

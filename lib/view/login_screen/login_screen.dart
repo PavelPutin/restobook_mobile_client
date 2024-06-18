@@ -1,6 +1,7 @@
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restobook_mobile_client/model/utils/validators.dart';
 import 'package:restobook_mobile_client/view/login_screen/administrator_registration_info_screen.dart';
 import 'package:restobook_mobile_client/view/login_screen/employee_registration_info_screen.dart';
 import 'package:restobook_mobile_client/view/main_screen/main_screen.dart';
@@ -59,6 +60,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (value == null || value.trim().isEmpty) {
                               return "Поле обязательное";
                             }
+                            var contentCheck = onlyEnglishAndDigits(value);
+                            if (contentCheck != null) {
+                              return contentCheck;
+                            }
                             if (value.length > 512) {
                               return "Логин не должен быть длиннее 512 символов";
                             }
@@ -79,6 +84,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
                                   return "Поле обязательное";
+                                }
+                                var contentCheck = onlyEnglishDigitsAndSomeSpecial(value);
+                                if (contentCheck != null) {
+                                  return contentCheck;
                                 }
                                 return null;
                               }))

@@ -16,8 +16,12 @@ class PersonsNumberTextField extends StatelessWidget {
         if (value == null || value.trim().isEmpty) {
           return "Поле обязательное";
         }
-        if (int.parse(value) <= 0) {
-          return "Значение должно быть больше нуля";
+        try {
+          if (int.parse(value) <= 0) {
+            return "Значение должно быть больше нуля";
+          }
+        } catch (_) {
+          return "Должно быть числом";
         }
         return null;
       },

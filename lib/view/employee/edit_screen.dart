@@ -6,6 +6,7 @@ import 'package:restobook_mobile_client/view_model/application_view_model.dart';
 import 'package:restobook_mobile_client/view_model/employee_view_model.dart';
 
 import '../../model/entities/employee.dart';
+import '../../model/utils/validators.dart';
 import '../shared_widget/comment_text_field.dart';
 import '../shared_widget/default_text_field.dart';
 import '../shared_widget/scrollable_expanded.dart';
@@ -88,18 +89,25 @@ class _EmployeeEditScreenState extends State<EmployeeEditScreen> {
                     margin: const EdgeInsets.only(bottom: 10, top: 25),
                     child: DefaultTextField(
                         controller: _surnameController,
-                        labelText: "Фамилия сотрудника"),
+                        labelText: "Фамилия сотрудника",
+                        validator: surnameValidator,
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     child: DefaultTextField(
-                        controller: _nameController, labelText: "Имя сотрудника"),
+                        controller: _nameController,
+                        labelText: "Имя сотрудника",
+                        validator: nameValidator
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     child: DefaultTextField(
                         controller: _patronymicController,
-                        labelText: "Отчество сотрудника"),
+                        labelText: "Отчество сотрудника",
+                        validator: patronymicValidator,
+                    ),
                   ),
                   Container(
                       margin: const EdgeInsets.only(bottom: 10),

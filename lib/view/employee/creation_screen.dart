@@ -2,6 +2,7 @@ import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restobook_mobile_client/model/model.dart';
+import 'package:restobook_mobile_client/model/utils/validators.dart';
 import 'package:restobook_mobile_client/view/employee/employee_screen.dart';
 import 'package:restobook_mobile_client/view/shared_widget/comment_text_field.dart';
 
@@ -51,6 +52,12 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                         if (value == null || value.trim().isEmpty) {
                           return "Поле обязательное";
                         }
+
+                        var contentCheck = onlyEnglishAndDigits(value);
+                        if (contentCheck != null) {
+                          return contentCheck;
+                        }
+
                         if (value.length > 512) {
                           return "Логин не должен быть длиннее 512 символов";
                         }
@@ -72,6 +79,10 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                             if (value == null || value.trim().isEmpty) {
                               return "Поле обязательное";
                             }
+                            var contentCheck = onlyEnglishDigitsAndSomeSpecial(value);
+                            if (contentCheck != null) {
+                              return contentCheck;
+                            }
                             return null;
                           })),
                   Container(
@@ -79,42 +90,21 @@ class _EmployeeCreationScreenState extends State<EmployeeCreationScreen> {
                     child: DefaultTextField(
                         controller: _surnameController,
                         labelText: "Фамилия сотрудника",
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Поле обязательное";
-                          }
-                          if (value.length > 512) {
-                            return "Фамилия не должна быть длиннее 512 символов";
-                          }
-                          return null;
-                        }),
+                        validator: surnameValidator),
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     child: DefaultTextField(
                         controller: _nameController,
                         labelText: "Имя сотрудника",
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Поле обязательное";
-                          }
-                          if (value.length > 512) {
-                            return "Имя не должно быть длиннее 512 символов";
-                          }
-                          return null;
-                        }),
+                        validator: nameValidator),
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     child: DefaultTextField(
                         controller: _patronymicController,
                         labelText: "Отчество сотрудника",
-                        validator: (value) {
-                          if (value != null && value.length > 512) {
-                            return "Отчество не должно быть длиннее 512 символов";
-                          }
-                          return null;
-                        }),
+                        validator: patronymicValidator),
                   ),
                   Container(
                       margin: const EdgeInsets.only(bottom: 10),

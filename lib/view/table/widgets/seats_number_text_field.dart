@@ -16,8 +16,12 @@ class SeatsNumberTextField extends StatelessWidget {
           if (value == null || value.trim().isEmpty) {
             return "Поле обязательное";
           }
-          if (int.parse(value) < 1) {
-            return "Значение должно быть не меньше 1";
+          try {
+            if (int.parse(value) < 1) {
+              return "Значение должно быть не меньше 1";
+            }
+          } catch (_) {
+            return "Должно быть числом";
           }
           return null;
         });
