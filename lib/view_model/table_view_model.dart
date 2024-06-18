@@ -1,12 +1,9 @@
 import 'dart:collection';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:restobook_mobile_client/model/model.dart';
-
-import 'application_view_model.dart';
 
 class TableViewModel extends ChangeNotifier {
   AbstractTableRepository tableRepository = GetIt.I<AbstractTableRepository>();

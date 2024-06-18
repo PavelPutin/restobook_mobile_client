@@ -4,7 +4,6 @@ import 'package:restobook_mobile_client/model/entities/auth_entity.dart';
 import 'package:restobook_mobile_client/model/model.dart';
 import 'package:restobook_mobile_client/model/service/abstract_auth_service.dart';
 import 'package:restobook_mobile_client/model/service/api_dio.dart';
-import 'package:restobook_mobile_client/model/utils/utils.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
@@ -22,7 +21,7 @@ class HttpAuthService extends AbstractAuthService {
     if (authEntity.password != hashedOldPassword) {
       throw "Invalid old password";
     }
-    final response = await api.dio.put(
+    await api.dio.put(
         "/restobook-api/auth/password",
         data: {
           "newPassword": newPassword,
@@ -79,6 +78,7 @@ class HttpAuthService extends AbstractAuthService {
       logger.e("Catch DioException", error: e);
       rethrow;
     }
+    return null;
   }
 
   @override

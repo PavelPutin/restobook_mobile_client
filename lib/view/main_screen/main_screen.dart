@@ -12,7 +12,6 @@ import 'package:restobook_mobile_client/view/shared_widget/floating_creation_res
 import 'package:restobook_mobile_client/view/shared_widget/icon_button_push_profile.dart';
 import 'package:restobook_mobile_client/view/shared_widget/scaffold_body_padding.dart';
 import 'package:restobook_mobile_client/view_model/application_view_model.dart';
-import 'package:restobook_mobile_client/view_model/reservation_view_model.dart';
 
 import '../../view_model/table_view_model.dart';
 
