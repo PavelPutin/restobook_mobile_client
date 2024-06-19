@@ -51,8 +51,6 @@ class HttpAuthService extends AbstractAuthService {
       );
 
       logger.t("Response status is ${response.statusCode}");
-      logger.t("Response data");
-      logger.t(response.data);
 
       if (response.statusCode! == 200) {
         var accessToken = response.data["access_token"];
@@ -91,8 +89,6 @@ class HttpAuthService extends AbstractAuthService {
       var response = await api.dio.get("/restobook-api/auth/me");
 
       logger.t("Response status is ${response.statusCode}");
-      logger.t("Response data");
-      logger.t(response.data);
 
       if (response.statusCode == 200) {
         Employee employee = Employee.fromJson(response.data);
